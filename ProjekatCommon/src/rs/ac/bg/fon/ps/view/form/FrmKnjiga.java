@@ -5,12 +5,19 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
+
+
+import javax.swing.JOptionPane;
+import rs.ac.bg.fon.ps.controller.Controller;
+import rs.ac.bg.fon.ps.domain.Knjiga;
+import rs.ac.bg.fon.ps.domain.Zanr;
+
 /**
  *
  * @author ANA
  */
 public class FrmKnjiga extends javax.swing.JDialog {
-
+    int idKnjige=0;
     /**
      * Creates new form FrmKnjiga
      */
@@ -18,6 +25,7 @@ public class FrmKnjiga extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        prepareView();
     }
 
     /**
@@ -58,6 +66,11 @@ public class FrmKnjiga extends javax.swing.JDialog {
         cmbZanr.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnDodaj.setText("Dodaj knjigu");
+        btnDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -127,9 +140,24 @@ public class FrmKnjiga extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAutorActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
+        Knjiga k= new Knjiga();
+       
+        k.setNaziv(txtNaziv.getText().trim());
+        k.setAutor(txtAutor.getText().trim());
+        k.setZanr(String.valueOf(cmbZanr.getSelectedItem()));
+        k.setPrimerci(null);
+        if(!(txtNaziv.getText().isEmpty()) && !(txtAutor.getText().isEmpty()) ){
+         Controller controller= Controller.getInstance();
+          k.setKnjigaID(controller.vratiID());
+        controller.addKnjiga(k);
+        JOptionPane.showMessageDialog(this, "Knjiga je uspesno sacuvana");
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate popuniti sva polja!", "Greska", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnDodajActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -142,4 +170,17 @@ public class FrmKnjiga extends javax.swing.JDialog {
     private javax.swing.JTextField txtAutor;
     private javax.swing.JTextField txtNaziv;
     // End of variables declaration//GEN-END:variables
+
+    private void prepareView() {
+        fillCBZanr();
+    }
+
+    private void fillCBZanr() {
+        cmbZanr.removeAllItems();
+        for (Zanr zanr : Zanr.values()) {
+            cmbZanr.addItem(zanr);
+        }
+    }
+
+    
 }

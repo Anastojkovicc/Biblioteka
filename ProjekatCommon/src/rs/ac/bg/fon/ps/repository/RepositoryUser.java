@@ -17,9 +17,21 @@ public class RepositoryUser {
     private final List<Bibliotekar> bibliotekari;
 
     public RepositoryUser() {
-        this.bibliotekari = new ArrayList<>();
-        bibliotekari.add(new Bibliotekar(11, "Admin", "Admin", "admin", "admin"));
+        this.bibliotekari = new ArrayList<Bibliotekar>(){
+            {
+                add(new Bibliotekar(11, "Admin", "Admin", "admin", "admin"));
+                add(new Bibliotekar(21, "Admin2", "Admin2", "admin2", "admin2"));
+                add(new Bibliotekar(31, "Admin3", "Admin3", "admin3", "admin3"));
+                add(new Bibliotekar(41, "Ana", "Stojkovic", "ana", "ana"));
+            }
+        };
     }
+
+    public List<Bibliotekar> getBibliotekari() {
+        return bibliotekari;
+    }
+    
+    
     
     
 }

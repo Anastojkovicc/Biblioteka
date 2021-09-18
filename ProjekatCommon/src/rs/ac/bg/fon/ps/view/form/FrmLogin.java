@@ -5,6 +5,12 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import rs.ac.bg.fon.ps.controller.Controller;
+import rs.ac.bg.fon.ps.domain.Bibliotekar;
+
 /**
  *
  * @author ANA
@@ -34,13 +40,15 @@ public class FrmLogin extends javax.swing.JFrame {
         lblPassword = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
+        lblUsernameError = new javax.swing.JLabel();
+        lblPasswordError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Login");
+        setTitle("Prijavljivanje");
 
-        lblUsername.setText("Username:");
+        lblUsername.setText("Korisničko ime:");
 
-        lblPassword.setText("Password:");
+        lblPassword.setText("Lozinka:");
 
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -48,12 +56,16 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
-        btnLogin.setText("Login");
+        btnLogin.setText("Prijavi se");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
             }
         });
+
+        lblUsernameError.setForeground(new java.awt.Color(255, 0, 0));
+
+        lblPasswordError.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,15 +76,17 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblUsername)
                     .addComponent(lblPassword))
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
                     .addComponent(txtPassword)
-                    .addComponent(txtUsername))
+                    .addComponent(lblUsernameError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPasswordError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(79, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(116, 116, 116)
                 .addComponent(btnLogin)
-                .addGap(75, 75, 75))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,13 +95,17 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUsername)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUsernameError)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPassword)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPassword))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPasswordError)
+                .addGap(35, 35, 35)
                 .addComponent(btnLogin)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -98,8 +116,21 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-       this.dispose();
-       new FrmMain().setVisible(true);
+        resetForm();
+        try {
+            String username = txtUsername.getText().trim();
+            String password = String.valueOf(txtPassword.getPassword());
+            validateForm(username,password);
+            Controller controller= Controller.getInstance();
+            Bibliotekar bibliotekar= controller.login(username,password);
+            JOptionPane.showMessageDialog(this, "Ulogovani bibliotekar je "+ bibliotekar.getIme() + " "+ bibliotekar.getPrezime(), "Prijavljivanje", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            new FrmMain().setVisible(true);
+        } catch (Exception ex) {
+           ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage(),"Greška pri prijavljivanju", JOptionPane.ERROR_MESSAGE);
+        }
+     
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -109,8 +140,30 @@ public class FrmLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblPasswordError;
     private javax.swing.JLabel lblUsername;
+    private javax.swing.JLabel lblUsernameError;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    private void validateForm(String username, String password) throws Exception {
+        String errorMessage="";
+        if(username.isEmpty()){
+            lblUsernameError.setText("Morate uneti korisničko ime!");
+            errorMessage+="Korisničko ime ne može biti prazno\n";
+        }
+        if(password.isEmpty()){
+            lblPasswordError.setText("Morate uneti lozinku!");
+             errorMessage+="Lozinka ne može biti prazna\n";
+        }
+        if(!errorMessage.isEmpty()){
+            throw new Exception(errorMessage);
+        }
+    }
+
+    private void resetForm() {
+        lblUsernameError.setText("");
+        lblPasswordError.setText("");
+    }
 }

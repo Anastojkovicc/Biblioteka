@@ -5,7 +5,10 @@
  */
 package rs.ac.bg.fon.ps.controller;
 
+import java.util.List;
 import rs.ac.bg.fon.ps.domain.Bibliotekar;
+import rs.ac.bg.fon.ps.domain.Knjiga;
+import rs.ac.bg.fon.ps.repository.RepositoryKnjiga;
 import rs.ac.bg.fon.ps.repository.RepositoryUser;
 
 /**
@@ -13,16 +16,45 @@ import rs.ac.bg.fon.ps.repository.RepositoryUser;
  * @author ANA
  */
 public class Controller {
-    private final RepositoryUser repositoryUser;
 
-    public Controller() {
+    private final RepositoryUser repositoryUser;
+    private final RepositoryKnjiga repositoryKnjiga;
+    private static Controller instanca;
+
+    public int idKnjige=0;
+    
+    private Controller() {
         this.repositoryUser = new RepositoryUser();
+        this.repositoryKnjiga = new RepositoryKnjiga();
     }
     
-    public Bibliotekar login(String username, String password){
-        return null;
+    public static Controller getInstance() {
+        if(instanca==null){
+        instanca= new Controller();
+        }
+        return instanca;
     }
     
+    public Bibliotekar login(String username, String password) throws Exception{
+        List<Bibliotekar> bibliotekari = repositoryUser.getBibliotekari();
+        for (Bibliotekar bibliotekar : bibliotekari) {
+            if(bibliotekar.getUsername().equals(username) && bibliotekar.getPassword().equals(password)){
+                return bibliotekar;
+            }
+        }
+       throw new Exception("Unknown user!");
+    }
     
+    public void addKnjiga(Knjiga knjiga){
+        repositoryKnjiga.add(knjiga);
+    }
+
+    public List<Knjiga> getAllBooks() {
+        return repositoryKnjiga.getListaKnjiga();
+    }
+
+    public int vratiID() {
+        return ++idKnjige;
+    }
     
 }

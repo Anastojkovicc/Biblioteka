@@ -36,6 +36,7 @@ public class FrmMain extends javax.swing.JFrame {
         jmenuKnjiga = new javax.swing.JMenu();
         jmiNovaKnjiga = new javax.swing.JMenuItem();
         jmiNoviPrimerak = new javax.swing.JMenuItem();
+        jmiPrikazKnjiga = new javax.swing.JMenuItem();
         jmenuClanovi = new javax.swing.JMenu();
         jmiNoviClan = new javax.swing.JMenuItem();
 
@@ -63,6 +64,14 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
         jmenuKnjiga.add(jmiNoviPrimerak);
+
+        jmiPrikazKnjiga.setText("Prikaz svih knjiga");
+        jmiPrikazKnjiga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPrikazKnjigaActionPerformed(evt);
+            }
+        });
+        jmenuKnjiga.add(jmiPrikazKnjiga);
 
         jmenuBarMain.add(jmenuKnjiga);
 
@@ -122,6 +131,11 @@ public class FrmMain extends javax.swing.JFrame {
         frmClan.setVisible(true);
     }//GEN-LAST:event_jmiNoviClanActionPerformed
 
+    private void jmiPrikazKnjigaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPrikazKnjigaActionPerformed
+        JFrame frm = new FrmPregledKnjiga();
+        frm.setVisible(true);
+    }//GEN-LAST:event_jmiPrikazKnjigaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -133,5 +147,6 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiNovaKnjiga;
     private javax.swing.JMenuItem jmiNoviClan;
     private javax.swing.JMenuItem jmiNoviPrimerak;
+    private javax.swing.JMenuItem jmiPrikazKnjiga;
     // End of variables declaration//GEN-END:variables
 }
