@@ -5,27 +5,30 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
-
-
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Knjiga;
 import rs.ac.bg.fon.ps.domain.Zanr;
+import rs.ac.bg.fon.ps.view.form.util.FormMode;
 
 /**
  *
  * @author ANA
  */
 public class FrmKnjiga extends javax.swing.JDialog {
-    int idKnjige=0;
+
+    int idKnjige = 0;
+    FormMode frmMode;
+
     /**
      * Creates new form FrmKnjiga
      */
-    public FrmKnjiga(java.awt.Frame parent, boolean modal) {
+    public FrmKnjiga(java.awt.Frame parent, boolean modal, FormMode formMode) {
         super(parent, modal);
         initComponents();
+        this.frmMode = formMode;
         setLocationRelativeTo(null);
-        prepareView();
+        prepareView(frmMode);
     }
 
     /**
@@ -44,7 +47,11 @@ public class FrmKnjiga extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cmbZanr = new javax.swing.JComboBox();
-        btnDodaj = new javax.swing.JButton();
+        btnIzmeni = new javax.swing.JButton();
+        btnSacuvaj = new javax.swing.JButton();
+        btnObrisi = new javax.swing.JButton();
+        btnOdustani = new javax.swing.JButton();
+        btnDozvoli = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Dodavanje nove knjige");
@@ -65,10 +72,38 @@ public class FrmKnjiga extends javax.swing.JDialog {
 
         cmbZanr.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnDodaj.setText("Dodaj knjigu");
-        btnDodaj.addActionListener(new java.awt.event.ActionListener() {
+        btnIzmeni.setText("Izmeni knjigu");
+        btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDodajActionPerformed(evt);
+                btnIzmeniActionPerformed(evt);
+            }
+        });
+
+        btnSacuvaj.setText("Sacuvaj knjigu");
+        btnSacuvaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSacuvajActionPerformed(evt);
+            }
+        });
+
+        btnObrisi.setText("Obrisi knjigu");
+        btnObrisi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiActionPerformed(evt);
+            }
+        });
+
+        btnOdustani.setText("Odustani");
+        btnOdustani.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOdustaniActionPerformed(evt);
+            }
+        });
+
+        btnDozvoli.setText("Omogući izmene");
+        btnDozvoli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDozvoliActionPerformed(evt);
             }
         });
 
@@ -79,6 +114,10 @@ public class FrmKnjiga extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNaziv))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
@@ -86,15 +125,20 @@ public class FrmKnjiga extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtAutor)
                             .addComponent(cmbZanr, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(126, 126, 126)
-                .addComponent(btnDodaj)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 26, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnDozvoli, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnOdustani, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnIzmeni)
+                                .addGap(14, 14, 14)
+                                .addComponent(btnObrisi)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSacuvaj)))))
+                .addGap(26, 26, 26))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,7 +156,14 @@ public class FrmKnjiga extends javax.swing.JDialog {
                     .addComponent(jLabel3)
                     .addComponent(cmbZanr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnDodaj)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnIzmeni)
+                    .addComponent(btnSacuvaj)
+                    .addComponent(btnObrisi))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnOdustani)
+                    .addComponent(btnDozvoli))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -120,17 +171,17 @@ public class FrmKnjiga extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
         );
 
         pack();
@@ -140,28 +191,33 @@ public class FrmKnjiga extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAutorActionPerformed
 
-    private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
-        Knjiga k= new Knjiga();
-       
-        k.setNaziv(txtNaziv.getText().trim());
-        k.setAutor(txtAutor.getText().trim());
-        k.setZanr(String.valueOf(cmbZanr.getSelectedItem()));
-        k.setPrimerci(null);
-        if(!(txtNaziv.getText().isEmpty()) && !(txtAutor.getText().isEmpty()) ){
-         Controller controller= Controller.getInstance();
-          k.setKnjigaID(controller.vratiID());
-        controller.addKnjiga(k);
-        JOptionPane.showMessageDialog(this, "Knjiga je uspesno sacuvana");
-        } else {
-            JOptionPane.showMessageDialog(this, "Morate popuniti sva polja!", "Greska", JOptionPane.ERROR_MESSAGE);
-        }
-        
-    }//GEN-LAST:event_btnDodajActionPerformed
+    private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIzmeniActionPerformed
 
-   
+    private void btnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSacuvajActionPerformed
+
+    private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnObrisiActionPerformed
+
+    private void btnOdustaniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOdustaniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnOdustaniActionPerformed
+
+    private void btnDozvoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDozvoliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDozvoliActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDodaj;
+    private javax.swing.JButton btnDozvoli;
+    private javax.swing.JButton btnIzmeni;
+    private javax.swing.JButton btnObrisi;
+    private javax.swing.JButton btnOdustani;
+    private javax.swing.JButton btnSacuvaj;
     private javax.swing.JComboBox cmbZanr;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -171,8 +227,9 @@ public class FrmKnjiga extends javax.swing.JDialog {
     private javax.swing.JTextField txtNaziv;
     // End of variables declaration//GEN-END:variables
 
-    private void prepareView() {
+    private void prepareView(FormMode formMode) {
         fillCBZanr();
+        setUpComponents(formMode);
     }
 
     private void fillCBZanr() {
@@ -182,5 +239,25 @@ public class FrmKnjiga extends javax.swing.JDialog {
         }
     }
 
-    
+    private void setUpComponents(FormMode formMode) {
+        switch(formMode){
+            case FORM_ADD: 
+                btnOdustani.setEnabled(false);
+                btnObrisi.setEnabled(false);
+                btnDozvoli.setEnabled(false);
+                btnIzmeni.setEnabled(false);
+                btnSacuvaj.setEnabled(true);
+                break;
+            case FORM_VIEW:
+                btnOdustani.setEnabled(false);
+                btnObrisi.setEnabled(true);
+                btnDozvoli.setEnabled(true);
+                btnIzmeni.setEnabled(false);
+                btnSacuvaj.setEnabled(false);
+                txtNaziv.setEnabled(false);
+                txtAutor.setEnabled(true);
+                break;
+        }      
+    }
+
 }

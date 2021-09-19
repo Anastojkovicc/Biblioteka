@@ -7,7 +7,9 @@ package rs.ac.bg.fon.ps.controller;
 
 import java.util.List;
 import rs.ac.bg.fon.ps.domain.Bibliotekar;
+import rs.ac.bg.fon.ps.domain.Clan;
 import rs.ac.bg.fon.ps.domain.Knjiga;
+import rs.ac.bg.fon.ps.repository.RepositoryClan;
 import rs.ac.bg.fon.ps.repository.RepositoryKnjiga;
 import rs.ac.bg.fon.ps.repository.RepositoryUser;
 
@@ -19,13 +21,16 @@ public class Controller {
 
     private final RepositoryUser repositoryUser;
     private final RepositoryKnjiga repositoryKnjiga;
+    private final RepositoryClan repositoryClan;
     private static Controller instanca;
 
     public int idKnjige=0;
+    public int idClana=0;
     
     private Controller() {
         this.repositoryUser = new RepositoryUser();
         this.repositoryKnjiga = new RepositoryKnjiga();
+        this.repositoryClan = new RepositoryClan();
     }
     
     public static Controller getInstance() {
@@ -56,5 +61,20 @@ public class Controller {
     public int vratiID() {
         return ++idKnjige;
     }
+
+    public List<Clan> getAllClan() {
+        return repositoryClan.getClanovi();
+    }
     
+    public void addClan(Clan c){
+        repositoryClan.add(c);
+    }
+
+    public int vratiIDClana() {
+        return ++idClana;
+    }
+
+    public void obrisiKnjigu(Knjiga knjiga) throws Exception {
+        repositoryKnjiga.obrisi(knjiga);
+    }
 }

@@ -27,5 +27,14 @@ public class RepositoryKnjiga {
     public void add(Knjiga k){
         listaKnjiga.add(k);
     }
+
+    public void obrisi(Knjiga knjiga) throws Exception {
+        int index= listaKnjiga.indexOf(knjiga);
+        if(index>=0){
+       listaKnjiga.remove(index);
+        } else{
+            throw new Exception("Greska: Knjiga ne postoji");
+        }
+    }
     
 }

@@ -7,6 +7,7 @@ package rs.ac.bg.fon.ps.view.form;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import rs.ac.bg.fon.ps.view.form.util.FormMode;
 
 /**
  *
@@ -109,7 +110,7 @@ public class FrmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiNovaKnjigaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNovaKnjigaActionPerformed
-        JDialog frmKnjiga = new FrmKnjiga(this, rootPaneCheckingEnabled);
+        JDialog frmKnjiga = new FrmKnjiga(this, true, FormMode.FORM_ADD);
         frmKnjiga.setVisible(true);
     }//GEN-LAST:event_jmiNovaKnjigaActionPerformed
 
