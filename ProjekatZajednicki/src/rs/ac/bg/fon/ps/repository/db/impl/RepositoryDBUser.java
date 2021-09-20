@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rs.ac.bg.fon.ps.domain.Bibliotekar;
+import rs.ac.bg.fon.ps.repository.db.DBConnectionFactory;
 import rs.ac.bg.fon.ps.repository.db.DBRepository;
 
 /**
@@ -27,12 +28,9 @@ public class RepositoryDBUser implements DBRepository<Bibliotekar>{
     public List<Bibliotekar> getAll() {
         try {
             String sql = "SELECT * FROM bibliotekar";
-            String url="jdbc:mysql://localhost:3306/biblioteka";
-            String username="root";
-            String password="";
-            
+           
             List<Bibliotekar> bibliotekari = new ArrayList<>();
-            Connection connection = DriverManager.getConnection(url,username,password);
+            Connection connection= DBConnectionFactory.getInstance().getConnection();
             Statement s =  connection.createStatement();
             ResultSet rs= s.executeQuery(sql);
             while(rs.next()){
@@ -52,6 +50,11 @@ public class RepositoryDBUser implements DBRepository<Bibliotekar>{
             return null;
         }
       
+    }
+
+    @Override
+    public void add(Bibliotekar param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -59,7 +59,7 @@
                   <Component id="jScrollPane1" min="-2" pref="452" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnIzmeni" max="32767" attributes="0"/>
+                      <Component id="btnDetalji" max="32767" attributes="0"/>
                       <Component id="btnObrisi" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnDodaj" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -77,7 +77,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnObrisi" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnIzmeni" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDetalji" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" min="-2" pref="305" max="-2" attributes="0"/>
                   </Group>
@@ -123,12 +123,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnObrisiActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnIzmeni">
+        <Component class="javax.swing.JButton" name="btnDetalji">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Izmeni"/>
+            <Property name="text" type="java.lang.String" value="Detalji"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIzmeniActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDetaljiActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -6,6 +6,7 @@
 package rs.ac.bg.fon.ps.repository;
 
 import java.util.List;
+import rs.ac.bg.fon.ps.domain.Knjiga;
 
 /**
  *
@@ -13,4 +14,6 @@ import java.util.List;
  */
 public interface Repository<T> {
     List<T> getAll();
+    void add(T param) throws Exception;
+
 }

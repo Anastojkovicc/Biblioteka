@@ -5,6 +5,8 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Knjiga;
@@ -196,7 +198,24 @@ public class FrmKnjiga extends javax.swing.JDialog {
     }//GEN-LAST:event_btnIzmeniActionPerformed
 
     private void btnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajActionPerformed
-        // TODO add your handling code here:
+        Knjiga k = new Knjiga();
+        if (txtNaziv.getText().isEmpty() || txtAutor.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Morate popuniti oba polja");
+            return;
+        }
+        k.setNaziv(txtNaziv.getText().trim());
+        k.setAutor(txtAutor.getText().trim());
+        k.setZanr(cmbZanr.getSelectedItem().toString());
+        Controller c = Controller.getInstance();
+        try {
+            c.addKnjiga(k);
+//            int idKnjige = c.vratiID(k);
+            JOptionPane.showMessageDialog(this, "Knjiga je uspesno dodata");
+        } catch (Exception ex) {
+            Logger.getLogger(FrmKnjiga.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+
+        }
     }//GEN-LAST:event_btnSacuvajActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
@@ -240,8 +259,8 @@ public class FrmKnjiga extends javax.swing.JDialog {
     }
 
     private void setUpComponents(FormMode formMode) {
-        switch(formMode){
-            case FORM_ADD: 
+        switch (formMode) {
+            case FORM_ADD:
                 btnOdustani.setEnabled(false);
                 btnObrisi.setEnabled(false);
                 btnDozvoli.setEnabled(false);
@@ -257,7 +276,9 @@ public class FrmKnjiga extends javax.swing.JDialog {
                 txtNaziv.setEnabled(false);
                 txtAutor.setEnabled(true);
                 break;
-        }      
+        }
     }
+
+   
 
 }

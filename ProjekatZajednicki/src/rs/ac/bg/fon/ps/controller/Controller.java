@@ -13,6 +13,7 @@ import rs.ac.bg.fon.ps.repository.Repository;
 import rs.ac.bg.fon.ps.repository.RepositoryClan;
 import rs.ac.bg.fon.ps.repository.RepositoryKnjiga;
 import rs.ac.bg.fon.ps.repository.RepositoryUser;
+import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBKnjiga;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBUser;
 
 /**
@@ -22,7 +23,7 @@ import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBUser;
 public class Controller {
 
     private final Repository<Bibliotekar> repositoryUser;
-    private final RepositoryKnjiga repositoryKnjiga;
+    private final Repository<Knjiga> repositoryKnjiga;
     private final RepositoryClan repositoryClan;
     private static Controller instanca;
 
@@ -31,7 +32,7 @@ public class Controller {
     
     private Controller() {
         this.repositoryUser = new RepositoryDBUser();
-        this.repositoryKnjiga = new RepositoryKnjiga();
+        this.repositoryKnjiga = new RepositoryDBKnjiga();
         this.repositoryClan = new RepositoryClan();
     }
     
@@ -52,12 +53,12 @@ public class Controller {
        throw new Exception("Unknown user!");
     }
     
-    public void addKnjiga(Knjiga knjiga){
+    public void addKnjiga(Knjiga knjiga) throws Exception{
         repositoryKnjiga.add(knjiga);
     }
 
     public List<Knjiga> getAllBooks() {
-        return repositoryKnjiga.getListaKnjiga();
+        return repositoryKnjiga.getAll();
     }
 
     public int vratiID() {
@@ -77,6 +78,8 @@ public class Controller {
     }
 
     public void obrisiKnjigu(Knjiga knjiga) throws Exception {
-        repositoryKnjiga.obrisi(knjiga);
+//        repositoryKnjiga.obrisi(knjiga);
     }
+
+   
 }
