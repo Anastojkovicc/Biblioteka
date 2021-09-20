@@ -5,6 +5,7 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
+import java.awt.event.ActionListener;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import rs.ac.bg.fon.ps.view.form.util.FormMode;
@@ -150,4 +151,12 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiNoviPrimerak;
     private javax.swing.JMenuItem jmiPrikazKnjiga;
     // End of variables declaration//GEN-END:variables
+
+    public void jmiNovaKnjigaAddActionListener(ActionListener actionListener) {
+        jmiNovaKnjiga.addActionListener(actionListener);
+    }
+
+    public void jmiPregledSvihKnjigaActionListener(ActionListener actionListener) {
+        jmiPrikazKnjiga.addActionListener(actionListener);
+    }
 }

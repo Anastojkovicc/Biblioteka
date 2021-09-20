@@ -5,6 +5,8 @@
  */
 package rs.ac.bg.fon.ps.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -16,19 +18,22 @@ public class Knjiga {
     private String naziv;
     private String autor;
     private String zanr;
-    private Primerak[] primerci;
+    private List<Primerak> primerci;
    
 
     public Knjiga() {
+        primerci = new ArrayList<>(); 
     }
 
-    public Knjiga(int knjigaID, String naziv, String autor, String zanr, Primerak[] primerci) {
+    public Knjiga(int knjigaID, String naziv, String autor, String zanr, List<Primerak> primerci) {
         this.knjigaID = knjigaID;
         this.naziv = naziv;
         this.autor = autor;
         this.zanr = zanr;
         this.primerci = primerci;
     }
+
+    
 
     
     @Override
@@ -99,13 +104,15 @@ public class Knjiga {
         this.zanr = zanr;
     }
 
-    public Primerak[] getPrimerci() {
+    public List<Primerak> getPrimerci() {
         return primerci;
     }
 
-    public void setPrimerci(Primerak[] primerci) {
+    public void setPrimerci(List<Primerak> primerci) {
         this.primerci = primerci;
     }
+
+    
 
     
 

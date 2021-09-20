@@ -5,9 +5,13 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Bibliotekar;
 
@@ -166,4 +170,27 @@ public class FrmLogin extends javax.swing.JFrame {
         lblUsernameError.setText("");
         lblPasswordError.setText("");
     }
+
+    public void loginAddActionListener(ActionListener actionListener) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public JLabel getLblPasswordError() {
+        return lblPasswordError;
+    }
+
+    public JLabel getLblUsernameError() {
+        return lblUsernameError;
+    }
+
+    public JPasswordField getTxtPassword() {
+        return txtPassword;
+    }
+
+    public JTextField getTxtUsername() {
+        return txtUsername;
+    }
+
+    
+    
 }

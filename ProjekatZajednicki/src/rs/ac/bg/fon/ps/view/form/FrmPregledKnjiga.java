@@ -5,9 +5,11 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Knjiga;
@@ -212,4 +214,15 @@ public class FrmPregledKnjiga extends javax.swing.JFrame {
 
         }
     }
+
+    public void getBtnDetaljiAddActionListener(ActionListener actionListener) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public JTable getTblKnjige() {
+        return tblKnjige;
+    }
+    
+
+    
 }

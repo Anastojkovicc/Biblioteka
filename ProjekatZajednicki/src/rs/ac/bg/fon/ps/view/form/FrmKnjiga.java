@@ -5,9 +5,13 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
+import java.awt.Frame;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Knjiga;
 import rs.ac.bg.fon.ps.domain.Zanr;
@@ -18,6 +22,10 @@ import rs.ac.bg.fon.ps.view.form.util.FormMode;
  * @author ANA
  */
 public class FrmKnjiga extends javax.swing.JDialog {
+
+    public static void setLocationRelativeTo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     int idKnjige = 0;
     FormMode frmMode;
@@ -31,6 +39,10 @@ public class FrmKnjiga extends javax.swing.JDialog {
         this.frmMode = formMode;
         setLocationRelativeTo(null);
         prepareView(frmMode);
+    }
+
+    public FrmKnjiga(Frame frmMain, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -198,24 +210,24 @@ public class FrmKnjiga extends javax.swing.JDialog {
     }//GEN-LAST:event_btnIzmeniActionPerformed
 
     private void btnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajActionPerformed
-        Knjiga k = new Knjiga();
-        if (txtNaziv.getText().isEmpty() || txtAutor.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Morate popuniti oba polja");
-            return;
-        }
-        k.setNaziv(txtNaziv.getText().trim());
-        k.setAutor(txtAutor.getText().trim());
-        k.setZanr(cmbZanr.getSelectedItem().toString());
-        Controller c = Controller.getInstance();
-        try {
-            c.addKnjiga(k);
-//            int idKnjige = c.vratiID(k);
-            JOptionPane.showMessageDialog(this, "Knjiga je uspesno dodata");
-        } catch (Exception ex) {
-            Logger.getLogger(FrmKnjiga.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-
-        }
+//        Knjiga k = new Knjiga();
+//        if (txtNaziv.getText().isEmpty() || txtAutor.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Morate popuniti oba polja");
+//            return;
+//        }
+//        k.setNaziv(txtNaziv.getText().trim());
+//        k.setAutor(txtAutor.getText().trim());
+//        k.setZanr(cmbZanr.getSelectedItem().toString());
+//        Controller c = Controller.getInstance();
+//        try {
+//            c.addKnjiga(k);
+////            int idKnjige = c.vratiID(k);
+//            JOptionPane.showMessageDialog(this, "Knjiga je uspesno dodata");
+//        } catch (Exception ex) {
+//            Logger.getLogger(FrmKnjiga.class.getName()).log(Level.SEVERE, null, ex);
+//            JOptionPane.showMessageDialog(this, ex.getMessage());
+//
+//        }
     }//GEN-LAST:event_btnSacuvajActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
@@ -279,6 +291,23 @@ public class FrmKnjiga extends javax.swing.JDialog {
         }
     }
 
+    public void addSacuvajBtnActionListener(ActionListener actionListener) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public JComboBox getCmbZanr() {
+        return cmbZanr;
+    }
+
+    public JTextField getTxtAutor() {
+        return txtAutor;
+    }
+
+    public JTextField getTxtNaziv() {
+        return txtNaziv;
+    }
+
+   
    
 
 }
