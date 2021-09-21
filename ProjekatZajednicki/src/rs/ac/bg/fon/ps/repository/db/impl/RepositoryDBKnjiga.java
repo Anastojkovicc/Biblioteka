@@ -41,7 +41,7 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
                 k.setKnjigaID(rs.getInt("KnjigaID"));
                 k.setNaziv(rs.getString("naziv"));
                 k.setAutor(rs.getString("autor"));
-                k.setZanr(rs.getString("zanr"));
+                k.setZanr( Zanr.valueOf(rs.getString("zanr")));
                 k.setPrimerci(null);
                 knjige.add(k);
             }
@@ -74,13 +74,37 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
     }
 
     @Override
-    public void edit(Knjiga param) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void edit(Knjiga knjiga) throws Exception {
+        try {
+            String sql= "UPDATE naziv='"+knjiga.getNaziv()+"', "
+                    + "autor='"+knjiga.getAutor()+"', "
+                    + "zanr='"+knjiga.getZanr()+"' "
+                    + "WHERE knjigaID="+knjiga.getKnjigaID();
+            System.out.println(sql);
+            Connection connection= DBConnectionFactory.getInstance().getConnection();
+            Statement s= connection.createStatement();
+            s.executeUpdate(sql);
+            s.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Exception("Greska u dbu u izmeni knjige");
+        }
     }
 
     @Override
-    public void delete(Knjiga param) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Knjiga knjiga) throws Exception {
+        try {
+            String sql= "DELETE FROM knjiga WHERE id="+knjiga.getKnjigaID();
+            System.out.println(sql);
+            Connection connection= DBConnectionFactory.getInstance().getConnection();
+            Statement s= connection.createStatement();
+            s.executeUpdate(sql);
+            s.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Exception("DB greska u brisanju knjige");
+        }
+        
     }
 
  

@@ -17,7 +17,7 @@ public class Knjiga {
     private int knjigaID;
     private String naziv;
     private String autor;
-    private String zanr;
+    private Zanr zanr;
     private List<Primerak> primerci;
    
 
@@ -25,13 +25,15 @@ public class Knjiga {
         primerci = new ArrayList<>(); 
     }
 
-    public Knjiga(int knjigaID, String naziv, String autor, String zanr, List<Primerak> primerci) {
+    public Knjiga(int knjigaID, String naziv, String autor, Zanr zanr, List<Primerak> primerci) {
         this.knjigaID = knjigaID;
         this.naziv = naziv;
         this.autor = autor;
         this.zanr = zanr;
         this.primerci = primerci;
     }
+
+  
 
     
 
@@ -96,13 +98,15 @@ public class Knjiga {
         this.autor = autor;
     }
 
-    public String getZanr() {
+    public Zanr getZanr() {
         return zanr;
     }
 
-    public void setZanr(String zanr) {
+    public void setZanr(Zanr zanr) {
         this.zanr = zanr;
     }
+
+    
 
     public List<Primerak> getPrimerci() {
         return primerci;

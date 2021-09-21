@@ -9,6 +9,8 @@ import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import rs.ac.bg.fon.ps.view.cordinator.MainCordinator;
 import rs.ac.bg.fon.ps.view.form.FrmMain;
 
@@ -17,11 +19,12 @@ import rs.ac.bg.fon.ps.view.form.FrmMain;
  * @author ANA
  */
 public class MainController {
+
     private final FrmMain frmMain;
 
     public MainController(FrmMain frmMain) {
-       this.frmMain = frmMain;
-       addActionListener();
+        this.frmMain = frmMain;
+        addActionListener();
     }
 
     public void openForm() {
@@ -29,6 +32,18 @@ public class MainController {
     }
 
     private void addActionListener() {
+        frmMain.jmiPozajmicaNewAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                jmiNovaPozajmicaAddActionListener(ae);
+            }
+
+            private void jmiNovaPozajmicaAddActionListener(ActionEvent e) {
+                MainCordinator.getInstance().openFrmPozajmica();
+
+            }
+        });
+
         frmMain.jmiNovaKnjigaAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,23 +54,25 @@ public class MainController {
                 MainCordinator.getInstance().openDodajNovuKnjiguForma();
             }
         });
-        
+
         frmMain.jmiPregledSvihKnjigaActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jmiPregledSvihKnjigaActionPerformed(e);
+                try {
+                    jmiPregledSvihKnjigaActionPerformed(e);
+                } catch (Exception ex) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
-            private void jmiPregledSvihKnjigaActionPerformed(ActionEvent e) {
+            private void jmiPregledSvihKnjigaActionPerformed(ActionEvent e) throws Exception {
                 MainCordinator.getInstance().openPrikazSvihKnjigaForma();
             }
         });
     }
 
     public Frame getFrmMain() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return frmMain;
     }
 
-    
-    
 }

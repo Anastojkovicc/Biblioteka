@@ -25,10 +25,12 @@ public class FrmPregledKnjiga extends javax.swing.JFrame {
     /**
      * Creates new form FrmPregledKnjiga
      */
-    public FrmPregledKnjiga() {
+    public FrmPregledKnjiga() throws Exception {
         initComponents();
         setLocationRelativeTo(null);
         prepareView();
+        
+        
 
     }
 
@@ -174,12 +176,13 @@ public class FrmPregledKnjiga extends javax.swing.JFrame {
     private javax.swing.JTable tblKnjige;
     // End of variables declaration//GEN-END:variables
 
-    private void prepareView() {
+    private void prepareView() throws Exception {
         fillTblKnjigaTM();
     }
 
-    private void fillTblKnjiga() {
+    private void fillTblKnjiga() throws Exception {
         List<Knjiga> listaKnjiga = Controller.getInstance().getAllBooks();
+        
         DefaultTableModel dtm = (DefaultTableModel) tblKnjige.getModel();
 
         for (Knjiga knjiga : listaKnjiga) {
@@ -190,7 +193,7 @@ public class FrmPregledKnjiga extends javax.swing.JFrame {
         }
     }
 
-    private void fillTblKnjigaTM() {
+    private void fillTblKnjigaTM() throws Exception {
         List<Knjiga> knjige = Controller.getInstance().getAllBooks();
         KnjigaTableModel ktm = new KnjigaTableModel(knjige);
         tblKnjige.setModel(ktm);

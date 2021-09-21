@@ -39,6 +39,9 @@ public class FrmMain extends javax.swing.JFrame {
         jmiNovaKnjiga = new javax.swing.JMenuItem();
         jmiNoviPrimerak = new javax.swing.JMenuItem();
         jmiPrikazKnjiga = new javax.swing.JMenuItem();
+        jmenuPozajmica = new javax.swing.JMenu();
+        jmiNovaPozajmica = new javax.swing.JMenuItem();
+        jmiPregledPozajmica = new javax.swing.JMenuItem();
         jmenuClanovi = new javax.swing.JMenu();
         jmiNoviClan = new javax.swing.JMenuItem();
 
@@ -76,6 +79,16 @@ public class FrmMain extends javax.swing.JFrame {
         jmenuKnjiga.add(jmiPrikazKnjiga);
 
         jmenuBarMain.add(jmenuKnjiga);
+
+        jmenuPozajmica.setText("Pozajmica");
+
+        jmiNovaPozajmica.setText("Nova pozajmica");
+        jmenuPozajmica.add(jmiNovaPozajmica);
+
+        jmiPregledPozajmica.setText("Pregled pozajmica");
+        jmenuPozajmica.add(jmiPregledPozajmica);
+
+        jmenuBarMain.add(jmenuPozajmica);
 
         jmenuClanovi.setText("Članovi");
         jmenuClanovi.addActionListener(new java.awt.event.ActionListener() {
@@ -120,8 +133,8 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jmenuKnjigaActionPerformed
 
     private void jmiNoviPrimerakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNoviPrimerakActionPerformed
-        JFrame frmPrimerak = new FrmPrimerak();
-        frmPrimerak.setVisible(true);
+//        JFrame frmPrimerak = new FrmPrimerak();
+//        frmPrimerak.setVisible(true);
     }//GEN-LAST:event_jmiNoviPrimerakActionPerformed
 
     private void jmenuClanoviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuClanoviActionPerformed
@@ -129,13 +142,13 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jmenuClanoviActionPerformed
 
     private void jmiNoviClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNoviClanActionPerformed
-        JFrame frmClan = new FrmClan();
-        frmClan.setVisible(true);
+//        JFrame frmClan = new FrmClan();
+//        frmClan.setVisible(true);
     }//GEN-LAST:event_jmiNoviClanActionPerformed
 
     private void jmiPrikazKnjigaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPrikazKnjigaActionPerformed
-        JFrame frm = new FrmPregledKnjiga();
-        frm.setVisible(true);
+//        JFrame frm = new FrmPregledKnjiga();
+//        frm.setVisible(true);
     }//GEN-LAST:event_jmiPrikazKnjigaActionPerformed
 
     /**
@@ -146,9 +159,12 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JMenuBar jmenuBarMain;
     private javax.swing.JMenu jmenuClanovi;
     private javax.swing.JMenu jmenuKnjiga;
+    private javax.swing.JMenu jmenuPozajmica;
     private javax.swing.JMenuItem jmiNovaKnjiga;
+    private javax.swing.JMenuItem jmiNovaPozajmica;
     private javax.swing.JMenuItem jmiNoviClan;
     private javax.swing.JMenuItem jmiNoviPrimerak;
+    private javax.swing.JMenuItem jmiPregledPozajmica;
     private javax.swing.JMenuItem jmiPrikazKnjiga;
     // End of variables declaration//GEN-END:variables
 
@@ -158,5 +174,9 @@ public class FrmMain extends javax.swing.JFrame {
 
     public void jmiPregledSvihKnjigaActionListener(ActionListener actionListener) {
         jmiPrikazKnjiga.addActionListener(actionListener);
+    }
+
+    public void jmiPozajmicaNewAddActionListener(ActionListener actionListener) {
+        jmiNovaPozajmica.addActionListener(actionListener);
     }
 }

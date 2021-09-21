@@ -10,7 +10,10 @@ package rs.ac.bg.fon.ps.view.constant;
  * @author ANA
  */
 public class Constants {
-     public static final String PARAM_ULOGOVANI="ULOGOVANI";
-    public static final String PARAM_KNJIGA="KNJIGA";
-    public static final String FORMA_SVE_KNJIGE ="FORMA_SVE_KNJIGE";
+
+    public static final String PARAM_ULOGOVANI = "ULOGOVANI";
+    public static final String PARAM_KNJIGA = "KNJIGA";
+    public static final String PARAM_PRIMERAK = "PRIMERAK";
+    public static final String PARAM_POZAJMICA = "POZAJMICA";
+    public static final String FORMA_SVE_KNJIGE = "FORMA_SVE_KNJIGE";
 }

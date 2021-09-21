@@ -16,8 +16,8 @@ public class Clan {
     private int brojClanskeKarte;
     private String ime;
     private String prezime;
-    private String jmbg;
-    private String telefon;
+    private int jmbg;
+    private int telefon;
     private String eMail;
     private String adresa;
     private Date datumUclanjenja;
@@ -26,7 +26,7 @@ public class Clan {
     public Clan() {
     }
 
-    public Clan(int brojClanskeKarte, String ime, String prezime, String jmbg, String telefon, String eMail, String adresa, Date datumUclanjenja, Date datumClanarine) {
+    public Clan(int brojClanskeKarte, String ime, String prezime, int jmbg, int telefon, String eMail, String adresa, Date datumUclanjenja, Date datumClanarine) {
         this.brojClanskeKarte = brojClanskeKarte;
         this.ime = ime;
         this.prezime = prezime;
@@ -38,6 +38,7 @@ public class Clan {
         this.datumClanarine = datumClanarine;
     }
 
+ 
  
 
    
@@ -74,20 +75,20 @@ public class Clan {
         this.prezime = prezime;
     }
 
-    public String getJmbg() {
-        return jmbg;
+    public void setTelefon(int telefon) {
+        this.telefon = telefon;
     }
 
-    public void setJmbg(String jmbg) {
+    public void setJmbg(int jmbg) {
         this.jmbg = jmbg;
     }
 
-    public String getTelefon() {
+    public int getTelefon() {
         return telefon;
     }
 
-    public void setTelefon(String telefon) {
-        this.telefon = telefon;
+    public int getJmbg() {
+        return jmbg;
     }
 
     public String geteMail() {

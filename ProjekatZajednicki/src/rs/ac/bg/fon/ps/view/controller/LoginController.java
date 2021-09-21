@@ -63,9 +63,19 @@ public class LoginController {
                 frmLogin.getLblPasswordError().setText("");
             }
 
-            
-            private void validateForm(String username, String password) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            private void validateForm(String username, String password) throws Exception {
+                String errorMessage = "";
+                if (username.isEmpty()) {
+                    frmLogin.getLblUsernameError().setText("Morate uneti korisničko ime!");
+                    errorMessage += "Korisničko ime ne može biti prazno\n";
+                }
+                if (password.isEmpty()) {
+                    frmLogin.getLblPasswordError().setText("Morate uneti lozinku!");
+                    errorMessage += "Lozinka ne može biti prazna\n";
+                }
+                if (!errorMessage.isEmpty()) {
+                    throw new Exception(errorMessage);
+                }
             }
         });
     }

@@ -19,7 +19,7 @@ public class FrmPregledClanova extends javax.swing.JFrame {
     /**
      * Creates new form FrmPregledClanova
      */
-    public FrmPregledClanova() {
+    public FrmPregledClanova() throws Exception {
         initComponents();
         setLocationRelativeTo(null);
         setTable();
@@ -99,7 +99,7 @@ public class FrmPregledClanova extends javax.swing.JFrame {
     private javax.swing.JTable tblClan;
     // End of variables declaration//GEN-END:variables
 
-    private void setTable() {
+    private void setTable() throws Exception {
         List<Clan> clanovi= Controller.getInstance().getAllClan();
         ClanTableModel ctm= new ClanTableModel(clanovi);
         tblClan.setModel(ctm);

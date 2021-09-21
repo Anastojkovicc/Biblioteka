@@ -23,6 +23,7 @@ import rs.ac.bg.fon.ps.view.form.component.table.KnjigaTableModel;
  * @author ANA
  */
 public class PrikazKnjigaController {
+
     private final FrmPregledKnjiga frmPregledKnjiga;
 
     public PrikazKnjigaController(FrmPregledKnjiga frmPregledKnjiga) {
@@ -40,23 +41,23 @@ public class PrikazKnjigaController {
         frmPregledKnjiga.getBtnDetaljiAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int row= frmPregledKnjiga.getTblKnjige().getSelectedRow();
-                if(row>=0){
+                int row = frmPregledKnjiga.getTblKnjige().getSelectedRow();
+                if (row >= 0) {
                     Knjiga knjiga = (Knjiga) frmPregledKnjiga.getTblKnjige().getModel();
-                    MainCordinator.getInstance().addParam(Constants.PARAM_KNJIGA,knjiga); //ili sve knjige
+                    MainCordinator.getInstance().addParam(Constants.PARAM_KNJIGA, knjiga); //ili sve knjige
                     MainCordinator.getInstance().openDetaljiKnjigeForma();
-                }else{
-                    JOptionPane.showMessageDialog(frmPregledKnjiga  ,"Morate selektovati red", "Detalji o knjizi", JOptionPane.ERROR);
+                } else {
+                    JOptionPane.showMessageDialog(frmPregledKnjiga, "Morate selektovati red", "Detalji o knjizi", JOptionPane.ERROR);
                 }
             }
         });
-        
+
         frmPregledKnjiga.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {
                 fillTblKnjiga();
             }
-            
+
         });
     }
 
@@ -68,12 +69,16 @@ public class PrikazKnjigaController {
     private void fillTblKnjiga() {
         List<Knjiga> knjige;
         try {
-            knjige= Controller.getInstance().getAllBooks();
+            knjige = Controller.getInstance().getAllBooks();
             KnjigaTableModel ktm = new KnjigaTableModel(knjige);
             frmPregledKnjiga.getTblKnjige().setModel(ktm);
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(frmPregledKnjiga, e.getMessage());
         }
     }
-    
+
+    public void refresh() {
+        fillTblKnjiga();
+    }
+
 }

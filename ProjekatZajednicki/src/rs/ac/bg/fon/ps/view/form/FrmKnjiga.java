@@ -9,6 +9,7 @@ import java.awt.Frame;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -305,6 +306,40 @@ public class FrmKnjiga extends javax.swing.JDialog {
 
     public JTextField getTxtNaziv() {
         return txtNaziv;
+    }
+
+    public JButton getBtnDozvoli() {
+        return btnDozvoli;
+    }
+
+    public JButton getBtnIzmeni() {
+        return btnIzmeni;
+    }
+
+    public JButton getBtnObrisi() {
+        return btnObrisi;
+    }
+
+    public JButton getBtnOdustani() {
+        return btnOdustani;
+    }
+
+    public JButton getBtnSacuvaj() {
+        return btnSacuvaj;
+    }
+    
+    
+
+    public void addCancelBtnActionListener(ActionListener actionListener) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void addDeletebtnActionListener(ActionListener actionListener) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void addEditBtnActionListener(ActionListener actionListener) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
    

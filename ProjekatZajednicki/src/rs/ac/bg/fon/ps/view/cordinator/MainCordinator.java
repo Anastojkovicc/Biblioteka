@@ -12,10 +12,12 @@ import rs.ac.bg.fon.ps.domain.Knjiga;
 import rs.ac.bg.fon.ps.view.controller.KnjigaController;
 import rs.ac.bg.fon.ps.view.controller.LoginController;
 import rs.ac.bg.fon.ps.view.controller.MainController;
+import rs.ac.bg.fon.ps.view.controller.PozajmicaController;
 import rs.ac.bg.fon.ps.view.controller.PrikazKnjigaController;
 import rs.ac.bg.fon.ps.view.form.FrmKnjiga;
 import rs.ac.bg.fon.ps.view.form.FrmLogin;
 import rs.ac.bg.fon.ps.view.form.FrmMain;
+import rs.ac.bg.fon.ps.view.form.FrmPozajmica;
 import rs.ac.bg.fon.ps.view.form.FrmPregledKnjiga;
 import rs.ac.bg.fon.ps.view.form.util.FormMode;
 
@@ -54,7 +56,7 @@ public class MainCordinator {
         knjigaController.openForm(FormMode.FORM_ADD);
     }
     
-    public void openPrikazSvihKnjigaForma(){
+    public void openPrikazSvihKnjigaForma() throws Exception{
         FrmPregledKnjiga form = new FrmPregledKnjiga();
         PrikazKnjigaController prikazKnjigaKontroler = new PrikazKnjigaController(form);
         prikazKnjigaKontroler.openForm();
@@ -69,6 +71,12 @@ public class MainCordinator {
         
     }
 
+      public void openFrmPozajmica() {
+          PozajmicaController pozajmicaController = new PozajmicaController(new FrmPozajmica());
+          pozajmicaController.openForm(FormMode.FORM_ADD);
+          
+    }
+    
     public MainController getMainController() {
         return mainController;
     }
@@ -80,6 +88,8 @@ public class MainCordinator {
     public Object getParam(String name){
         return params.get(name);
     }
+
+  
     
     
     

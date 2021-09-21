@@ -5,6 +5,7 @@
  */
 package rs.ac.bg.fon.ps.view.form.component.table;
 
+import static java.lang.String.valueOf;
 import java.sql.Savepoint;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -82,7 +83,7 @@ public class ClanTableModel extends AbstractTableModel {
                 clan.setPrezime(String.valueOf(value));
                 break;
             case 3:
-                clan.setTelefon(String.valueOf(value));
+                clan.setTelefon(Integer.parseInt(valueOf(value)));
                 break;
             case 4:
                 clan.seteMail(String.valueOf(value));

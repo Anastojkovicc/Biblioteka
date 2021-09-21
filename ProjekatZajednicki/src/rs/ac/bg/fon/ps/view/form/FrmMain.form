@@ -38,6 +38,23 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="jmenuPozajmica">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pozajmica"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiNovaPozajmica">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Nova pozajmica"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiPregledPozajmica">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pregled pozajmica"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="jmenuClanovi">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x10c;lanovi"/>

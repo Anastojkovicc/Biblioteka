@@ -5,6 +5,8 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Clan;
@@ -164,15 +166,19 @@ public class FrmClan extends javax.swing.JFrame {
         Clan c = new Clan();
         c.setIme(txtIme.getText().trim());
         c.setPrezime(txtPrezime.getText().trim());
-        c.setJmbg(txtJMBG.getText().trim());
-        c.setTelefon(txtTelefon.getText().trim());
+        c.setJmbg(Integer.parseInt(txtJMBG.getText().trim()));
+        c.setTelefon(Integer.parseInt(txtTelefon.getText().trim()));
         c.seteMail(txtEmail.getText().trim());
         c.setAdresa(txtAdresa.getText().trim());
 //FORMATIRAJ DATUME ZA UCLANJENJE I CLANARINU I UBACI U IF
         if (!(txtIme.getText().isEmpty()) && !(txtPrezime.getText().isEmpty()) && !(txtJMBG.getText().isEmpty()) && !(txtTelefon.getText().isEmpty()) && !(txtEmail.getText().isEmpty()) && !(txtAdresa.getText().isEmpty()) && !(txtAdresa.getText().isEmpty())) {
             Controller controller = Controller.getInstance();
             c.setBrojClanskeKarte(controller.vratiIDClana());
-            controller.addClan(c);
+            try {
+                controller.addClan(c);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmClan.class.getName()).log(Level.SEVERE, null, ex);
+            }
             JOptionPane.showMessageDialog(this, "Clan je uspesno sacuvan");
         } else {
             JOptionPane.showMessageDialog(this, "Morate popuniti sva polja!", "Greska", JOptionPane.ERROR_MESSAGE);
@@ -201,4 +207,8 @@ public class FrmClan extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrezime;
     private javax.swing.JTextField txtTelefon;
     // End of variables declaration//GEN-END:variables
+
+    private void addClan(Clan c) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -124,7 +124,7 @@ public class FrmLogin extends javax.swing.JFrame {
         try {
             String username = txtUsername.getText().trim();
             String password = String.valueOf(txtPassword.getPassword());
-            validateForm(username,password);
+//            validateForm(username,password);
             Controller controller= Controller.getInstance();
             Bibliotekar bibliotekar= controller.login(username,password);
             JOptionPane.showMessageDialog(this, "Ulogovani bibliotekar je "+ bibliotekar.getIme() + " "+ bibliotekar.getPrezime(), "Prijavljivanje", JOptionPane.INFORMATION_MESSAGE);
@@ -151,20 +151,20 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
-    private void validateForm(String username, String password) throws Exception {
-        String errorMessage="";
-        if(username.isEmpty()){
-            lblUsernameError.setText("Morate uneti korisničko ime!");
-            errorMessage+="Korisničko ime ne može biti prazno\n";
-        }
-        if(password.isEmpty()){
-            lblPasswordError.setText("Morate uneti lozinku!");
-             errorMessage+="Lozinka ne može biti prazna\n";
-        }
-        if(!errorMessage.isEmpty()){
-            throw new Exception(errorMessage);
-        }
-    }
+//    private void validateForm(String username, String password) throws Exception {
+//        String errorMessage="";
+//        if(username.isEmpty()){
+//            lblUsernameError.setText("Morate uneti korisničko ime!");
+//            errorMessage+="Korisničko ime ne može biti prazno\n";
+//        }
+//        if(password.isEmpty()){
+//            lblPasswordError.setText("Morate uneti lozinku!");
+//             errorMessage+="Lozinka ne može biti prazna\n";
+//        }
+//        if(!errorMessage.isEmpty()){
+//            throw new Exception(errorMessage);
+//        }
+//    }
 
     private void resetForm() {
         lblUsernameError.setText("");
@@ -172,7 +172,7 @@ public class FrmLogin extends javax.swing.JFrame {
     }
 
     public void loginAddActionListener(ActionListener actionListener) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        btnLogin.addActionListener(actionListener);
     }
 
     public JLabel getLblPasswordError() {
