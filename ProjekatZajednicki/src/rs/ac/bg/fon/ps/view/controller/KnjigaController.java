@@ -17,6 +17,7 @@ import rs.ac.bg.fon.ps.domain.Zanr;
 import rs.ac.bg.fon.ps.view.constant.Constants;
 import rs.ac.bg.fon.ps.view.cordinator.MainCordinator;
 import rs.ac.bg.fon.ps.view.form.FrmKnjiga;
+import rs.ac.bg.fon.ps.view.form.FrmPregledKnjiga;
 import rs.ac.bg.fon.ps.view.form.util.FormMode;
 
 /**
@@ -26,6 +27,7 @@ import rs.ac.bg.fon.ps.view.form.util.FormMode;
 public class KnjigaController {
 
     private final FrmKnjiga frmKnjiga;
+    private int idKnjige;
 
     public KnjigaController(FrmKnjiga frmKnjiga) {
         this.frmKnjiga = frmKnjiga;
@@ -33,6 +35,7 @@ public class KnjigaController {
     }
 
     private void addActionListeners() {
+
         frmKnjiga.addSacuvajBtnActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,35 +86,53 @@ public class KnjigaController {
             private void delete() {
                 Knjiga knjiga = makeKnjigaForm();
                 try {
-                    Controller.getInstance().obrisiKnjigu(knjiga);
-                    JOptionPane.showMessageDialog(frmKnjiga, "Knjiga je uspesno obrisana", "Brisanje knjige", JOptionPane.INFORMATION_MESSAGE);
-                    frmKnjiga.dispose();
+                    int option = JOptionPane.showConfirmDialog(frmKnjiga, "Da li zaista želite da obrišete knjigu " + knjiga.getNaziv() + " od autora " + knjiga.getAutor(), "Brisanje knjige", JOptionPane.YES_NO_CANCEL_OPTION);
+                    if (option == JOptionPane.YES_OPTION) {
+                        // Controller controller = Controller.getInstance();
+                        boolean uspesno = Controller.getInstance().obrisiKnjigu(knjiga);
+                        if (uspesno) {
+                            JOptionPane.showMessageDialog(frmKnjiga, "Knjiga je uspešno obrisana", "Brisanje knjige", JOptionPane.INFORMATION_MESSAGE);
+                            frmKnjiga.dispose();
+                        }
+                    }
+
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(frmKnjiga, "Greska u brisanju knjige" + ex.getMessage(), "Brisanje knjige", JOptionPane.ERROR_MESSAGE);
                     Logger.getLogger(KnjigaController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                frmKnjiga.addEditBtnActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        edit();
-                    }
-
-                    private void edit() {
-                        Knjiga knjiga = makeKnjigaForm();
-                        try {
-                            Controller.getInstance().editKnjigu(knjiga);
-                            JOptionPane.showMessageDialog(frmKnjiga, "Knjiga je uspesno izmenjena", "Izmena knjige", JOptionPane.INFORMATION_MESSAGE);
-                            frmKnjiga.dispose();
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(frmKnjiga, "Greska u izmeni knjige" + ex.getMessage(), "Izmena knjige", JOptionPane.ERROR_MESSAGE);
-                            Logger.getLogger(KnjigaController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-                );
             }
 
+        });
+
+        frmKnjiga.addEditBtnActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                edit();
+            }
+
+            private void edit() {
+                Knjiga knjiga3 = makeKnjigaForm();
+                try {
+                    Controller.getInstance().editKnjigu(knjiga3);
+                    JOptionPane.showMessageDialog(frmKnjiga, "Knjiga je uspešno izmenjena", "Izmena knjige", JOptionPane.INFORMATION_MESSAGE);
+                    frmKnjiga.dispose();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frmKnjiga, "Greška u izmeni knjige" + ex.getMessage(), "Izmena knjige", JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(KnjigaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        frmKnjiga.addEnabledBtnActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dozvoli();
+            }
+
+            private void dozvoli() {
+                setUpComponents(FormMode.FORM_EDIT);
+            }
         });
 
     }
@@ -139,7 +160,7 @@ public class KnjigaController {
         knjiga.setNaziv(frmKnjiga.getTxtNaziv().getText().trim());
         knjiga.setAutor(frmKnjiga.getTxtAutor().getText().trim());
         knjiga.setZanr((Zanr) frmKnjiga.getCmbZanr().getSelectedItem());
-        knjiga.setPrimerci(new ArrayList<>());
+        knjiga.setKnjigaID(idKnjige);
         return knjiga;
     }
 
@@ -168,6 +189,7 @@ public class KnjigaController {
                 frmKnjiga.getCmbZanr().setEnabled(false);
 
                 Knjiga knjiga = (Knjiga) MainCordinator.getInstance().getParam(Constants.PARAM_KNJIGA);
+                idKnjige = knjiga.getKnjigaID();
                 frmKnjiga.getTxtNaziv().setText(knjiga.getNaziv());
                 frmKnjiga.getTxtAutor().setText(knjiga.getAutor());
                 frmKnjiga.getCmbZanr().setSelectedItem(Zanr.valueOf(knjiga.getZanr().toString()));

@@ -20,7 +20,7 @@ public class ClanTableModel extends AbstractTableModel {
 
     private final List<Clan> clanovi;
 
-    String[] kolone = {"Broj clanske karte", "Ime", "Prezime", "Telefon", "Email", "Adresa", "Datum clanarine"};
+    String[] kolone = {"Broj članske karte", "Ime", "Prezime", "Telefon", "Email", "Adresa", "Datum članarine"};
 
     public ClanTableModel(List<Clan> clanovi) {
         this.clanovi = clanovi;

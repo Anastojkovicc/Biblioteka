@@ -26,7 +26,7 @@ public class PrimerakController {
 
     public PrimerakController(FrmPrimerak frmPrimerak) {
         this.frmPrimerak = frmPrimerak;
-        //addActionListener();
+        addActionListener();
     }
 
     public void openForm() throws Exception {
@@ -47,10 +47,10 @@ public class PrimerakController {
         frmPrimerak.addBtnSacuvajActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sacuvaj(e);
+                sacuvaj();
             }
 
-            private void sacuvaj(ActionEvent e) {
+            private void sacuvaj() {
                 Knjiga knjiga = (Knjiga) frmPrimerak.getCmbKnjiga().getSelectedItem();
                 String godina = frmPrimerak.getTxtGodina().getText().trim();
                 if (godina.isEmpty()) {
@@ -58,10 +58,10 @@ public class PrimerakController {
                     return;
                 }
                 Primerak primerak = new Primerak(-1, false, Integer.parseInt(godina), knjiga);
-                Controller controller = Controller.getInstance();
+          
                 boolean sacuvano;
                 try {
-                    sacuvano = controller.addPrimerak(primerak);
+                    sacuvano = Controller.getInstance().addPrimerak(primerak);
                     if (!sacuvano) {
                         JOptionPane.showMessageDialog(frmPrimerak, "Greška u čuvanju primerka", "Greška", JOptionPane.ERROR_MESSAGE);
                         return;

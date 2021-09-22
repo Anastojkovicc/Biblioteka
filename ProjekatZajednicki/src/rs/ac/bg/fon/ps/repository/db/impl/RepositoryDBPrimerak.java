@@ -61,6 +61,7 @@ public class RepositoryDBPrimerak implements DBRepository<Primerak> {
     public void add(Primerak param) throws Exception {
         try{
         String sql = "INSERT INTO primerak (izdat,godinaIzdanja,knjigaID) VALUES (?,?,?)";
+            System.out.println(sql);
         Connection connection= DBConnectionFactory.getInstance().getConnection();
         PreparedStatement ps= connection.prepareStatement(sql);
         ps.setBoolean(1, param.isIzdat());
@@ -68,10 +69,11 @@ public class RepositoryDBPrimerak implements DBRepository<Primerak> {
         ps.setInt(3, param.getKnjiga().getKnjigaID());
         ps.executeUpdate();
         ps.close();
+        
         }
         catch(Exception e){
             System.out.println(e.getMessage());
-            throw  new Exception("Primerak ne može biti sačuvana");
+            throw  new Exception("Primerak ne može biti sačuvan");
         }
     }
 
@@ -82,6 +84,11 @@ public class RepositoryDBPrimerak implements DBRepository<Primerak> {
 
     @Override
     public void delete(Primerak param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Primerak> getAllPoUslovu(Primerak param) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

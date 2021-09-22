@@ -64,13 +64,16 @@ public class PregledClanovaController {
                 }
                 ClanTableModel ctm = (ClanTableModel) frmPregledClanova.getTblClan().getModel();
                 Clan clan = ctm.getClanAt(red);
-                Controller controller = Controller.getInstance();
-                boolean uspesno = controller.obrisiClana(clan);
-                if (uspesno) {
-                    ctm.obrisiClana(red);
-                    JOptionPane.showMessageDialog(frmPregledClanova, "Uspešno obrisan član", "Brisanje", JOptionPane.INFORMATION_MESSAGE);
-
+                int option = JOptionPane.showConfirmDialog(frmPregledClanova, "Da li zaista želite da obrišete člana " + clan.getIme() + " " + clan.getPrezime(), "Brisanje člana", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    Controller controller = Controller.getInstance();
+                    boolean uspesno = controller.obrisiClana(clan);
+                    if (uspesno) {
+                        ctm.obrisiClana(red);
+                        JOptionPane.showMessageDialog(frmPregledClanova, "Uspešno obrisan član", "Brisanje", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
+
             }
         });
     }

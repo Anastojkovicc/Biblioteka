@@ -49,6 +49,12 @@ public class FrmPozajmica extends javax.swing.JFrame {
 
         jLabel3.setText("Inventarski broj primerka:");
 
+        txtInventarskiBrojPrimerka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtInventarskiBrojPrimerkaActionPerformed(evt);
+            }
+        });
+
         btnSacuvaj.setText("Sacuvaj");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -116,6 +122,10 @@ public class FrmPozajmica extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtInventarskiBrojPrimerkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInventarskiBrojPrimerkaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtInventarskiBrojPrimerkaActionPerformed
 
     public JButton getBtnSacuvaj() {
         return btnSacuvaj;

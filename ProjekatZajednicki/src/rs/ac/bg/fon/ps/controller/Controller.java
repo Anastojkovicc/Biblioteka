@@ -40,7 +40,7 @@ public class Controller {
         this.repositoryUser = new RepositoryDBUser();
         this.repositoryKnjiga = new RepositoryDBKnjiga();
         this.repositoryClan = new RepositoryDBClan();
-        this.repositoryPrimerak=  new RepositoryDBPrimerak();
+        this.repositoryPrimerak = new RepositoryDBPrimerak();
     }
 
     public static Controller getInstance() {
@@ -128,11 +128,12 @@ public class Controller {
         return ++idClana;
     }
 
-    public void obrisiKnjigu(Knjiga knjiga) throws Exception {
+    public boolean obrisiKnjigu(Knjiga knjiga) throws Exception {
         ((DBRepository) repositoryKnjiga).connect();
         try {
             repositoryKnjiga.delete(knjiga);
             ((DBRepository) repositoryKnjiga).commit();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             ((DBRepository) repositoryKnjiga).rollback();

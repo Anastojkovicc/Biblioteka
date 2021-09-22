@@ -236,6 +236,10 @@ public class FrmPregledKnjiga extends javax.swing.JFrame {
     public JButton getBtnObrisi() {
         return btnObrisi;
     }
+
+    public void addBtnDeleteActionListener(ActionListener actionListener) {
+        btnObrisi.addActionListener(actionListener);
+    }
     
 
     

@@ -42,7 +42,6 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
                 k.setNaziv(rs.getString("naziv"));
                 k.setAutor(rs.getString("autor"));
                 k.setZanr( Zanr.valueOf(rs.getString("zanr")));
-                k.setPrimerci(null);
                 knjige.add(k);
             }
             rs.close();
@@ -76,11 +75,11 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
     @Override
     public void edit(Knjiga knjiga) throws Exception {
         try {
-            String sql= "UPDATE naziv='"+knjiga.getNaziv()+"', "
+            String sql= "UPDATE knjiga SET naziv='"+knjiga.getNaziv()+"', "
                     + "autor='"+knjiga.getAutor()+"', "
-                    + "zanr='"+knjiga.getZanr()+"' "
+                    + "zanr='"+knjiga.getZanr().toString()+"' "
                     + "WHERE knjigaID="+knjiga.getKnjigaID();
-            System.out.println(sql);
+           
             Connection connection= DBConnectionFactory.getInstance().getConnection();
             Statement s= connection.createStatement();
             s.executeUpdate(sql);
@@ -94,7 +93,7 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
     @Override
     public void delete(Knjiga knjiga) throws Exception {
         try {
-            String sql= "DELETE FROM knjiga WHERE id="+knjiga.getKnjigaID();
+            String sql= "DELETE FROM knjiga WHERE knjigaID="+knjiga.getKnjigaID();
             System.out.println(sql);
             Connection connection= DBConnectionFactory.getInstance().getConnection();
             Statement s= connection.createStatement();
@@ -105,6 +104,11 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
             throw new Exception("DB greska u brisanju knjige");
         }
         
+    }
+
+    @Override
+    public List<Knjiga> getAllPoUslovu(Knjiga param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
  

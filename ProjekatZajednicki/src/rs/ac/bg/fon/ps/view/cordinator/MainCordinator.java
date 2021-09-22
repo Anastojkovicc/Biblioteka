@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
 import rs.ac.bg.fon.ps.domain.Knjiga;
+import rs.ac.bg.fon.ps.view.constant.Constants;
 import rs.ac.bg.fon.ps.view.controller.ClanController;
 import rs.ac.bg.fon.ps.view.controller.KnjigaController;
 import rs.ac.bg.fon.ps.view.controller.LoginController;
@@ -76,7 +77,7 @@ public class MainCordinator {
         FrmKnjiga detaljiOKnjizi = new FrmKnjiga(mainController.getFrmMain(), true, FormMode.FORM_VIEW);
         KnjigaController knjigaController = new KnjigaController(detaljiOKnjizi);
         knjigaController.openForm(FormMode.FORM_VIEW);
-
+        addParam(Constants.PARAM_KNJIGA, detaljiOKnjizi);
     }
 
     public void openFrmPozajmica() {

@@ -18,21 +18,20 @@ public class Knjiga {
     private String naziv;
     private String autor;
     private Zanr zanr;
-    private List<Primerak> primerci;
    
 
     public Knjiga() {
-        primerci = new ArrayList<>(); 
+
     }
 
-    public Knjiga(int knjigaID, String naziv, String autor, Zanr zanr, List<Primerak> primerci) {
+    public Knjiga(int knjigaID, String naziv, String autor, Zanr zanr) {
         this.knjigaID = knjigaID;
         this.naziv = naziv;
         this.autor = autor;
         this.zanr = zanr;
-        this.primerci = primerci;
     }
-    
+
+   
     @Override
     public String toString() {
         return "Naziv: " + naziv + " | Autor=" + autor;
@@ -101,21 +100,6 @@ public class Knjiga {
         this.zanr = zanr;
     }
 
-    
-
-    public List<Primerak> getPrimerci() {
-        return primerci;
-    }
-
-    public void setPrimerci(List<Primerak> primerci) {
-        this.primerci = primerci;
-    }
-
-    
-
-    
-
-    
     
     
 }

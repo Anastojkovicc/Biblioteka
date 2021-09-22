@@ -333,4 +333,8 @@ public class FrmKnjiga extends javax.swing.JDialog {
     public void addDozvoliBtnActionListener(ActionListener actionListener) {
         btnDozvoli.addActionListener(actionListener);
     }
+
+    public void addEnabledBtnActionListener(ActionListener actionListener) {
+        btnDozvoli.addActionListener(actionListener);
+    }
 }

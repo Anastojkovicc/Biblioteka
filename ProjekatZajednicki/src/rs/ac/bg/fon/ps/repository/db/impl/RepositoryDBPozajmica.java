@@ -34,5 +34,10 @@ public class RepositoryDBPozajmica implements DBRepository<Pozajmica>{
     public void delete(Pozajmica param) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<Pozajmica> getAllPoUslovu(Pozajmica param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

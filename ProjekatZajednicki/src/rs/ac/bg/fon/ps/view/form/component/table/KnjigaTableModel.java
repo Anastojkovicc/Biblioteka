@@ -13,7 +13,8 @@ import rs.ac.bg.fon.ps.domain.Knjiga;
  *
  * @author ANA
  */
-public class KnjigaTableModel extends AbstractTableModel{
+public class KnjigaTableModel extends AbstractTableModel {
+
     private final List<Knjiga> knjige;
 
     public KnjigaTableModel(List<Knjiga> knjige) {
@@ -22,7 +23,9 @@ public class KnjigaTableModel extends AbstractTableModel{
 
     @Override
     public int getRowCount() {
-        if(knjige==null) return 0;
+        if (knjige == null) {
+            return 0;
+        }
         return knjige.size();
     }
 
@@ -34,35 +37,48 @@ public class KnjigaTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Knjiga k = knjige.get(rowIndex);
-        switch(columnIndex){
-            case 0: return k.getKnjigaID();
-            case 1: return k.getNaziv();
-            case 2: return k.getAutor();
-            case 3: return k.getZanr();
-        default: return "n/a";
+        switch (columnIndex) {
+            case 0:
+                return k.getKnjigaID();
+            case 1:
+                return k.getNaziv();
+            case 2:
+                return k.getAutor();
+            case 3:
+                return k.getZanr();
+            default:
+                return "n/a";
         }
     }
 
     @Override
     public String getColumnName(int column) {
-         switch(column){
-            case 0: return "ID";
-            case 1: return "Naziv";
-            case 2: return "Autor";
-            case 3: return "Zanr";
-        default: return "n/a";
+        switch (column) {
+            case 0:
+                return "ID";
+            case 1:
+                return "Naziv";
+            case 2:
+                return "Autor";
+            case 3:
+                return "Žanr";
+            default:
+                return "n/a";
         }
     }
 
     public void addKnjiga(Knjiga knjiga) {
         knjige.add(knjiga);
-        fireTableRowsInserted(knjige.size()-1,knjige.size()-1);
+        fireTableRowsInserted(knjige.size() - 1, knjige.size() - 1);
     }
 
     public Knjiga getKnjiga(int red) {
         return knjige.get(red);
     }
-    
-    
-    
+
+    public void obrisiKnjigu(Knjiga knjiga) {
+        knjige.remove(knjiga);
+        fireTableDataChanged();
+    }
+
 }

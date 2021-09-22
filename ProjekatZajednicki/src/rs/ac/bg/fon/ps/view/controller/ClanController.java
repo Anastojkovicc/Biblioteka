@@ -95,10 +95,10 @@ public class ClanController {
                     } catch (Exception ex) {
                         Logger.getLogger(FrmClan.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    JOptionPane.showMessageDialog(frmClan, "Clan je uspesno sacuvan");
+                    JOptionPane.showMessageDialog(frmClan, "Član je uspešno sacuvan i njegov broj članske karte je: "+ c.getBrojClanskeKarte());
                     resetForm();
                 } else {
-                    JOptionPane.showMessageDialog(frmClan, "Morate popuniti sva polja!", "Greska", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmClan, "Morate popuniti sva polja!", "Greška", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
