@@ -38,7 +38,7 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
             ResultSet rs = s.executeQuery(sql);
             while (rs.next()) {
                 Knjiga k = new Knjiga();
-                k.setKnjigaID(rs.getInt("KnjigaID"));
+                k.setKnjigaID(rs.getInt("knjigaID"));
                 k.setNaziv(rs.getString("naziv"));
                 k.setAutor(rs.getString("autor"));
                 k.setZanr( Zanr.valueOf(rs.getString("zanr")));

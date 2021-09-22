@@ -15,15 +15,19 @@ public class Primerak {
     private int invertarskiBroj;
     private boolean izdat;
     private int godinaIzdanja;
+    private Knjiga knjiga;
 
     public Primerak() {
     }
 
-    public Primerak(int invertarskiBroj, boolean izdat, int godinaIzdanja) {
+    public Primerak(int invertarskiBroj, boolean izdat, int godinaIzdanja, Knjiga knjiga) {
         this.invertarskiBroj = invertarskiBroj;
         this.izdat = izdat;
         this.godinaIzdanja = godinaIzdanja;
+        this.knjiga = knjiga;
     }
+
+    
 
     public int getGodinaIzdanja() {
         return godinaIzdanja;
@@ -39,6 +43,14 @@ public class Primerak {
 
     public void setInvertarskiBroj(int invertarskiBroj) {
         this.invertarskiBroj = invertarskiBroj;
+    }
+
+    public void setKnjiga(Knjiga knjiga) {
+        this.knjiga = knjiga;
+    }
+
+    public Knjiga getKnjiga() {
+        return knjiga;
     }
 
     

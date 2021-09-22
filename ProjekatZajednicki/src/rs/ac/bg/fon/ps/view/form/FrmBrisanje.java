@@ -84,14 +84,14 @@ int red;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNeActionPerformed
-       this.dispose();
+//       this.dispose();
     }//GEN-LAST:event_btnNeActionPerformed
 
     private void btnDaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDaActionPerformed
-        FrmPregledKnjiga forma= (FrmPregledKnjiga) getParent();
-        forma.brisanjeKnjige(red);
-        this.dispose();
-        
+//        FrmPregledKnjiga forma= (FrmPregledKnjiga) getParent();
+//        forma.brisanjeKnjige(red);
+//        this.dispose();
+//        
     }//GEN-LAST:event_btnDaActionPerformed
 
    
@@ -102,3 +102,5 @@ int red;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
+
+//SREDITI

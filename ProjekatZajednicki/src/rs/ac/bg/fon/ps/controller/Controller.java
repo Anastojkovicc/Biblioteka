@@ -10,6 +10,7 @@ import java.util.List;
 import rs.ac.bg.fon.ps.domain.Bibliotekar;
 import rs.ac.bg.fon.ps.domain.Clan;
 import rs.ac.bg.fon.ps.domain.Knjiga;
+import rs.ac.bg.fon.ps.domain.Primerak;
 import rs.ac.bg.fon.ps.repository.Repository;
 import rs.ac.bg.fon.ps.repository.RepositoryClan;
 import rs.ac.bg.fon.ps.repository.RepositoryKnjiga;
@@ -17,6 +18,7 @@ import rs.ac.bg.fon.ps.repository.RepositoryUser;
 import rs.ac.bg.fon.ps.repository.db.DBRepository;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBClan;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBKnjiga;
+import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBPrimerak;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBUser;
 
 /**
@@ -28,16 +30,17 @@ public class Controller {
     private final Repository repositoryUser;
     private final Repository repositoryKnjiga;
     private final Repository repositoryClan;
+    private final Repository repositoryPrimerak;
     private static Controller instanca;
 
     public int idKnjige = 0;
     public int idClana = 0;
-    
 
     public Controller() {
         this.repositoryUser = new RepositoryDBUser();
         this.repositoryKnjiga = new RepositoryDBKnjiga();
         this.repositoryClan = new RepositoryDBClan();
+        this.repositoryPrimerak=  new RepositoryDBPrimerak();
     }
 
     public static Controller getInstance() {
@@ -152,6 +155,37 @@ public class Controller {
             ((DBRepository) repositoryKnjiga).disconnect();
         }
 
+    }
+
+    public boolean obrisiClana(Clan clan) throws Exception {
+        ((DBRepository) repositoryClan).connect();
+        try {
+            repositoryClan.delete(clan);
+            ((DBRepository) repositoryClan).commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ((DBRepository) repositoryClan).rollback();
+            throw e;
+        } finally {
+            ((DBRepository) repositoryClan).disconnect();
+        }
+
+    }
+
+    public boolean addPrimerak(Primerak primerak) throws Exception {
+        ((DBRepository) repositoryPrimerak).connect();
+        try {
+            repositoryPrimerak.add(primerak);
+            ((DBRepository) repositoryPrimerak).commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ((DBRepository) repositoryPrimerak).rollback();
+            throw e;
+        } finally {
+            ((DBRepository) repositoryPrimerak).disconnect();
+        }
     }
 
 }

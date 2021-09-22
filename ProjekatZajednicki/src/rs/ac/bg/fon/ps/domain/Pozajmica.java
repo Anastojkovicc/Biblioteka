@@ -17,21 +17,19 @@ public class Pozajmica {
     private Date datumVracanja;
     private Clan clan;
     private Primerak primerak;
-    private double naknadaKasnjenja;
-
+   
     public Pozajmica() {
     }
 
-    public Pozajmica(int idPozajmice, Date datumIzdavanja, Date datumVracanja, Clan clan, Primerak primerak, double naknadaKasnjenja) {
+    public Pozajmica(int idPozajmice, Date datumIzdavanja, Date datumVracanja, Clan clan, Primerak primerak) {
         this.idPozajmice = idPozajmice;
         this.datumIzdavanja = datumIzdavanja;
         this.datumVracanja = datumVracanja;
         this.clan = clan;
         this.primerak = primerak;
-        this.naknadaKasnjenja = naknadaKasnjenja;
     }
 
-    
+        
 
     public Primerak getPrimerak() {
         return primerak;
@@ -73,13 +71,6 @@ public class Pozajmica {
         this.clan = clan;
     }
 
-    public double getNaknadaKasnjenja() {
-        return naknadaKasnjenja;
-    }
-
-    public void setNaknadaKasnjenja(double naknadaKasnjenja) {
-        this.naknadaKasnjenja = naknadaKasnjenja;
-    }
     
     
 }

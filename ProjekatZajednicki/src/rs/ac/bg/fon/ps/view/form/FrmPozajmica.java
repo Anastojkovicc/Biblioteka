@@ -19,6 +19,7 @@ public class FrmPozajmica extends javax.swing.JFrame {
      */
     public FrmPozajmica() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

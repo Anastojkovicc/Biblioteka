@@ -32,6 +32,60 @@ public class MainController {
     }
 
     private void addActionListener() {
+        frmMain.jmiNoviPrimerakNewAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    jmiNoviPrimerakAddActionListener(evt);
+                } catch (Exception ex) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            private void jmiNoviPrimerakAddActionListener(ActionEvent evt) throws Exception {
+                MainCordinator.getInstance().openNoviPrimerakForm();
+            }
+        });
+
+        frmMain.jmiPregledPozajmicaAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent acevt) {
+                jmiPregledPozajmicaAddActionListener(acevt);
+            }
+
+            private void jmiPregledPozajmicaAddActionListener(ActionEvent acevt) {
+                MainCordinator.getInstance().openPregledPozajmicaForm();
+
+            }
+        });
+
+        frmMain.jmiPregledClanovaAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent act) {
+                try {
+                    jmiPregledClanovaAddActionListener(act);
+                } catch (Exception ex) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            private void jmiPregledClanovaAddActionListener(ActionEvent e) throws Exception {
+                MainCordinator.getInstance().openPregledSvihClanovaForm();
+            }
+        });
+
+        frmMain.jmiClanNewAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jmiNoviClanAddActionListener(e);
+
+            }
+
+            private void jmiNoviClanAddActionListener(ActionEvent e) {
+                MainCordinator.getInstance().openAddNewClanForm();
+            }
+        });
+
         frmMain.jmiPozajmicaNewAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {

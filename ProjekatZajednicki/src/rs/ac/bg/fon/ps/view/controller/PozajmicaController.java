@@ -5,6 +5,8 @@
  */
 package rs.ac.bg.fon.ps.view.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import rs.ac.bg.fon.ps.view.form.FrmPozajmica;
 import rs.ac.bg.fon.ps.view.form.util.FormMode;
 
@@ -25,7 +27,11 @@ public class PozajmicaController {
     }
     
      private void prepareView(FormMode formMode) {
-//        fillCbZanr();
-//        setUpComponents(formMode);
+         fillDefaultValues();
+    }
+
+    private void fillDefaultValues() {
+        String currentDate= new SimpleDateFormat("dd.MM.yyyy.").format(new Date());
+        frmPozajmica.getTxtDatumIzdavanja().setText(currentDate);
     }
 }

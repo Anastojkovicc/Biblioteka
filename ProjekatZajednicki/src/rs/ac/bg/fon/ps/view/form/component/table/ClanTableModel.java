@@ -7,6 +7,7 @@ package rs.ac.bg.fon.ps.view.form.component.table;
 
 import static java.lang.String.valueOf;
 import java.sql.Savepoint;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import rs.ac.bg.fon.ps.domain.Clan;
@@ -19,7 +20,7 @@ public class ClanTableModel extends AbstractTableModel {
 
     private final List<Clan> clanovi;
 
-    String[] kolone = {"Broj clanske karte", "Ime", "Prezime", "Telefon", "Email", "Adresa", "Datum placanja clanarine"};
+    String[] kolone = {"Broj clanske karte", "Ime", "Prezime", "Telefon", "Email", "Adresa", "Datum clanarine"};
 
     public ClanTableModel(List<Clan> clanovi) {
         this.clanovi = clanovi;
@@ -91,9 +92,24 @@ public class ClanTableModel extends AbstractTableModel {
             case 5:
                 clan.setAdresa(String.valueOf(value));
                 break;
-            //    case 6: clan.setDatumClanarine(String.valueOf(value)); 
+            case 6:
+                clan.setDatumClanarine((Date) value);
+                break;
         }
     }
 
+    public void dodajClana(Clan clan) {
+        clanovi.add(clan);
+        fireTableRowsInserted(clanovi.size() - 1, clanovi.size() - 1);
+    }
+
+    public Clan getClanAt(int row) {
+        return clanovi.get(row);
+    }
+
+    public void obrisiClana(int red) {
+        clanovi.remove(red);
+        fireTableDataChanged();
+    }
 
 }

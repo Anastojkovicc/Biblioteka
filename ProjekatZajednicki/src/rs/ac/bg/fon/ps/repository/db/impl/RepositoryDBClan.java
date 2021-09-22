@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,10 +41,10 @@ public class RepositoryDBClan implements DBRepository<Clan> {
                 clan.setPrezime(rs.getString("prezime"));
                 clan.setJmbg(rs.getInt("jmbg"));
                 clan.setTelefon(rs.getInt("telefon"));
+                clan.seteMail(rs.getString("email"));
                 clan.setAdresa(rs.getString("adresa"));
-                //datum
-                clan.setDatumClanarine(new Date());
-                clan.setDatumUclanjenja(new Date());
+                clan.setDatumClanarine(rs.getDate("datumUclanjenja"));
+                clan.setDatumUclanjenja(rs.getDate("datumClanarine"));
                 clanovi.add(clan);
                 
             }
@@ -60,17 +61,17 @@ public class RepositoryDBClan implements DBRepository<Clan> {
     @Override
     public void add(Clan clan) throws Exception {
         try {
-            String sql = "INSERT INTO clan VALUES(?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO clan(ime,prezime,jmbg,telefon,email,adresa,datumUclanjenja,datumClanarine) VALUES(?,?,?,?,?,?,?,?)";
             Connection connection = DBConnectionFactory.getInstance().getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(2, clan.getIme());
-            ps.setString(3, clan.getPrezime());
-            ps.setInt(4, clan.getJmbg());
-            ps.setInt(5, clan.getTelefon());
-            ps.setString(6, clan.geteMail());
-            ps.setString(7, clan.getAdresa());
-            ps.setDate(8, new java.sql.Date(clan.getDatumUclanjenja().getTime()));
-            ps.setDate(9, new java.sql.Date(clan.getDatumClanarine().getTime()));
+            ps.setString(1, clan.getIme());
+            ps.setString(2, clan.getPrezime());
+            ps.setInt(3, clan.getJmbg());
+            ps.setInt(4, clan.getTelefon());
+            ps.setString(5, clan.geteMail());
+            ps.setString(6, clan.getAdresa());
+            ps.setDate(7, new java.sql.Date(clan.getDatumUclanjenja().getTime()));
+            ps.setDate(8, new java.sql.Date(clan.getDatumClanarine().getTime()));
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
@@ -83,13 +84,15 @@ public class RepositoryDBClan implements DBRepository<Clan> {
     @Override
     public void edit(Clan clan) throws Exception {
         try {
+            SimpleDateFormat sdf= new SimpleDateFormat("dd.MM.yyyy.");
+            String datum= sdf.format(clan.getDatumClanarine());
             String sql = "UPDATE clan SET ime='" + clan.getIme() + "', "
                     + "prezime='" + clan.getPrezime() + "', "
                     + "jmbg=" + clan.getJmbg() + ", "
                     + "telefon=" + clan.getTelefon() + ", "
-                    + "adresa='" + clan.getAdresa() + "' "
+                    + "adresa='" + clan.getAdresa() + "', "
+                    + " datumClanarine='"+datum+ "', "
                     + "WHERE id=" + clan.getBrojClanskeKarte();
-            //dodati datum za izmenu
             System.out.println(sql);
             Connection connection = DBConnectionFactory.getInstance().getConnection();
             Statement s = connection.createStatement();
@@ -105,7 +108,7 @@ public class RepositoryDBClan implements DBRepository<Clan> {
     @Override
     public void delete(Clan clan) throws Exception {
         try {
-            String sql = "DELETE FROM clan WHERE id=" + clan.getBrojClanskeKarte();
+            String sql = "DELETE FROM clan WHERE brojClanskeKarte=" + clan.getBrojClanskeKarte();
             Connection connection = DBConnectionFactory.getInstance().getConnection();
             Statement s = connection.createStatement();
             s.executeUpdate(sql);

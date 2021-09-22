@@ -44,16 +44,16 @@ public class LoginController {
                 try {
                     String username = frmLogin.getTxtUsername().getText().trim();
                     String password = String.copyValueOf(frmLogin.getTxtPassword().getPassword());
-
                     validateForm(username, password);
-
                     Bibliotekar user = Controller.getInstance().login(username, password);
                     MainCordinator.getInstance().addParam(Constants.PARAM_ULOGOVANI, user);
-                    JOptionPane.showMessageDialog(frmLogin, "Welcome " + user.getIme() + ", " + user.getPrezime(), "Login", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frmLogin, "Ulogovani bibliotekar je " + user.getIme()
+                            + " " + user.getPrezime(), "Prijavljivanje", JOptionPane.INFORMATION_MESSAGE);
                     frmLogin.dispose();
                     MainCordinator.getInstance().openMainForm();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(frmLogin, ex.getMessage(), "Login error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmLogin, ex.getMessage(),
+                            "Greska u prijavljivanju", JOptionPane.ERROR_MESSAGE);
 
                 }
             }

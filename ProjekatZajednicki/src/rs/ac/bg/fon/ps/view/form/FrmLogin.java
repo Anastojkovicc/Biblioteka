@@ -120,21 +120,21 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        resetForm();
-        try {
-            String username = txtUsername.getText().trim();
-            String password = String.valueOf(txtPassword.getPassword());
-//            validateForm(username,password);
-            Controller controller= Controller.getInstance();
-            Bibliotekar bibliotekar= controller.login(username,password);
-            JOptionPane.showMessageDialog(this, "Ulogovani bibliotekar je "+ bibliotekar.getIme() + " "+ bibliotekar.getPrezime(), "Prijavljivanje", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-            new FrmMain().setVisible(true);
-        } catch (Exception ex) {
-           ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, ex.getMessage(),"Greška pri prijavljivanju", JOptionPane.ERROR_MESSAGE);
-        }
-     
+//        resetForm();
+//        try {
+//            String username = txtUsername.getText().trim();
+//            String password = String.valueOf(txtPassword.getPassword());
+////            validateForm(username,password);
+//            Controller controller= Controller.getInstance();
+//            Bibliotekar bibliotekar= controller.login(username,password);
+//            JOptionPane.showMessageDialog(this, "Ulogovani bibliotekar je "+ bibliotekar.getIme() + " "+ bibliotekar.getPrezime(), "Prijavljivanje", JOptionPane.INFORMATION_MESSAGE);
+//            this.dispose();
+//            new FrmMain().setVisible(true);
+//        } catch (Exception ex) {
+//           ex.printStackTrace();
+//            JOptionPane.showMessageDialog(this, ex.getMessage(),"Greška pri prijavljivanju", JOptionPane.ERROR_MESSAGE);
+//        }
+//     
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -165,11 +165,11 @@ public class FrmLogin extends javax.swing.JFrame {
 //            throw new Exception(errorMessage);
 //        }
 //    }
-
-    private void resetForm() {
-        lblUsernameError.setText("");
-        lblPasswordError.setText("");
-    }
+//
+//    private void resetForm() {
+//        lblUsernameError.setText("");
+//        lblPasswordError.setText("");
+//    }
 
     public void loginAddActionListener(ActionListener actionListener) {
         btnLogin.addActionListener(actionListener);
@@ -191,6 +191,23 @@ public class FrmLogin extends javax.swing.JFrame {
         return txtUsername;
     }
 
+    public void setLblPasswordError(JLabel lblPasswordError) {
+        this.lblPasswordError = lblPasswordError;
+    }
+
+    public void setLblUsernameError(JLabel lblUsernameError) {
+        this.lblUsernameError = lblUsernameError;
+    }
+
+    public void setTxtPassword(JPasswordField txtPassword) {
+        this.txtPassword = txtPassword;
+    }
+
+    public void setTxtUsername(JTextField txtUsername) {
+        this.txtUsername = txtUsername;
+    }
+
+    
     
     
 }

@@ -43,14 +43,18 @@ public class KnjigaController {
                 Knjiga k = new Knjiga();
                 k.setNaziv(frmKnjiga.getTxtNaziv().getText().trim());
                 k.setAutor(frmKnjiga.getTxtAutor().getText().trim());
-                k.setZanr((Zanr) frmKnjiga.getCmbZanr().getSelectedItem());
+                k.setZanr((Zanr) Zanr.valueOf(frmKnjiga.getCmbZanr().getSelectedItem().toString()));
                 Controller c = Controller.getInstance();
                 try {
-                    c.addKnjiga(k);
+                    if (!frmKnjiga.getTxtNaziv().getText().isEmpty() && !frmKnjiga.getTxtAutor().getText().isEmpty()) {
+                        c.addKnjiga(k);
 //            int idKnjige = c.vratiID(k);
-                    JOptionPane.showMessageDialog(frmKnjiga, "Knjiga je uspesno dodata");
-                    frmKnjiga.dispose();
+                        JOptionPane.showMessageDialog(frmKnjiga, "Knjiga je uspesno dodata", "Uspešno dodavanje", JOptionPane.INFORMATION_MESSAGE);
+                        frmKnjiga.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(frmKnjiga, "Morate popuniti oba polja", "Nespešno dodavanje", JOptionPane.ERROR_MESSAGE);
 
+                    }
                 } catch (Exception ex) {
                     Logger.getLogger(FrmKnjiga.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(frmKnjiga, ex.getMessage());

@@ -24,10 +24,6 @@ import rs.ac.bg.fon.ps.view.form.util.FormMode;
  */
 public class FrmKnjiga extends javax.swing.JDialog {
 
-    public static void setLocationRelativeTo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     int idKnjige = 0;
     FormMode frmMode;
 
@@ -39,11 +35,7 @@ public class FrmKnjiga extends javax.swing.JDialog {
         initComponents();
         this.frmMode = formMode;
         setLocationRelativeTo(null);
-        prepareView(frmMode);
-    }
-
-    public FrmKnjiga(Frame frmMain, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        prepareView(frmMode);
     }
 
     /**
@@ -259,41 +251,39 @@ public class FrmKnjiga extends javax.swing.JDialog {
     private javax.swing.JTextField txtNaziv;
     // End of variables declaration//GEN-END:variables
 
-    private void prepareView(FormMode formMode) {
-        fillCBZanr();
-        setUpComponents(formMode);
-    }
-
-    private void fillCBZanr() {
-        cmbZanr.removeAllItems();
-        for (Zanr zanr : Zanr.values()) {
-            cmbZanr.addItem(zanr);
-        }
-    }
-
-    private void setUpComponents(FormMode formMode) {
-        switch (formMode) {
-            case FORM_ADD:
-                btnOdustani.setEnabled(false);
-                btnObrisi.setEnabled(false);
-                btnDozvoli.setEnabled(false);
-                btnIzmeni.setEnabled(false);
-                btnSacuvaj.setEnabled(true);
-                break;
-            case FORM_VIEW:
-                btnOdustani.setEnabled(false);
-                btnObrisi.setEnabled(true);
-                btnDozvoli.setEnabled(true);
-                btnIzmeni.setEnabled(false);
-                btnSacuvaj.setEnabled(false);
-                txtNaziv.setEnabled(false);
-                txtAutor.setEnabled(true);
-                break;
-        }
-    }
-
+//    private void prepareView(FormMode formMode) {
+//        fillCBZanr();
+//        setUpComponents(formMode);
+//    }
+//
+//    private void fillCBZanr() {
+//        cmbZanr.removeAllItems();
+//        for (Zanr zanr : Zanr.values()) {
+//            cmbZanr.addItem(zanr);
+//        }
+//    }
+//    private void setUpComponents(FormMode formMode) {
+//        switch (formMode) {
+//            case FORM_ADD:
+//                btnOdustani.setEnabled(false);
+//                btnObrisi.setEnabled(false);
+//                btnDozvoli.setEnabled(false);
+//                btnIzmeni.setEnabled(false);
+//                btnSacuvaj.setEnabled(true);
+//                break;
+//            case FORM_VIEW:
+//                btnOdustani.setEnabled(false);
+//                btnObrisi.setEnabled(true);
+//                btnDozvoli.setEnabled(true);
+//                btnIzmeni.setEnabled(false);
+//                btnSacuvaj.setEnabled(false);
+//                txtNaziv.setEnabled(false);
+//                txtAutor.setEnabled(true);
+//                break;
+//        }
+//    }
     public void addSacuvajBtnActionListener(ActionListener actionListener) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        btnSacuvaj.addActionListener(actionListener);
     }
 
     public JComboBox getCmbZanr() {
@@ -327,22 +317,20 @@ public class FrmKnjiga extends javax.swing.JDialog {
     public JButton getBtnSacuvaj() {
         return btnSacuvaj;
     }
-    
-    
 
     public void addCancelBtnActionListener(ActionListener actionListener) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        btnOdustani.addActionListener(actionListener);
     }
 
     public void addDeletebtnActionListener(ActionListener actionListener) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        btnObrisi.addActionListener(actionListener);
     }
 
     public void addEditBtnActionListener(ActionListener actionListener) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        btnIzmeni.addActionListener(actionListener);
     }
 
-   
-   
-
+    public void addDozvoliBtnActionListener(ActionListener actionListener) {
+        btnDozvoli.addActionListener(actionListener);
+    }
 }

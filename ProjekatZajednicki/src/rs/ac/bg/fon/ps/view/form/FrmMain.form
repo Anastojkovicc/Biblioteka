@@ -47,6 +47,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nova pozajmica"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiNovaPozajmicaActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiPregledPozajmica">
               <Properties>
@@ -70,6 +73,11 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiNoviClanActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiPregledClanova">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pregled &#x10d;lanova"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>

@@ -44,6 +44,7 @@ public class FrmMain extends javax.swing.JFrame {
         jmiPregledPozajmica = new javax.swing.JMenuItem();
         jmenuClanovi = new javax.swing.JMenu();
         jmiNoviClan = new javax.swing.JMenuItem();
+        jmiPregledClanova = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +84,11 @@ public class FrmMain extends javax.swing.JFrame {
         jmenuPozajmica.setText("Pozajmica");
 
         jmiNovaPozajmica.setText("Nova pozajmica");
+        jmiNovaPozajmica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiNovaPozajmicaActionPerformed(evt);
+            }
+        });
         jmenuPozajmica.add(jmiNovaPozajmica);
 
         jmiPregledPozajmica.setText("Pregled pozajmica");
@@ -105,6 +111,9 @@ public class FrmMain extends javax.swing.JFrame {
         });
         jmenuClanovi.add(jmiNoviClan);
 
+        jmiPregledClanova.setText("Pregled članova");
+        jmenuClanovi.add(jmiPregledClanova);
+
         jmenuBarMain.add(jmenuClanovi);
 
         setJMenuBar(jmenuBarMain);
@@ -124,8 +133,8 @@ public class FrmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiNovaKnjigaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNovaKnjigaActionPerformed
-        JDialog frmKnjiga = new FrmKnjiga(this, true, FormMode.FORM_ADD);
-        frmKnjiga.setVisible(true);
+//        JDialog frmKnjiga = new FrmKnjiga(this, true, FormMode.FORM_ADD);
+//        frmKnjiga.setVisible(true);
     }//GEN-LAST:event_jmiNovaKnjigaActionPerformed
 
     private void jmenuKnjigaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuKnjigaActionPerformed
@@ -151,6 +160,10 @@ public class FrmMain extends javax.swing.JFrame {
 //        frm.setVisible(true);
     }//GEN-LAST:event_jmiPrikazKnjigaActionPerformed
 
+    private void jmiNovaPozajmicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNovaPozajmicaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiNovaPozajmicaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -164,6 +177,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiNovaPozajmica;
     private javax.swing.JMenuItem jmiNoviClan;
     private javax.swing.JMenuItem jmiNoviPrimerak;
+    private javax.swing.JMenuItem jmiPregledClanova;
     private javax.swing.JMenuItem jmiPregledPozajmica;
     private javax.swing.JMenuItem jmiPrikazKnjiga;
     // End of variables declaration//GEN-END:variables
@@ -178,5 +192,21 @@ public class FrmMain extends javax.swing.JFrame {
 
     public void jmiPozajmicaNewAddActionListener(ActionListener actionListener) {
         jmiNovaPozajmica.addActionListener(actionListener);
+    }
+
+    public void jmiClanNewAddActionListener(ActionListener actionListener) {
+        jmiNoviClan.addActionListener(actionListener);
+    }
+
+    public void jmiPregledClanovaAddActionListener(ActionListener actionListener) {
+        jmiPregledClanova.addActionListener(actionListener);
+    }
+
+    public void jmiPregledPozajmicaAddActionListener(ActionListener actionListener) {
+        jmiPregledPozajmica.addActionListener(actionListener);
+    }
+
+    public void jmiNoviPrimerakNewAddActionListener(ActionListener actionListener) {
+        jmiNoviPrimerak.addActionListener(actionListener);
     }
 }

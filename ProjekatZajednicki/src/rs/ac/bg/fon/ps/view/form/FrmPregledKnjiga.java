@@ -7,6 +7,7 @@ package rs.ac.bg.fon.ps.view.form;
 
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -28,10 +29,7 @@ public class FrmPregledKnjiga extends javax.swing.JFrame {
     public FrmPregledKnjiga() throws Exception {
         initComponents();
         setLocationRelativeTo(null);
-        prepareView();
-        
-        
-
+//        prepareView();
     }
 
     /**
@@ -120,13 +118,14 @@ public class FrmPregledKnjiga extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnDodaj)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnObrisi)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDetalji))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnDetalji)))
+                .addGap(196, 196, 196))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -142,29 +141,29 @@ public class FrmPregledKnjiga extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
-        dodajNovuKnjigu();
+//        dodajNovuKnjigu();
     }//GEN-LAST:event_btnDodajActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
-        int red = tblKnjige.getSelectedRow();
-        if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate selektovati red", "Greška", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        JDialog brisanje= new FrmBrisanje(this, true, red);
-        brisanje.setVisible(true);
+//        int red = tblKnjige.getSelectedRow();
+//        if (red == -1) {
+//            JOptionPane.showMessageDialog(this, "Morate selektovati red", "Greška", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//        JDialog brisanje= new FrmBrisanje(this, true, red);
+//        brisanje.setVisible(true);
     }//GEN-LAST:event_btnObrisiActionPerformed
 
     private void btnDetaljiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetaljiActionPerformed
-    new FrmKnjiga(this, true, FormMode.FORM_VIEW).setVisible(true);
+//    new FrmKnjiga(this, true, FormMode.FORM_VIEW).setVisible(true);
     }//GEN-LAST:event_btnDetaljiActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -176,54 +175,66 @@ public class FrmPregledKnjiga extends javax.swing.JFrame {
     private javax.swing.JTable tblKnjige;
     // End of variables declaration//GEN-END:variables
 
-    private void prepareView() throws Exception {
-        fillTblKnjigaTM();
-    }
-
-    private void fillTblKnjiga() throws Exception {
-        List<Knjiga> listaKnjiga = Controller.getInstance().getAllBooks();
-        
-        DefaultTableModel dtm = (DefaultTableModel) tblKnjige.getModel();
-
-        for (Knjiga knjiga : listaKnjiga) {
-            Object[] rowData = new Object[]{
-                knjiga.getKnjigaID(), knjiga.getNaziv(), knjiga.getAutor(), knjiga.getZanr()
-            };
-            dtm.addRow(rowData);
-        }
-    }
-
-    private void fillTblKnjigaTM() throws Exception {
-        List<Knjiga> knjige = Controller.getInstance().getAllBooks();
-        KnjigaTableModel ktm = new KnjigaTableModel(knjige);
-        tblKnjige.setModel(ktm);
-    }
-
-    private void dodajNovuKnjigu() {
-        Knjiga knjiga = new Knjiga();
-        KnjigaTableModel ktm = (KnjigaTableModel) tblKnjige.getModel();
-        ktm.addKnjiga(knjiga);
-    }
-
-    public void brisanjeKnjige(int red) {
-        KnjigaTableModel ktm = (KnjigaTableModel) tblKnjige.getModel();
-        Knjiga knjiga = ktm.getKnjiga(red);
-        try {
-            Controller.getInstance().obrisiKnjigu(knjiga);
-            ktm.fireTableDataChanged();
-            JOptionPane.showMessageDialog(this, "Knjiga je obrisana");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
-
-        }
-    }
+//    private void prepareView() throws Exception {
+//        fillTblKnjigaTM();
+//    }
+//
+//    private void fillTblKnjiga() throws Exception {
+//        List<Knjiga> listaKnjiga = Controller.getInstance().getAllBooks();
+//        
+//        DefaultTableModel dtm = (DefaultTableModel) tblKnjige.getModel();
+//
+//        for (Knjiga knjiga : listaKnjiga) {
+//            Object[] rowData = new Object[]{
+//                knjiga.getKnjigaID(), knjiga.getNaziv(), knjiga.getAutor(), knjiga.getZanr()
+//            };
+//            dtm.addRow(rowData);
+//        }
+//    }
+//
+//    private void fillTblKnjigaTM() throws Exception {
+//        List<Knjiga> knjige = Controller.getInstance().getAllBooks();
+//        KnjigaTableModel ktm = new KnjigaTableModel(knjige);
+//        tblKnjige.setModel(ktm);
+//    }
+//
+//    private void dodajNovuKnjigu() {
+//        Knjiga knjiga = new Knjiga();
+//        KnjigaTableModel ktm = (KnjigaTableModel) tblKnjige.getModel();
+//        ktm.addKnjiga(knjiga);
+//    }
+//
+//    public void brisanjeKnjige(int red) {
+//        KnjigaTableModel ktm = (KnjigaTableModel) tblKnjige.getModel();
+//        Knjiga knjiga = ktm.getKnjiga(red);
+//        try {
+//            Controller.getInstance().obrisiKnjigu(knjiga);
+//            ktm.fireTableDataChanged();
+//            JOptionPane.showMessageDialog(this, "Knjiga je obrisana");
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, e.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
+//
+//        }
+//    }
 
     public void getBtnDetaljiAddActionListener(ActionListener actionListener) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        btnDetalji.addActionListener(actionListener);
     }
 
     public JTable getTblKnjige() {
         return tblKnjige;
+    }
+
+    public JButton getBtnDetalji() {
+        return btnDetalji;
+    }
+
+    public JButton getBtnDodaj() {
+        return btnDodaj;
+    }
+
+    public JButton getBtnObrisi() {
+        return btnObrisi;
     }
     
 

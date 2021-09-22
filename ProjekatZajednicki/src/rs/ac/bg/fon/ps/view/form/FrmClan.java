@@ -5,9 +5,12 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Clan;
 
@@ -163,26 +166,26 @@ public class FrmClan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajActionPerformed
-        Clan c = new Clan();
-        c.setIme(txtIme.getText().trim());
-        c.setPrezime(txtPrezime.getText().trim());
-        c.setJmbg(Integer.parseInt(txtJMBG.getText().trim()));
-        c.setTelefon(Integer.parseInt(txtTelefon.getText().trim()));
-        c.seteMail(txtEmail.getText().trim());
-        c.setAdresa(txtAdresa.getText().trim());
-//FORMATIRAJ DATUME ZA UCLANJENJE I CLANARINU I UBACI U IF
-        if (!(txtIme.getText().isEmpty()) && !(txtPrezime.getText().isEmpty()) && !(txtJMBG.getText().isEmpty()) && !(txtTelefon.getText().isEmpty()) && !(txtEmail.getText().isEmpty()) && !(txtAdresa.getText().isEmpty()) && !(txtAdresa.getText().isEmpty())) {
-            Controller controller = Controller.getInstance();
-            c.setBrojClanskeKarte(controller.vratiIDClana());
-            try {
-                controller.addClan(c);
-            } catch (Exception ex) {
-                Logger.getLogger(FrmClan.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            JOptionPane.showMessageDialog(this, "Clan je uspesno sacuvan");
-        } else {
-            JOptionPane.showMessageDialog(this, "Morate popuniti sva polja!", "Greska", JOptionPane.ERROR_MESSAGE);
-        }
+//        Clan c = new Clan();
+//        c.setIme(txtIme.getText().trim());
+//        c.setPrezime(txtPrezime.getText().trim());
+//        c.setJmbg(Integer.parseInt(txtJMBG.getText().trim()));
+//        c.setTelefon(Integer.parseInt(txtTelefon.getText().trim()));
+//        c.seteMail(txtEmail.getText().trim());
+//        c.setAdresa(txtAdresa.getText().trim());
+////FORMATIRAJ DATUME ZA UCLANJENJE I CLANARINU I UBACI U IF
+//        if (!(txtIme.getText().isEmpty()) && !(txtPrezime.getText().isEmpty()) && !(txtJMBG.getText().isEmpty()) && !(txtTelefon.getText().isEmpty()) && !(txtEmail.getText().isEmpty()) && !(txtAdresa.getText().isEmpty()) && !(txtAdresa.getText().isEmpty())) {
+//            Controller controller = Controller.getInstance();
+//            c.setBrojClanskeKarte(controller.vratiIDClana());
+//            try {
+//                controller.addClan(c);
+//            } catch (Exception ex) {
+//                Logger.getLogger(FrmClan.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            JOptionPane.showMessageDialog(this, "Clan je uspesno sacuvan");
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Morate popuniti sva polja!", "Greska", JOptionPane.ERROR_MESSAGE);
+//        }
     }//GEN-LAST:event_btnSacuvajActionPerformed
 
     /**
@@ -208,7 +211,69 @@ public class FrmClan extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefon;
     // End of variables declaration//GEN-END:variables
 
-    private void addClan(Clan c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public JButton getBtnSacuvaj() {
+        return btnSacuvaj;
     }
+
+    public JTextField getTxtAdresa() {
+        return txtAdresa;
+    }
+
+    public JTextField getTxtDatumUclanjenja() {
+        return txtDatumUclanjenja;
+    }
+
+    public JTextField getTxtEmail() {
+        return txtEmail;
+    }
+
+    public JTextField getTxtIme() {
+        return txtIme;
+    }
+
+    public JTextField getTxtJMBG() {
+        return txtJMBG;
+    }
+
+    public JTextField getTxtPrezime() {
+        return txtPrezime;
+    }
+
+    public JTextField getTxtTelefon() {
+        return txtTelefon;
+    }
+
+    public void setTxtAdresa(JTextField txtAdresa) {
+        this.txtAdresa = txtAdresa;
+    }
+
+    public void setTxtDatumUclanjenja(JTextField txtDatumUclanjenja) {
+        this.txtDatumUclanjenja = txtDatumUclanjenja;
+    }
+
+    public void setTxtEmail(JTextField txtEmail) {
+        this.txtEmail = txtEmail;
+    }
+
+    public void setTxtIme(JTextField txtIme) {
+        this.txtIme = txtIme;
+    }
+
+    public void setTxtJMBG(JTextField txtJMBG) {
+        this.txtJMBG = txtJMBG;
+    }
+
+    public void setTxtPrezime(JTextField txtPrezime) {
+        this.txtPrezime = txtPrezime;
+    }
+
+    public void setTxtTelefon(JTextField txtTelefon) {
+        this.txtTelefon = txtTelefon;
+    }
+
+    public void sacuvajAddActionListener(ActionListener actionListener) {
+        btnSacuvaj.addActionListener(actionListener);
+    }
+
+   
 }

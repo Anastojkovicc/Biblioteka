@@ -32,15 +32,10 @@ public class Knjiga {
         this.zanr = zanr;
         this.primerci = primerci;
     }
-
-  
-
-    
-
     
     @Override
     public String toString() {
-        return "Knjiga{" + "naziv=" + naziv + ", autor=" + autor + '}';
+        return "Naziv: " + naziv + " | Autor=" + autor;
     }
 
     @Override
