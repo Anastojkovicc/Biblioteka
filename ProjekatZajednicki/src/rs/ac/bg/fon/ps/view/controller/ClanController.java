@@ -56,25 +56,26 @@ public class ClanController {
 
             private void save(ActionEvent e) throws ParseException {
                 Clan c = new Clan();
-                c.setIme(frmClan.getTxtIme().getText().trim());
-                c.setPrezime(frmClan.getTxtPrezime().getText().trim());
-                c.setJmbg(Integer.parseInt(frmClan.getTxtJMBG().getText().trim()));
-                c.setTelefon(Integer.parseInt(frmClan.getTxtTelefon().getText().trim()));
-                c.seteMail(frmClan.getTxtEmail().getText().trim());
-                c.setAdresa(frmClan.getTxtAdresa().getText().trim());
-                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
-                Date datum = sdf.parse(frmClan.getTxtDatumUclanjenja().getText().trim());
-                c.setDatumUclanjenja(datum);
-                c.setDatumClanarine(datum);
-
-                String regex = "^(.+)@(.+)$";
-                Pattern pattern = Pattern.compile(regex);
-                Matcher matcher = pattern.matcher(frmClan.getTxtEmail().getText().trim());
-
                 if (!(frmClan.getTxtIme().getText().isEmpty()) && !(frmClan.getTxtPrezime().getText().isEmpty())
                         && !(frmClan.getTxtJMBG().getText().isEmpty()) && !(frmClan.getTxtTelefon().getText().isEmpty())
                         && !(frmClan.getTxtEmail().getText().isEmpty()) && !(frmClan.getTxtAdresa().getText().isEmpty())
                         && !(frmClan.getTxtAdresa().getText().isEmpty()) && !(frmClan.getTxtDatumUclanjenja().getText().isEmpty())) {
+
+                    c.setIme(frmClan.getTxtIme().getText().trim());
+                    c.setPrezime(frmClan.getTxtPrezime().getText().trim());
+                    c.setJmbg(Integer.parseInt(frmClan.getTxtJMBG().getText().trim()));
+                    c.setTelefon(Integer.parseInt(frmClan.getTxtTelefon().getText().trim()));
+                    c.seteMail(frmClan.getTxtEmail().getText().trim());
+                    c.setAdresa(frmClan.getTxtAdresa().getText().trim());
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
+                    Date datum = sdf.parse(frmClan.getTxtDatumUclanjenja().getText().trim());
+                    c.setDatumUclanjenja(datum);
+                    c.setDatumClanarine(datum);
+
+                    String regex = "^(.+)@(.+)$";
+                    Pattern pattern = Pattern.compile(regex);
+                    Matcher matcher = pattern.matcher(frmClan.getTxtEmail().getText().trim());
+
                     if (frmClan.getTxtJMBG().getText().length() < 5) {
                         JOptionPane.showMessageDialog(frmClan, "JMBG mora sadržati barem 13 cifara", "Greška", JOptionPane.ERROR_MESSAGE);
                         return;
@@ -89,13 +90,12 @@ public class ClanController {
                     }
 
                     Controller controller = Controller.getInstance();
-                    // c.setBrojClanskeKarte(controller.vratiIDClana());
                     try {
                         controller.addClan(c);
                     } catch (Exception ex) {
                         Logger.getLogger(FrmClan.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    JOptionPane.showMessageDialog(frmClan, "Član je uspešno sacuvan i njegov broj članske karte je: "+ c.getBrojClanskeKarte());
+                    JOptionPane.showMessageDialog(frmClan, "Član je uspešno sacuvan i njegov broj članske karte je: " + c.getBrojClanskeKarte());
                     resetForm();
                 } else {
                     JOptionPane.showMessageDialog(frmClan, "Morate popuniti sva polja!", "Greška", JOptionPane.ERROR_MESSAGE);

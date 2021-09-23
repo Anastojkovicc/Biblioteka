@@ -21,6 +21,13 @@ public class KnjigaTableModel extends AbstractTableModel {
         this.knjige = knjige;
     }
 
+    public List<Knjiga> getKnjige() {
+        return knjige;
+    }
+    
+    
+    
+
     @Override
     public int getRowCount() {
         if (knjige == null) {

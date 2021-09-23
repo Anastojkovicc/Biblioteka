@@ -48,6 +48,8 @@ public class FrmPregledClanova extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Prikaz članova");
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Prikaz članova"));
+
         tblClan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

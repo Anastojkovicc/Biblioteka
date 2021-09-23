@@ -59,21 +59,27 @@ public class RepositoryDBPrimerak implements DBRepository<Primerak> {
 
     @Override
     public void add(Primerak param) throws Exception {
-        try{
-        String sql = "INSERT INTO primerak (izdat,godinaIzdanja,knjigaID) VALUES (?,?,?)";
+        try {
+            String sql = "INSERT INTO primerak (izdat,godinaIzdanja,knjigaID) VALUES (?,?,?)";
             System.out.println(sql);
-        Connection connection= DBConnectionFactory.getInstance().getConnection();
-        PreparedStatement ps= connection.prepareStatement(sql);
-        ps.setBoolean(1, param.isIzdat());
-        ps.setInt(2, param.getGodinaIzdanja());
-        ps.setInt(3, param.getKnjiga().getKnjigaID());
-        ps.executeUpdate();
-        ps.close();
-        
-        }
-        catch(Exception e){
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setBoolean(1, param.isIzdat());
+            ps.setInt(2, param.getGodinaIzdanja());
+            ps.setInt(3, param.getKnjiga().getKnjigaID());
+            ps.executeUpdate();
+            
+            ResultSet rsKey = ps.getGeneratedKeys();
+            if(rsKey.next()){
+                int primerakID= rsKey.getInt(1);
+                param.setInvertarskiBroj(primerakID);
+            }else{
+            throw new Exception("ID primerka nije generisan!");
+            }
+            ps.close();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            throw  new Exception("Primerak ne može biti sačuvan");
+            throw new Exception("Primerak ne može biti sačuvan");
         }
     }
 

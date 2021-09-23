@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Knjiga;
@@ -59,6 +61,11 @@ public class FrmKnjiga extends javax.swing.JDialog {
         btnObrisi = new javax.swing.JButton();
         btnOdustani = new javax.swing.JButton();
         btnDozvoli = new javax.swing.JButton();
+        panelKnjige = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblKnjige = new javax.swing.JTable();
+        btnSacuvajSve = new javax.swing.JButton();
+        btnObrisiTabela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Dodavanje nove knjige");
@@ -75,7 +82,7 @@ public class FrmKnjiga extends javax.swing.JDialog {
 
         jLabel2.setText("Autor:");
 
-        jLabel3.setText("Zanr:");
+        jLabel3.setText("Žanr:");
 
         cmbZanr.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -86,14 +93,14 @@ public class FrmKnjiga extends javax.swing.JDialog {
             }
         });
 
-        btnSacuvaj.setText("Sacuvaj knjigu");
+        btnSacuvaj.setText("Sačuvaj knjigu");
         btnSacuvaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSacuvajActionPerformed(evt);
             }
         });
 
-        btnObrisi.setText("Obrisi knjigu");
+        btnObrisi.setText("Obriši knjigu");
         btnObrisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnObrisiActionPerformed(evt);
@@ -133,19 +140,16 @@ public class FrmKnjiga extends javax.swing.JDialog {
                             .addComponent(txtAutor)
                             .addComponent(cmbZanr, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 26, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnDozvoli, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnOdustani, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnIzmeni)
-                                .addGap(14, 14, 14)
-                                .addComponent(btnObrisi)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnSacuvaj)))))
-                .addGap(26, 26, 26))
+                        .addComponent(btnDozvoli, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnOdustani, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnIzmeni)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSacuvaj)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,10 +172,53 @@ public class FrmKnjiga extends javax.swing.JDialog {
                     .addComponent(btnSacuvaj)
                     .addComponent(btnObrisi))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOdustani)
                     .addComponent(btnDozvoli))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tblKnjige.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblKnjige);
+
+        btnSacuvajSve.setText("Sačuvaj sve");
+
+        btnObrisiTabela.setText("Obriši dodatu");
+
+        javax.swing.GroupLayout panelKnjigeLayout = new javax.swing.GroupLayout(panelKnjige);
+        panelKnjige.setLayout(panelKnjigeLayout);
+        panelKnjigeLayout.setHorizontalGroup(
+            panelKnjigeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKnjigeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelKnjigeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(panelKnjigeLayout.createSequentialGroup()
+                        .addComponent(btnObrisiTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSacuvajSve, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        panelKnjigeLayout.setVerticalGroup(
+            panelKnjigeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKnjigeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelKnjigeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSacuvajSve)
+                    .addComponent(btnObrisiTabela))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -179,8 +226,10 @@ public class FrmKnjiga extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelKnjige, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -188,6 +237,8 @@ public class FrmKnjiga extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelKnjige, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -240,13 +291,18 @@ public class FrmKnjiga extends javax.swing.JDialog {
     private javax.swing.JButton btnDozvoli;
     private javax.swing.JButton btnIzmeni;
     private javax.swing.JButton btnObrisi;
+    private javax.swing.JButton btnObrisiTabela;
     private javax.swing.JButton btnOdustani;
     private javax.swing.JButton btnSacuvaj;
+    private javax.swing.JButton btnSacuvajSve;
     private javax.swing.JComboBox cmbZanr;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelKnjige;
+    private javax.swing.JTable tblKnjige;
     private javax.swing.JTextField txtAutor;
     private javax.swing.JTextField txtNaziv;
     // End of variables declaration//GEN-END:variables
@@ -318,6 +374,27 @@ public class FrmKnjiga extends javax.swing.JDialog {
         return btnSacuvaj;
     }
 
+    public JTable getTblKnjige() {
+        return tblKnjige;
+    }
+
+    public void setTblKnjige(JTable tblKnjige) {
+        this.tblKnjige = tblKnjige;
+    }
+
+    public JButton getBtnObrisiTabela() {
+        return btnObrisiTabela;
+    }
+
+    public JButton getBtnSacuvajSve() {
+        return btnSacuvajSve;
+    }
+
+    public JPanel getPanelKnjige() {
+        return panelKnjige;
+    }
+
+    
     public void addCancelBtnActionListener(ActionListener actionListener) {
         btnOdustani.addActionListener(actionListener);
     }
@@ -336,5 +413,13 @@ public class FrmKnjiga extends javax.swing.JDialog {
 
     public void addEnabledBtnActionListener(ActionListener actionListener) {
         btnDozvoli.addActionListener(actionListener);
+    }
+
+    public void addBtnObrisiIzTabeleActionListener(ActionListener actionListener) {
+        btnObrisiTabela.addActionListener(actionListener);
+    }
+
+    public void addBtnSacuvajSveActionListener(ActionListener actionListener) {
+        btnSacuvajSve.addActionListener(actionListener);
     }
 }

@@ -73,7 +73,7 @@ public class FrmClan extends javax.swing.JFrame {
 
         jLabel7.setText("Datum učlanjenja:");
 
-        btnSacuvaj.setText("Sacuvaj");
+        btnSacuvaj.setText("Sačuvaj");
         btnSacuvaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSacuvajActionPerformed(evt);

@@ -47,7 +47,7 @@ public class FrmPrimerak extends javax.swing.JFrame {
 
         jLabel4.setText("Godina izdanja novog primerka:");
 
-        btnSacuvaj.setText("Sacuvaj");
+        btnSacuvaj.setText("Sačuvaj");
 
         cmbKnjiga.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 

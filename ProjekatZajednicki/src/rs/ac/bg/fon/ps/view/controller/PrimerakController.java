@@ -66,7 +66,7 @@ public class PrimerakController {
                         JOptionPane.showMessageDialog(frmPrimerak, "Greška u čuvanju primerka", "Greška", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    JOptionPane.showMessageDialog(frmPrimerak, "Sačuvan primerak", "Čuvanje", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frmPrimerak, "Primerak je sačuvan i njegov inventarski broj je "+ primerak.getInvertarskiBroj(), "Čuvanje", JOptionPane.INFORMATION_MESSAGE);
                     frmPrimerak.getTxtGodina().setText("");
                 } catch (Exception ex) {
                     Logger.getLogger(PrimerakController.class.getName()).log(Level.SEVERE, null, ex);

@@ -18,6 +18,7 @@ import rs.ac.bg.fon.ps.view.constant.Constants;
 import rs.ac.bg.fon.ps.view.cordinator.MainCordinator;
 import rs.ac.bg.fon.ps.view.form.FrmKnjiga;
 import rs.ac.bg.fon.ps.view.form.FrmPregledKnjiga;
+import rs.ac.bg.fon.ps.view.form.component.table.KnjigaTableModel;
 import rs.ac.bg.fon.ps.view.form.util.FormMode;
 
 /**
@@ -44,24 +45,18 @@ public class KnjigaController {
 
             private void save() {
                 Knjiga k = new Knjiga();
+                k.setKnjigaID(0);
                 k.setNaziv(frmKnjiga.getTxtNaziv().getText().trim());
                 k.setAutor(frmKnjiga.getTxtAutor().getText().trim());
                 k.setZanr((Zanr) Zanr.valueOf(frmKnjiga.getCmbZanr().getSelectedItem().toString()));
-                Controller c = Controller.getInstance();
-                try {
-                    if (!frmKnjiga.getTxtNaziv().getText().isEmpty() && !frmKnjiga.getTxtAutor().getText().isEmpty()) {
-                        c.addKnjiga(k);
-//            int idKnjige = c.vratiID(k);
-                        JOptionPane.showMessageDialog(frmKnjiga, "Knjiga je uspesno dodata", "Uspešno dodavanje", JOptionPane.INFORMATION_MESSAGE);
-                        frmKnjiga.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(frmKnjiga, "Morate popuniti oba polja", "Nespešno dodavanje", JOptionPane.ERROR_MESSAGE);
-
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(FrmKnjiga.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmKnjiga, ex.getMessage());
-
+                KnjigaTableModel ktblm = (KnjigaTableModel) frmKnjiga.getTblKnjige().getModel();
+                if (!frmKnjiga.getTxtNaziv().getText().isEmpty() && !frmKnjiga.getTxtAutor().getText().isEmpty()) {
+                    ktblm.addKnjiga(k);
+                    frmKnjiga.getTxtNaziv().setText("");
+                    frmKnjiga.getTxtAutor().setText("");
+                } else {
+                    JOptionPane.showMessageDialog(frmKnjiga, "Morate popuniti oba polja", "Dodavanje knjige", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             }
         });
@@ -88,7 +83,6 @@ public class KnjigaController {
                 try {
                     int option = JOptionPane.showConfirmDialog(frmKnjiga, "Da li zaista želite da obrišete knjigu " + knjiga.getNaziv() + " od autora " + knjiga.getAutor(), "Brisanje knjige", JOptionPane.YES_NO_CANCEL_OPTION);
                     if (option == JOptionPane.YES_OPTION) {
-                        // Controller controller = Controller.getInstance();
                         boolean uspesno = Controller.getInstance().obrisiKnjigu(knjiga);
                         if (uspesno) {
                             JOptionPane.showMessageDialog(frmKnjiga, "Knjiga je uspešno obrisana", "Brisanje knjige", JOptionPane.INFORMATION_MESSAGE);
@@ -135,6 +129,56 @@ public class KnjigaController {
             }
         });
 
+        frmKnjiga.addBtnObrisiIzTabeleActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                obrisiKnjigu();
+            }
+
+            private void obrisiKnjigu() {
+                KnjigaTableModel ktm = (KnjigaTableModel) frmKnjiga.getTblKnjige().getModel();
+                int red = frmKnjiga.getTblKnjige().getSelectedRow();
+                if (red < 0) {
+                    JOptionPane.showMessageDialog(frmKnjiga, "Morate selektovati red", "Greška", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                Knjiga knjiga = ktm.getKnjiga(red);
+                int option = JOptionPane.showConfirmDialog(frmKnjiga, "Da li zaista želite da obrišete knjigu " + knjiga.getNaziv() + " od autora " + knjiga.getAutor(), "Brisanje knjige", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+
+                    ktm.obrisiKnjigu(knjiga);
+                    JOptionPane.showMessageDialog(frmKnjiga, "Uspešno obrisana knjiga", "Brisanje", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            }
+        });
+
+        frmKnjiga.addBtnSacuvajSveActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sacuvajSve();
+            }
+
+            private void sacuvajSve() {
+
+                Controller c = Controller.getInstance();
+                KnjigaTableModel ktm = (KnjigaTableModel) frmKnjiga.getTblKnjige().getModel();
+                ArrayList<Knjiga> liste = (ArrayList<Knjiga>) ktm.getKnjige();
+                try {
+                    for (Knjiga knjiga : liste) {
+                        c.addKnjiga(knjiga);
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frmKnjiga, "Greška pri unosu liste u bazu", "Greška", JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(KnjigaController.class.getName()).log(Level.SEVERE, null, ex);
+                    return;
+                }
+                JOptionPane.showMessageDialog(frmKnjiga, "Knjige su uspešno dodate", "Uspešno dodavanje", JOptionPane.INFORMATION_MESSAGE);
+                frmKnjiga.getTblKnjige().setModel(new KnjigaTableModel(new ArrayList<>()));
+
+            }
+        });
+
     }
 
     public void openForm(FormMode formMode) {
@@ -146,6 +190,7 @@ public class KnjigaController {
     private void prepareView(FormMode formMode) {
         fillCbZanr();
         setUpComponents(formMode);
+        setTable();
     }
 
     private void fillCbZanr() {
@@ -172,6 +217,7 @@ public class KnjigaController {
                 frmKnjiga.getBtnIzmeni().setEnabled(false);
                 frmKnjiga.getBtnDozvoli().setEnabled(false);
                 frmKnjiga.getBtnSacuvaj().setEnabled(true);
+                frmKnjiga.getPanelKnjige().setVisible(true);
 
                 frmKnjiga.getTxtNaziv().setEnabled(true);
                 frmKnjiga.getTxtAutor().setEnabled(true);
@@ -183,6 +229,7 @@ public class KnjigaController {
                 frmKnjiga.getBtnIzmeni().setEnabled(false);
                 frmKnjiga.getBtnDozvoli().setEnabled(true);
                 frmKnjiga.getBtnSacuvaj().setEnabled(false);
+                frmKnjiga.getPanelKnjige().setVisible(false);
 
                 frmKnjiga.getTxtNaziv().setEnabled(false);
                 frmKnjiga.getTxtAutor().setEnabled(false);
@@ -200,12 +247,18 @@ public class KnjigaController {
                 frmKnjiga.getBtnIzmeni().setEnabled(true);
                 frmKnjiga.getBtnDozvoli().setEnabled(false);
                 frmKnjiga.getBtnSacuvaj().setEnabled(false);
+                frmKnjiga.getPanelKnjige().setVisible(false);
 
                 frmKnjiga.getTxtNaziv().setEnabled(false);
                 frmKnjiga.getTxtAutor().setEnabled(true);
                 frmKnjiga.getCmbZanr().setEnabled(true);
                 break;
         }
+    }
+
+    private void setTable() {
+        KnjigaTableModel ktm = new KnjigaTableModel(new ArrayList<>());
+        frmKnjiga.getTblKnjige().setModel(ktm);
     }
 
 }

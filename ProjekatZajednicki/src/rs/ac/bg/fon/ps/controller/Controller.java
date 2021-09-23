@@ -10,6 +10,7 @@ import java.util.List;
 import rs.ac.bg.fon.ps.domain.Bibliotekar;
 import rs.ac.bg.fon.ps.domain.Clan;
 import rs.ac.bg.fon.ps.domain.Knjiga;
+import rs.ac.bg.fon.ps.domain.Pozajmica;
 import rs.ac.bg.fon.ps.domain.Primerak;
 import rs.ac.bg.fon.ps.repository.Repository;
 import rs.ac.bg.fon.ps.repository.RepositoryClan;
@@ -18,6 +19,7 @@ import rs.ac.bg.fon.ps.repository.RepositoryUser;
 import rs.ac.bg.fon.ps.repository.db.DBRepository;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBClan;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBKnjiga;
+import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBPozajmica;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBPrimerak;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBUser;
 
@@ -31,6 +33,7 @@ public class Controller {
     private final Repository repositoryKnjiga;
     private final Repository repositoryClan;
     private final Repository repositoryPrimerak;
+    private final Repository repositoryPozajmica;
     private static Controller instanca;
 
     public int idKnjige = 0;
@@ -41,6 +44,7 @@ public class Controller {
         this.repositoryKnjiga = new RepositoryDBKnjiga();
         this.repositoryClan = new RepositoryDBClan();
         this.repositoryPrimerak = new RepositoryDBPrimerak();
+        this.repositoryPozajmica= new RepositoryDBPozajmica();
     }
 
     public static Controller getInstance() {
@@ -57,7 +61,7 @@ public class Controller {
                 return bibliotekar;
             }
         }
-        throw new Exception("Unknown user!");
+        throw new Exception("Nepoznati korisnik!");
     }
 
     public void addKnjiga(Knjiga knjiga) throws Exception {
@@ -187,6 +191,52 @@ public class Controller {
         } finally {
             ((DBRepository) repositoryPrimerak).disconnect();
         }
+    }
+
+    public void addPozajmica(Pozajmica pozajmica) throws Exception {
+        ((DBRepository) repositoryPozajmica).connect();
+        try {
+          repositoryPozajmica.add(pozajmica);
+            ((DBRepository) repositoryPozajmica).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ((DBRepository) repositoryPozajmica).rollback();
+            throw e;
+        } finally {
+            ((DBRepository) repositoryPozajmica).disconnect();
+        }
+    }
+
+    public ArrayList<Pozajmica> getAllPozajmice() throws Exception {
+        ArrayList<Pozajmica> pozajmice = new ArrayList<>();
+        ((DBRepository) repositoryPozajmica).connect();
+        try {
+            pozajmice= (ArrayList<Pozajmica>) repositoryPozajmica.getAll();
+            ((DBRepository) repositoryPozajmica).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ((DBRepository) repositoryPozajmica).rollback();
+            throw e;
+        } finally {
+            ((DBRepository) repositoryPozajmica).disconnect();
+        }
+        return pozajmice;
+    }
+
+    public boolean obrisiPozajmicu(Pozajmica p) throws Exception {
+        ((DBRepository) repositoryPozajmica).connect();
+        try {
+            repositoryPozajmica.delete(p);
+            ((DBRepository) repositoryPozajmica).commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ((DBRepository) repositoryPozajmica).rollback();
+            throw e;
+        } finally {
+            ((DBRepository) repositoryPozajmica).disconnect();
+        }
+
     }
 
 }
