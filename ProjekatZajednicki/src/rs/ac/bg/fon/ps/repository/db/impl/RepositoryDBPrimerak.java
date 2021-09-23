@@ -42,7 +42,7 @@ public class RepositoryDBPrimerak implements DBRepository<Primerak> {
                 k.setAutor(rs.getString("k.autor"));
                 k.setZanr(Zanr.valueOf(rs.getString("k.zanr")));
                 Primerak p = new Primerak();
-                p.setInvertarskiBroj(rs.getInt("p.invertarskiBroj"));
+                p.setInvertarskiBroj(rs.getInt("p.inventarskiBroj"));
                 p.setIzdat(rs.getBoolean("p.izdat"));
                 p.setGodinaIzdanja(rs.getInt("p.godinaIzdanja"));
                 p.setKnjiga(k);
@@ -68,13 +68,13 @@ public class RepositoryDBPrimerak implements DBRepository<Primerak> {
             ps.setInt(2, param.getGodinaIzdanja());
             ps.setInt(3, param.getKnjiga().getKnjigaID());
             ps.executeUpdate();
-            
+
             ResultSet rsKey = ps.getGeneratedKeys();
-            if(rsKey.next()){
-                int primerakID= rsKey.getInt(1);
+            if (rsKey.next()) {
+                int primerakID = rsKey.getInt(1);
                 param.setInvertarskiBroj(primerakID);
-            }else{
-            throw new Exception("ID primerka nije generisan!");
+            } else {
+                throw new Exception("ID primerka nije generisan!");
             }
             ps.close();
         } catch (Exception e) {
@@ -96,6 +96,36 @@ public class RepositoryDBPrimerak implements DBRepository<Primerak> {
     @Override
     public List<Primerak> getAllPoUslovu(Primerak param) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Primerak getUslov(Primerak param) throws Exception {
+        Primerak primerak = null;
+        try {
+            String sql = "SELECT * FROM primerak p JOIN knjiga k ON p.knjigaID=k.knjigaID WHERE p.inventarskiBroj=" + param.getInvertarskiBroj() + " AND p.izdat=0";
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                Knjiga k = new Knjiga();
+                k.setKnjigaID(rs.getInt("k.knjigaID"));
+                k.setNaziv(rs.getString("k.naziv"));
+                k.setAutor(rs.getString("k.autor"));
+                k.setZanr(Zanr.valueOf(rs.getString("k.zanr")));
+                primerak = new Primerak();
+                primerak.setInvertarskiBroj(rs.getInt("p.inventarskiBroj"));
+                primerak.setIzdat(rs.getBoolean("p.izdat"));
+                primerak.setGodinaIzdanja(rs.getInt("p.godinaIzdanja"));
+                primerak.setKnjiga(k);
+
+            }
+            rs.close();
+            s.close();
+            return primerak;
+        } catch (SQLException ex) {
+            Logger.getLogger(RepositoryDBPrimerak.class.getName()).log(Level.SEVERE, null, ex);
+            return primerak;
+        }
     }
 
 }

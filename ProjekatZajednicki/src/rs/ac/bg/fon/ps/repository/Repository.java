@@ -18,5 +18,5 @@ public interface Repository<T> {
     void edit(T param) throws Exception;
     void delete(T param) throws Exception;
     public List<T> getAllPoUslovu(T param) throws Exception;
-
+    public T getUslov(T param) throws Exception;
 }

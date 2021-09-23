@@ -86,7 +86,7 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
             s.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new Exception("Greska u dbu u izmeni knjige");
+            throw new Exception("Greška u dbu u izmeni knjige");
         }
     }
 
@@ -101,13 +101,18 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
             s.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new Exception("DB greska u brisanju knjige");
+            throw new Exception("DB greška u brisanju knjige");
         }
         
     }
 
     @Override
     public List<Knjiga> getAllPoUslovu(Knjiga param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Knjiga getUslov(Knjiga param) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

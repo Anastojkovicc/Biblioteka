@@ -52,32 +52,50 @@ public class PozajmicaController {
         frmPozajmica.addSacuvajBtnActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sacuvaj();
+                try {
+                    sacuvaj();
+                } catch (Exception ex) {
+                    Logger.getLogger(PozajmicaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
-            private void sacuvaj() {
+            private void sacuvaj() throws Exception {
                 if (!frmPozajmica.getTxtInventarskiBrojPrimerka().getText().isEmpty()
                         && !frmPozajmica.getTxtBrClanskeKarte().getText().isEmpty()
                         && !frmPozajmica.getTxtDatumIzdavanja().getText().isEmpty()) {
 
                     try {
                         int idClana = Integer.parseInt(frmPozajmica.getTxtBrClanskeKarte().getText().trim());
-                        //      Clan clan = Controller.getInstance().vratiClana(idClana);
-                        int brPrimerka = Integer.parseInt(frmPozajmica.getTxtDatumIzdavanja().getText().trim());
-                        //     Primerak primerak = Controller.getInstance().vratiPrimerak(brPrimerka);
+                        Clan clan = new Clan();
+                        clan.setBrojClanskeKarte(idClana);
+                        Clan clan2 = Controller.getInstance().getClan(clan);
+                        if (clan2 == null) {
+                            JOptionPane.showMessageDialog(frmPozajmica, "Dati član ne postoji ili nije platio članarinu", "Greška", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        int brPrimerka = Integer.parseInt(frmPozajmica.getTxtInventarskiBrojPrimerka().getText().trim());
+                        Primerak primerak = new Primerak();
+                        primerak.setInvertarskiBroj(brPrimerka);
+                        Primerak primerak2 = Controller.getInstance().getPrimerak(primerak);
+                        if (primerak2 == null) {
+                            JOptionPane.showMessageDialog(frmPozajmica, "Dati primerak ne postoji ili je izdat", "Greška", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
                         Date datum = sdf.parse(frmPozajmica.getTxtDatumIzdavanja().getText().trim());
-                        //Pri cuvanju u bazi dodati za sest meseci
 
-                        //       Pozajmica pozajmica= new Pozajmica(-1, datum, datum, clan, primerak)
-                        // boolean sacuvano = Controller.getInstance().addPozajmica(pozajmica);
-                        //                        if(sacuvano){
-                        //                        JOptionPane.showMessageDialog(frmPozajmica, "Pozajmica je uspešno sačuvana", "Čuvanje pozajmice", JOptionPane.INFORMATION_MESSAGE);
-                        //                        refreshView();
-                        //                        }
-//                        else{
-//                      JOptionPane.showMessageDialog(frmPozajmica, "Pozajmica nije sačuvana", "Greška", JOptionPane.ERROR_MESSAGE);
-//                            }
+                        Pozajmica pozajmica = new Pozajmica(-1, datum, datum, clan2, primerak);
+                        try {
+                            boolean sacuvano = Controller.getInstance().addPozajmica(pozajmica);
+                            if (sacuvano) {
+                                JOptionPane.showMessageDialog(frmPozajmica, "Pozajmica je uspešno sačuvana", "Čuvanje pozajmice", JOptionPane.INFORMATION_MESSAGE);
+                                refreshView();
+                            } else {
+                                JOptionPane.showMessageDialog(frmPozajmica, "Pozajmica nije sačuvana", "Greška", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (Exception ex) {
+                            Logger.getLogger(PozajmicaController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     } catch (ParseException ex) {
                         Logger.getLogger(PozajmicaController.class.getName()).log(Level.SEVERE, null, ex);
                     }

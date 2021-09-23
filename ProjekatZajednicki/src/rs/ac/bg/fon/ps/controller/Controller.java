@@ -44,7 +44,7 @@ public class Controller {
         this.repositoryKnjiga = new RepositoryDBKnjiga();
         this.repositoryClan = new RepositoryDBClan();
         this.repositoryPrimerak = new RepositoryDBPrimerak();
-        this.repositoryPozajmica= new RepositoryDBPozajmica();
+        this.repositoryPozajmica = new RepositoryDBPozajmica();
     }
 
     public static Controller getInstance() {
@@ -193,11 +193,12 @@ public class Controller {
         }
     }
 
-    public void addPozajmica(Pozajmica pozajmica) throws Exception {
+    public boolean addPozajmica(Pozajmica pozajmica) throws Exception {
         ((DBRepository) repositoryPozajmica).connect();
         try {
-          repositoryPozajmica.add(pozajmica);
+            repositoryPozajmica.add(pozajmica);
             ((DBRepository) repositoryPozajmica).commit();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             ((DBRepository) repositoryPozajmica).rollback();
@@ -211,7 +212,7 @@ public class Controller {
         ArrayList<Pozajmica> pozajmice = new ArrayList<>();
         ((DBRepository) repositoryPozajmica).connect();
         try {
-            pozajmice= (ArrayList<Pozajmica>) repositoryPozajmica.getAll();
+            pozajmice = (ArrayList<Pozajmica>) repositoryPozajmica.getAll();
             ((DBRepository) repositoryPozajmica).commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -237,6 +238,40 @@ public class Controller {
             ((DBRepository) repositoryPozajmica).disconnect();
         }
 
+    }
+
+    public Clan getClan(Clan clan) throws Exception {
+        Clan clan2 = null;
+        ((DBRepository) repositoryClan).connect();
+        try {
+            clan2 = (Clan) repositoryClan.getUslov(clan);
+            ((DBRepository) repositoryClan).commit();
+            return clan2;
+
+        } catch (Exception e) {
+            ((DBRepository) repositoryClan).rollback();
+            return clan2;
+
+        } finally {
+            ((DBRepository) repositoryClan).disconnect();
+        }
+
+    }
+
+    public Primerak getPrimerak(Primerak primerak) throws Exception {
+        Primerak prim = null;
+        ((DBRepository) repositoryPrimerak).connect();
+        try {
+            prim = (Primerak) repositoryPrimerak.getUslov(primerak);
+            ((DBRepository) repositoryPrimerak).commit();
+            return prim;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ((DBRepository) repositoryPrimerak).rollback();
+            return prim;
+        } finally {
+            ((DBRepository) repositoryPrimerak).disconnect();
+        }
     }
 
 }

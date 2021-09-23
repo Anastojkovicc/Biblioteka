@@ -71,5 +71,10 @@ public class RepositoryDBUser implements DBRepository<Bibliotekar>{
     public List<Bibliotekar> getAllPoUslovu(Bibliotekar param) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Bibliotekar getUslov(Bibliotekar param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
