@@ -13,10 +13,18 @@ import rs.ac.bg.fon.ps.domain.Knjiga;
  * @author ANA
  */
 public interface Repository<T> {
-    List<T> getAll();
+
+    List<T> getAll(T param) throws Exception;
+
     void add(T param) throws Exception;
+
     void edit(T param) throws Exception;
+
     void delete(T param) throws Exception;
+
     public List<T> getAllPoUslovu(T param) throws Exception;
+
     public T getUslov(T param) throws Exception;
+
+    List<T> getAll();
 }

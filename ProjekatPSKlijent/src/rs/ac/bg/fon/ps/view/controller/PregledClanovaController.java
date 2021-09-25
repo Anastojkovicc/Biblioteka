@@ -76,6 +76,35 @@ public class PregledClanovaController {
 
             }
         });
+
+        frmPregledClanova.addPretraziBtnActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    pretrazi();
+                } catch (Exception ex) {
+                    Logger.getLogger(PregledClanovaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            private void pretrazi() throws Exception {
+                
+                String naziv = frmPregledClanova.getTxtPretraga().getText().trim();
+                if (!frmPregledClanova.getTxtPretraga().getText().isEmpty()) {
+                   
+                    Clan clan = new Clan();
+                    clan.setIme(naziv);
+                    clan.setPrezime(naziv);
+                    ArrayList<Clan> clanovi = Communication.getInstance().getAllClanUslov(clan);
+                    ClanTableModel ctm = (ClanTableModel) frmPregledClanova.getTblClan().getModel();
+                    ctm.setClanovi(clanovi);
+                } else {
+                    ArrayList<Clan> clanoviSvi = (ArrayList<Clan>) Communication.getInstance().getAllClan();
+                    ClanTableModel ctm = (ClanTableModel) frmPregledClanova.getTblClan().getModel();
+                    ctm.setClanovi(clanoviSvi);
+                }
+            }
+        });
     }
 
 }

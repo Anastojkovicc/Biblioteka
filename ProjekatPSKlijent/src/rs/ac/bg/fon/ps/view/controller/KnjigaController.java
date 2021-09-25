@@ -40,22 +40,35 @@ public class KnjigaController {
         frmKnjiga.addSacuvajBtnActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                save();
+                try {
+                    save();
+                } catch (Exception ex) {
+                    Logger.getLogger(KnjigaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
             private void save() {
                 Knjiga k = new Knjiga();
-                k.setKnjigaID(0);
-                k.setNaziv(frmKnjiga.getTxtNaziv().getText().trim());
-                k.setAutor(frmKnjiga.getTxtAutor().getText().trim());
-                k.setZanr((Zanr) Zanr.valueOf(frmKnjiga.getCmbZanr().getSelectedItem().toString()));
-                KnjigaTableModel ktblm = (KnjigaTableModel) frmKnjiga.getTblKnjige().getModel();
-                if (!frmKnjiga.getTxtNaziv().getText().isEmpty() && !frmKnjiga.getTxtAutor().getText().isEmpty()) {
-                    ktblm.addKnjiga(k);
-                    frmKnjiga.getTxtNaziv().setText("");
-                    frmKnjiga.getTxtAutor().setText("");
-                } else {
-                    JOptionPane.showMessageDialog(frmKnjiga, "Morate popuniti oba polja", "Dodavanje knjige", JOptionPane.ERROR_MESSAGE);
+                try {
+                    if (!frmKnjiga.getTxtNaziv().getText().isEmpty() && !frmKnjiga.getTxtAutor().getText().isEmpty()) {
+
+                        k.setNaziv(frmKnjiga.getTxtNaziv().getText().trim());
+                        k.setAutor(frmKnjiga.getTxtAutor().getText().trim());
+                        k.setZanr((Zanr) Zanr.valueOf(frmKnjiga.getCmbZanr().getSelectedItem().toString()));
+                        System.out.println("ovde");
+
+                        Communication.getInstance().addKnjiga(k);
+                        JOptionPane.showMessageDialog(frmKnjiga, "Knjiga je uspešno sačuvana");
+                        frmKnjiga.getTxtNaziv().setText("");
+                        frmKnjiga.getTxtAutor().setText("");
+                    } else {
+                        JOptionPane.showMessageDialog(frmKnjiga, "Morate popuniti oba polja", "Dodavanje knjige", JOptionPane.ERROR_MESSAGE);
+
+                        return;
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frmKnjiga, "Neuspešno čuvanje knjige", "Greška", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -156,10 +169,14 @@ public class KnjigaController {
         frmKnjiga.addBtnSacuvajSveActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sacuvajSve();
+                try {
+                    sacuvajSve();
+                } catch (Exception ex) {
+                    Logger.getLogger(KnjigaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
-            private void sacuvajSve() {
+            private void sacuvajSve() throws Exception {
 
                 Communication c = Communication.getInstance();
                 KnjigaTableModel ktm = (KnjigaTableModel) frmKnjiga.getTblKnjige().getModel();
@@ -217,7 +234,7 @@ public class KnjigaController {
                 frmKnjiga.getBtnIzmeni().setEnabled(false);
                 frmKnjiga.getBtnDozvoli().setEnabled(false);
                 frmKnjiga.getBtnSacuvaj().setEnabled(true);
-                frmKnjiga.getPanelKnjige().setVisible(true);
+                frmKnjiga.getPanelKnjige().setVisible(false);
 
                 frmKnjiga.getTxtNaziv().setEnabled(true);
                 frmKnjiga.getTxtAutor().setEnabled(true);

@@ -202,4 +202,37 @@ public class Communication {
         }
     }
 
+    public ArrayList<Clan> getAllClanUslov(Clan clan) throws Exception {
+        Request request = new Request(Operation.GET_CLANOVI_USLOV, clan);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if (response.getException() == null) {
+            return  (ArrayList<Clan>) response.getResult();
+        } else {
+            throw response.getException();
+        }
+    }
+
+    public ArrayList<Pozajmica> getAllPozajmicaUslov(Pozajmica p) throws Exception {
+         Request request = new Request(Operation.GET_POZAJMICE_USLOV,p);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if (response.getException() == null) {
+            return   (ArrayList<Pozajmica>) response.getResult();
+        } else {
+            throw response.getException();
+        }
+    }
+
+    public boolean razduziSve(ArrayList<Pozajmica> listaRazduzivanja) throws Exception {
+        Request request = new Request(Operation.RAZDUZI_SVE, listaRazduzivanja);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if (response.getException() == null) {
+            return true;
+        } else {
+            throw response.getException();
+        }
+    }
+
 }

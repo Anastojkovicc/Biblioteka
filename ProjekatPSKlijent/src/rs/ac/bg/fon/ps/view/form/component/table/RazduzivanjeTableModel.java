@@ -8,24 +8,36 @@ package rs.ac.bg.fon.ps.view.form.component.table;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import rs.ac.bg.fon.ps.domain.Pozajmica;
-import rs.ac.bg.fon.ps.domain.Primerak;
 
 /**
  *
  * @author ANA
  */
-public class PozajmicaTableModel extends AbstractTableModel {
+public class RazduzivanjeTableModel extends AbstractTableModel {
 
     List<Pozajmica> listaPozajmica;
     String[] kolone = {"Broj članske karte", "Inventarski broj primerka", "Rok za vraćanje"};
 
-    public PozajmicaTableModel(List<Pozajmica> listaPozajmica) {
+    /**
+     *
+     * @param list
+     */
+    public RazduzivanjeTableModel(List<Pozajmica> listaPozajmica) {
         this.listaPozajmica = listaPozajmica;
     }
 
     public void setListaPozajmica(List<Pozajmica> listaPozajmica) {
         this.listaPozajmica = listaPozajmica;
         fireTableDataChanged();
+    }
+
+    public void addPozajmica(Pozajmica p) {
+        listaPozajmica.add(p);
+        fireTableDataChanged();
+    }
+
+    public List<Pozajmica> getListaPozajmica() {
+        return listaPozajmica;
     }
 
     @Override

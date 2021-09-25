@@ -48,7 +48,11 @@ public class RepositoryDBUser implements DBRepository<Bibliotekar>{
         } catch (SQLException ex) {
             Logger.getLogger(RepositoryDBUser.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        } catch (Exception ex) {
+            Logger.getLogger(RepositoryDBUser.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
+        
       
     }
 
@@ -74,6 +78,11 @@ public class RepositoryDBUser implements DBRepository<Bibliotekar>{
 
     @Override
     public Bibliotekar getUslov(Bibliotekar param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Bibliotekar> getAll(Bibliotekar param) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

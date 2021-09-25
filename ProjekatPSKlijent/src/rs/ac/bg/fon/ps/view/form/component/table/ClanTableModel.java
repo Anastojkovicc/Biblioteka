@@ -18,7 +18,7 @@ import rs.ac.bg.fon.ps.domain.Clan;
  */
 public class ClanTableModel extends AbstractTableModel {
 
-    private final List<Clan> clanovi;
+    private  List<Clan> clanovi;
 
     String[] kolone = {"Broj članske karte", "Ime", "Prezime", "Telefon", "Email", "Adresa", "Datum članarine"};
 
@@ -111,5 +111,12 @@ public class ClanTableModel extends AbstractTableModel {
         clanovi.remove(red);
         fireTableDataChanged();
     }
+
+    public void setClanovi(List<Clan> clanovi) {
+        this.clanovi = clanovi;
+        fireTableDataChanged();
+    }
+    
+    
 
 }

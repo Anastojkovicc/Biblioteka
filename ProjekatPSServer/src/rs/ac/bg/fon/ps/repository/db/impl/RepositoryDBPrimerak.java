@@ -54,6 +54,9 @@ public class RepositoryDBPrimerak implements DBRepository<Primerak> {
         } catch (SQLException ex) {
             Logger.getLogger(RepositoryDBPrimerak.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        } catch (Exception ex) {
+            Logger.getLogger(RepositoryDBPrimerak.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
@@ -126,6 +129,11 @@ public class RepositoryDBPrimerak implements DBRepository<Primerak> {
             Logger.getLogger(RepositoryDBPrimerak.class.getName()).log(Level.SEVERE, null, ex);
             return primerak;
         }
+    }
+
+    @Override
+    public List<Primerak> getAll(Primerak param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

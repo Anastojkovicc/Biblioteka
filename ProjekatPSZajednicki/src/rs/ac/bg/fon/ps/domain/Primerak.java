@@ -6,13 +6,17 @@
 package rs.ac.bg.fon.ps.domain;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author ANA
  */
-public class Primerak implements Serializable{
+public class Primerak implements GenericEntity {
+
     private int invertarskiBroj;
     private boolean izdat;
     private int godinaIzdanja;
@@ -27,8 +31,6 @@ public class Primerak implements Serializable{
         this.godinaIzdanja = godinaIzdanja;
         this.knjiga = knjiga;
     }
-
-    
 
     public int getGodinaIzdanja() {
         return godinaIzdanja;
@@ -85,7 +87,97 @@ public class Primerak implements Serializable{
         final Primerak other = (Primerak) obj;
         return true;
     }
-    
-    
-    
+
+    @Override
+    public String getTableName() {
+        return "primerak";
+    }
+
+    @Override
+    public String getColumnNamesForInsert() {
+        return "izdat,godinaIzdanja,knjigaID";
+    }
+
+    @Override
+    public String getInsertValues() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(izdat).append(", ").append(godinaIzdanja).append(", ").append(knjiga.getKnjigaID());
+        return sb.toString();
+    }
+
+    @Override
+    public void setId(int id) {
+        this.invertarskiBroj = id;
+    }
+
+    @Override
+    public String getColumns() {
+        return "*";
+    }
+
+    @Override
+    public String tableNameForGetAll() {
+        return "primerak p JOIN knjiga k ON p.knjigaID=k.knjigaID";
+
+    }
+
+    @Override
+    public List<GenericEntity> getList(ResultSet rs) throws Exception {
+        List<GenericEntity> lista = new ArrayList<>();
+        while (rs.next()) {
+            Knjiga k = new Knjiga();
+            k.setKnjigaID(rs.getInt("k.knjigaID"));
+            k.setNaziv(rs.getString("k.naziv"));
+            k.setAutor(rs.getString("k.autor"));
+            k.setZanr(Zanr.valueOf(rs.getString("k.zanr")));
+            Primerak p = new Primerak();
+            p.setInvertarskiBroj(rs.getInt("p.inventarskiBroj"));
+            p.setIzdat(rs.getBoolean("p.izdat"));
+            p.setGodinaIzdanja(rs.getInt("p.godinaIzdanja"));
+            p.setKnjiga(k);
+            lista.add(p);
+        }
+        return lista;
+    }
+
+    @Override
+    public String getPoljaIZmene() {
+        return "izdat=1";
+    }
+
+    @Override
+    public String getUslovBrisanja() {
+        return "p.inventarskiBroj=" + invertarskiBroj + " AND p.izdat=0";
+
+    }
+
+    @Override
+    public String getUslovPretrage() {
+        return " p.inventarskiBroj=" + invertarskiBroj + " AND p.izdat=0";
+    }
+
+    @Override
+    public String uslovZaNalazenje() {
+        return "";
+    }
+
+    @Override
+    public GenericEntity getEntity(ResultSet rs) throws Exception {
+        if (rs.next()) {
+            Knjiga k = new Knjiga();
+            k.setKnjigaID(rs.getInt("k.knjigaID"));
+            k.setNaziv(rs.getString("k.naziv"));
+            k.setAutor(rs.getString("k.autor"));
+            k.setZanr(Zanr.valueOf(rs.getString("k.zanr")));
+            Primerak p = new Primerak();
+            p.setInvertarskiBroj(rs.getInt("p.inventarskiBroj"));
+            p.setIzdat(rs.getBoolean("p.izdat"));
+            p.setGodinaIzdanja(rs.getInt("p.godinaIzdanja"));
+            p.setKnjiga(k);
+            return p;
+        }
+        throw new Exception("Ne postoji primerak sa unetim podacima!");
+
+    }
+
 }

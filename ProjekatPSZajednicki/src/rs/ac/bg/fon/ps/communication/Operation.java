@@ -26,5 +26,8 @@ public enum Operation implements Serializable{
     DELETE_POZAJMICA,
     GET_ALL_PRIMERKE,
     GET_CLAN,
-    GET_PRIMERAK;
+    GET_PRIMERAK,
+    GET_CLANOVI_USLOV,
+    GET_POZAJMICE_USLOV,
+    RAZDUZI_SVE;
 }

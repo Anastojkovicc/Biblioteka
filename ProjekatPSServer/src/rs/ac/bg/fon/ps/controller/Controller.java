@@ -12,9 +12,13 @@ import rs.ac.bg.fon.ps.domain.Clan;
 import rs.ac.bg.fon.ps.domain.Knjiga;
 import rs.ac.bg.fon.ps.domain.Pozajmica;
 import rs.ac.bg.fon.ps.domain.Primerak;
+import rs.ac.bg.fon.ps.operation.AbstractGenericOperation;
+import rs.ac.bg.fon.ps.operation.bibliotekar.GetAllBibliotekari;
+import rs.ac.bg.fon.ps.operation.knjiga.AddKnjiga;
 import rs.ac.bg.fon.ps.repository.Repository;
 import rs.ac.bg.fon.ps.repository.db.DBRepository;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBClan;
+import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBGeneric;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBKnjiga;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBPozajmica;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBPrimerak;
@@ -31,10 +35,8 @@ public class Controller {
     private final Repository repositoryClan;
     private final Repository repositoryPrimerak;
     private final Repository repositoryPozajmica;
+    private final Repository repositoryGeneric;
     private static Controller instanca;
-
-//    public int idKnjige = 0;
-//    public int idClana = 0;
 
     public Controller() {
         this.repositoryUser = new RepositoryDBUser();
@@ -42,6 +44,7 @@ public class Controller {
         this.repositoryClan = new RepositoryDBClan();
         this.repositoryPrimerak = new RepositoryDBPrimerak();
         this.repositoryPozajmica = new RepositoryDBPozajmica();
+        this.repositoryGeneric = new RepositoryDBGeneric();
     }
 
     public static Controller getInstance() {
@@ -52,106 +55,101 @@ public class Controller {
     }
 
     public Bibliotekar login(String username, String password) throws Exception {
-        List<Bibliotekar> bibliotekari = repositoryUser.getAll();
-        for (Bibliotekar bibliotekar : bibliotekari) {
-            if (bibliotekar.getUsername().equals(username) && bibliotekar.getPassword().equals(password)) {
-                return bibliotekar;
-            }
-        }
-        throw new Exception("Nepoznati korisnik!");
+        Bibliotekar bibliotekar = new Bibliotekar();
+        bibliotekar.setUsername(username);
+        bibliotekar.setPassword(password);
+        AbstractGenericOperation operation = new GetAllBibliotekari();
+        operation.execute(bibliotekar);
+        return ((GetAllBibliotekari) operation).getBibliotekar();
     }
 
     public void addKnjiga(Knjiga knjiga) throws Exception {
-        ((DBRepository) repositoryKnjiga).connect();
+//        AbstractGenericOperation operation = new AddKnjiga();
+//        operation.execute(knjiga);
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            repositoryKnjiga.add(knjiga);
-            ((DBRepository) repositoryKnjiga).commit();
+            repositoryGeneric.add(knjiga);
+            ((DBRepository) repositoryGeneric).commit();
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryKnjiga).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
-            ((DBRepository) repositoryKnjiga).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
     }
 
     public List<Knjiga> getAllBooks() throws Exception {
         List<Knjiga> knjige = null;
-        ((DBRepository) repositoryKnjiga).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            knjige = repositoryKnjiga.getAll();
-            ((DBRepository) repositoryKnjiga).commit();
+            Knjiga knjiga= new Knjiga();
+            knjige = repositoryGeneric.getAll(knjiga);
+            ((DBRepository) repositoryGeneric).commit();
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryKnjiga).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
-            ((DBRepository) repositoryKnjiga).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
         return knjige;
     }
 
-//    public int vratiID() {
-//        return ++idKnjige;
-//    }
-
     public List<Clan> getAllClan() throws Exception {
         List<Clan> clanovi = new ArrayList<>();
-        ((DBRepository) repositoryClan).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            clanovi = repositoryClan.getAll();
-            ((DBRepository) repositoryClan).commit();
+            Clan clan= new Clan();
+            clanovi = repositoryGeneric.getAll(clan);
+            ((DBRepository) repositoryGeneric).commit();
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryClan).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
-            ((DBRepository) repositoryClan).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
         return clanovi;
     }
 
     public void addClan(Clan c) throws Exception {
-        ((DBRepository) repositoryClan).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            repositoryClan.add(c);
-            ((DBRepository) repositoryClan).commit();
+            repositoryGeneric.add(c);
+            ((DBRepository) repositoryGeneric).commit();
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryClan).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
-            ((DBRepository) repositoryClan).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
     }
 
-//    public int vratiIDClana() {
-//        return ++idClana;
-//    }
-
     public boolean obrisiKnjigu(Knjiga knjiga) throws Exception {
-        ((DBRepository) repositoryKnjiga).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            repositoryKnjiga.delete(knjiga);
-            ((DBRepository) repositoryKnjiga).commit();
+            repositoryGeneric.delete(knjiga);
+            ((DBRepository) repositoryGeneric).commit();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryKnjiga).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
-            ((DBRepository) repositoryKnjiga).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
     }
 
     public void editKnjigu(Knjiga knjiga) throws Exception {
-        ((DBRepository) repositoryKnjiga).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            ((DBRepository) repositoryKnjiga).edit(knjiga);
-            ((DBRepository) repositoryKnjiga).commit();
+            ((DBRepository) repositoryGeneric).edit(knjiga);
+            ((DBRepository) repositoryGeneric).commit();
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryKnjiga).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
             ((DBRepository) repositoryKnjiga).disconnect();
@@ -160,115 +158,152 @@ public class Controller {
     }
 
     public boolean obrisiClana(Clan clan) throws Exception {
-        ((DBRepository) repositoryClan).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            repositoryClan.delete(clan);
-            ((DBRepository) repositoryClan).commit();
+            repositoryGeneric.delete(clan);
+            ((DBRepository) repositoryGeneric).commit();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryClan).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
-            ((DBRepository) repositoryClan).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
 
     }
 
     public boolean addPrimerak(Primerak primerak) throws Exception {
-        ((DBRepository) repositoryPrimerak).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            repositoryPrimerak.add(primerak);
-            ((DBRepository) repositoryPrimerak).commit();
+            repositoryGeneric.add(primerak);
+            ((DBRepository) repositoryGeneric).commit();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryPrimerak).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
-            ((DBRepository) repositoryPrimerak).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
     }
 
     public boolean addPozajmica(Pozajmica pozajmica) throws Exception {
-        ((DBRepository) repositoryPozajmica).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            repositoryPozajmica.add(pozajmica);
-            ((DBRepository) repositoryPozajmica).commit();
+            repositoryGeneric.add(pozajmica);
+            ((DBRepository) repositoryGeneric).commit();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryPozajmica).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
-            ((DBRepository) repositoryPozajmica).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
     }
 
     public ArrayList<Pozajmica> getAllPozajmice() throws Exception {
         ArrayList<Pozajmica> pozajmice = new ArrayList<>();
-        ((DBRepository) repositoryPozajmica).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            pozajmice = (ArrayList<Pozajmica>) repositoryPozajmica.getAll();
-            ((DBRepository) repositoryPozajmica).commit();
+            Pozajmica pozajmica= new Pozajmica();
+            pozajmice = (ArrayList<Pozajmica>) repositoryGeneric.getAll(pozajmica);
+            ((DBRepository) repositoryGeneric).commit();
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryPozajmica).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
-            ((DBRepository) repositoryPozajmica).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
         return pozajmice;
     }
 
     public boolean obrisiPozajmicu(Pozajmica p) throws Exception {
-        ((DBRepository) repositoryPozajmica).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            repositoryPozajmica.delete(p);
-            ((DBRepository) repositoryPozajmica).commit();
+            repositoryGeneric.delete(p);
+            ((DBRepository) repositoryGeneric).commit();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryPozajmica).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             throw e;
         } finally {
-            ((DBRepository) repositoryPozajmica).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
 
     }
 
     public Clan getClan(Clan clan) throws Exception {
         Clan clan2 = null;
-        ((DBRepository) repositoryClan).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            clan2 = (Clan) repositoryClan.getUslov(clan);
-            ((DBRepository) repositoryClan).commit();
+            clan2 = (Clan) repositoryGeneric.getUslov(clan);
+            ((DBRepository) repositoryGeneric).commit();
             return clan2;
 
         } catch (Exception e) {
-            ((DBRepository) repositoryClan).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             return clan2;
 
         } finally {
-            ((DBRepository) repositoryClan).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
 
     }
 
     public Primerak getPrimerak(Primerak primerak) throws Exception {
         Primerak prim = null;
-        ((DBRepository) repositoryPrimerak).connect();
+        ((DBRepository) repositoryGeneric).connect();
         try {
-            prim = (Primerak) repositoryPrimerak.getUslov(primerak);
-            ((DBRepository) repositoryPrimerak).commit();
+            prim = (Primerak) repositoryGeneric.getUslov(primerak);
+            ((DBRepository) repositoryGeneric).commit();
             return prim;
         } catch (Exception e) {
             e.printStackTrace();
-            ((DBRepository) repositoryPrimerak).rollback();
+            ((DBRepository) repositoryGeneric).rollback();
             return prim;
         } finally {
-            ((DBRepository) repositoryPrimerak).disconnect();
+            ((DBRepository) repositoryGeneric).disconnect();
         }
+    }
+
+    public ArrayList<Clan> getAllClanUslov(Clan clan) throws Exception {
+        ArrayList<Clan> clanovi = new ArrayList<>();
+        ((DBRepository) repositoryGeneric).connect();
+        try {
+            clanovi = (ArrayList<Clan>) repositoryGeneric.getAllPoUslovu(clan);
+            ((DBRepository) repositoryGeneric).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ((DBRepository) repositoryGeneric).rollback();
+            throw e;
+        } finally {
+            ((DBRepository) repositoryGeneric).disconnect();
+        }
+        return clanovi;
+    }
+
+    public Object getAllPozajmiceUslov(Pozajmica p) throws Exception {
+        ArrayList<Pozajmica> pozajmice = new ArrayList<>();
+        ((DBRepository) repositoryGeneric).connect();
+        try {
+            pozajmice = (ArrayList<Pozajmica>) repositoryGeneric.getAllPoUslovu(p);
+            ((DBRepository) repositoryGeneric).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ((DBRepository) repositoryGeneric).rollback();
+            throw e;
+        } finally {
+            ((DBRepository) repositoryGeneric).disconnect();
+        }
+        return pozajmice;
+    }
+
+    public void razduziSvePozajmice(ArrayList<Pozajmica> razduzivanje) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

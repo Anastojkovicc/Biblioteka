@@ -31,9 +31,9 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
     public List<Knjiga> getAll() {
         try {
             String sql = "SELECT * FROM knjiga";
-            
+
             List<Knjiga> knjige = new ArrayList<>();
-            Connection connection= DBConnectionFactory.getInstance().getConnection();
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(sql);
             while (rs.next()) {
@@ -41,7 +41,7 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
                 k.setKnjigaID(rs.getInt("knjigaID"));
                 k.setNaziv(rs.getString("naziv"));
                 k.setAutor(rs.getString("autor"));
-                k.setZanr( Zanr.valueOf(rs.getString("zanr")));
+                k.setZanr(Zanr.valueOf(rs.getString("zanr")));
                 knjige.add(k);
             }
             rs.close();
@@ -50,38 +50,40 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
         } catch (SQLException ex) {
             Logger.getLogger(RepositoryDBKnjiga.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        } catch (Exception ex) {
+            Logger.getLogger(RepositoryDBKnjiga.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
 
     }
 
     @Override
     public void add(Knjiga param) throws Exception {
-        try{
-        String sql = "INSERT INTO knjiga (naziv,autor,zanr) VALUES (?,?,?)";
-        Connection connection= DBConnectionFactory.getInstance().getConnection();
-        PreparedStatement ps= connection.prepareStatement(sql);
-        ps.setString(1, param.getNaziv());
-        ps.setString(2, param.getAutor());
-        ps.setString(3, param.getZanr().toString());
-        ps.executeUpdate();
-        ps.close();
-        }
-        catch(Exception e){
+        try {
+            String sql = "INSERT INTO knjiga (naziv,autor,zanr) VALUES (?,?,?)";
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, param.getNaziv());
+            ps.setString(2, param.getAutor());
+            ps.setString(3, param.getZanr().toString());
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            throw  new Exception("Knjiga ne moze biti sacuvana");
+            throw new Exception("Knjiga ne moze biti sacuvana");
         }
     }
 
     @Override
     public void edit(Knjiga knjiga) throws Exception {
         try {
-            String sql= "UPDATE knjiga SET naziv='"+knjiga.getNaziv()+"', "
-                    + "autor='"+knjiga.getAutor()+"', "
-                    + "zanr='"+knjiga.getZanr().toString()+"' "
-                    + "WHERE knjigaID="+knjiga.getKnjigaID();
-           
-            Connection connection= DBConnectionFactory.getInstance().getConnection();
-            Statement s= connection.createStatement();
+            String sql = "UPDATE knjiga SET naziv='" + knjiga.getNaziv() + "', "
+                    + "autor='" + knjiga.getAutor() + "', "
+                    + "zanr='" + knjiga.getZanr().toString() + "' "
+                    + "WHERE knjigaID=" + knjiga.getKnjigaID();
+
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
+            Statement s = connection.createStatement();
             s.executeUpdate(sql);
             s.close();
         } catch (SQLException ex) {
@@ -93,17 +95,17 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
     @Override
     public void delete(Knjiga knjiga) throws Exception {
         try {
-            String sql= "DELETE FROM knjiga WHERE knjigaID="+knjiga.getKnjigaID();
+            String sql = "DELETE FROM knjiga WHERE knjigaID=" + knjiga.getKnjigaID();
             System.out.println(sql);
-            Connection connection= DBConnectionFactory.getInstance().getConnection();
-            Statement s= connection.createStatement();
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
+            Statement s = connection.createStatement();
             s.executeUpdate(sql);
             s.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw new Exception("DB greška u brisanju knjige");
         }
-        
+
     }
 
     @Override
@@ -116,6 +118,34 @@ public class RepositoryDBKnjiga implements DBRepository<Knjiga> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
- 
+    @Override
+    public List<Knjiga> getAll(Knjiga param) throws Exception {
+        try {
+            String sql = "SELECT * FROM knjiga";
+
+            List<Knjiga> knjige = new ArrayList<>();
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                Knjiga k = new Knjiga();
+                k.setKnjigaID(rs.getInt("knjigaID"));
+                k.setNaziv(rs.getString("naziv"));
+                k.setAutor(rs.getString("autor"));
+                k.setZanr(Zanr.valueOf(rs.getString("zanr")));
+                knjige.add(k);
+            }
+            rs.close();
+            s.close();
+            return knjige;
+        } catch (SQLException ex) {
+            Logger.getLogger(RepositoryDBKnjiga.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (Exception ex) {
+            Logger.getLogger(RepositoryDBKnjiga.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
 
 }

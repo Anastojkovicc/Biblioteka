@@ -73,6 +73,8 @@ public class RepositoryDBPozajmica implements DBRepository<Pozajmica> {
 
         } catch (SQLException ex) {
             Logger.getLogger(RepositoryDBPozajmica.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(RepositoryDBPozajmica.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
 
@@ -108,7 +110,7 @@ public class RepositoryDBPozajmica implements DBRepository<Pozajmica> {
     }
 
     @Override
-    public void delete(Pozajmica param) {
+    public void delete(Pozajmica param) throws Exception {
         try {
             String sql = "DELETE FROM pozajmica WHERE idPozajmice=" + param.getIdPozajmice();
             Connection connection = DBConnectionFactory.getInstance().getConnection();
@@ -127,11 +129,60 @@ public class RepositoryDBPozajmica implements DBRepository<Pozajmica> {
 
     @Override
     public List<Pozajmica> getAllPoUslovu(Pozajmica param) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            List<Pozajmica> pozajmice = new ArrayList<>();
+            String sql = "SELECT * FROM pozajmica p join clan c on p.clan=c.brojClanskeKarte "
+                    + "join primerak pr on p.primerak=pr.inventarskiBroj left join knjiga k ON pr.knjigaID=k.knjigaID WHERE c.brojClanskeKarte=" + param.getClan().getBrojClanskeKarte();
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                Knjiga k = new Knjiga();
+                k.setKnjigaID(rs.getInt("k.knjigaID"));
+                k.setNaziv(rs.getString("k.naziv"));
+                k.setAutor(rs.getString("k.autor"));
+                k.setZanr(Zanr.valueOf(rs.getString("k.zanr")));
+                Primerak p = new Primerak();
+                p.setInvertarskiBroj(rs.getInt("pr.inventarskiBroj"));
+                p.setIzdat(rs.getBoolean("pr.izdat"));
+                p.setGodinaIzdanja(rs.getInt("pr.godinaIzdanja"));
+                p.setKnjiga(k);
+                Clan clan = new Clan();
+                clan.setBrojClanskeKarte(rs.getInt("c.brojClanskeKarte"));
+                clan.setIme(rs.getString("c.ime"));
+                clan.setPrezime(rs.getString("c.prezime"));
+                clan.setJmbg(rs.getInt("c.jmbg"));
+                clan.setTelefon(rs.getInt("c.telefon"));
+                clan.seteMail(rs.getString("c.email"));
+                clan.setAdresa(rs.getString("c.adresa"));
+                clan.setDatumClanarine(rs.getDate("c.datumUclanjenja"));
+                clan.setDatumUclanjenja(rs.getDate("c.datumClanarine"));
+                int pozajmicaID = rs.getInt("p.idPozajmice");
+                Date datumI = rs.getDate("p.datumIzdavanja");
+                Date datumV = rs.getDate("p.datumVracanja");
+                Pozajmica pozajmica = new Pozajmica(pozajmicaID, datumI, datumV, clan, p);
+                pozajmice.add(pozajmica);
+
+            }
+            rs.close();
+            s.close();
+            return pozajmice;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RepositoryDBPozajmica.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(RepositoryDBPozajmica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
     public Pozajmica getUslov(Pozajmica param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Pozajmica> getAll(Pozajmica param) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

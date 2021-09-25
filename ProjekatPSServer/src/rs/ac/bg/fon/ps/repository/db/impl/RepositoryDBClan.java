@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import rs.ac.bg.fon.ps.domain.Clan;
 import rs.ac.bg.fon.ps.repository.db.DBConnectionFactory;
 import rs.ac.bg.fon.ps.repository.db.DBRepository;
@@ -51,6 +53,9 @@ public class RepositoryDBClan implements DBRepository<Clan> {
             return clanovi;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            return null;
+        } catch (Exception ex) {
+            Logger.getLogger(RepositoryDBClan.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
 
@@ -125,10 +130,11 @@ public class RepositoryDBClan implements DBRepository<Clan> {
     }
 
     @Override
-    public List<Clan> getAllPoUslovu(Clan param) throws Exception {
-        //DODATI USLOV ZA DUGME PRETRAGE
+    public List<Clan> getAllPoUslovu(Clan c) throws Exception {
+
         try {
-            String sql = "select * from clan";
+            String sql = "select * from clan where ime LIKE '%" + c.getIme() + "%' OR prezime LIKE '%" + c.getPrezime() + "%'";
+            System.out.println(sql);
             List<Clan> clanovi = new ArrayList<>();
             Connection connection = DBConnectionFactory.getInstance().getConnection();
             Statement s = connection.createStatement();
@@ -182,6 +188,41 @@ public class RepositoryDBClan implements DBRepository<Clan> {
             return clan;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<Clan> getAll(Clan param) throws Exception {
+         try {
+            String sql = "select * from clan";
+            List<Clan> clanovi = new ArrayList<>();
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                Clan clan = new Clan();
+                clan.setBrojClanskeKarte(rs.getInt("brojClanskeKarte"));
+                clan.setIme(rs.getString("ime"));
+                clan.setPrezime(rs.getString("prezime"));
+                clan.setJmbg(rs.getInt("jmbg"));
+                clan.setTelefon(rs.getInt("telefon"));
+                clan.seteMail(rs.getString("email"));
+                clan.setAdresa(rs.getString("adresa"));
+                clan.setDatumClanarine(rs.getDate("datumUclanjenja"));
+                clan.setDatumUclanjenja(rs.getDate("datumClanarine"));
+                clanovi.add(clan);
+
+            }
+            rs.close();
+            s.close();
+            return clanovi;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        } catch (Exception ex) {
+            Logger.getLogger(RepositoryDBClan.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
 

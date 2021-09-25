@@ -20,7 +20,7 @@ public class FrmMain extends javax.swing.JFrame {
      * Creates new form FrmMain
      */
     public FrmMain() {
-        super("Pocetna forma");
+        super("Početna forma");
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
     }

@@ -6,14 +6,18 @@
 package rs.ac.bg.fon.ps.domain;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author ANA
  */
-public class Clan implements Serializable{
+public class Clan implements GenericEntity {
+
     private int brojClanskeKarte;
     private String ime;
     private String prezime;
@@ -38,11 +42,6 @@ public class Clan implements Serializable{
         this.datumUclanjenja = datumUclanjenja;
         this.datumClanarine = datumClanarine;
     }
-
- 
- 
-
-   
 
     public Date getDatumUclanjenja() {
         return datumUclanjenja;
@@ -116,10 +115,6 @@ public class Clan implements Serializable{
         this.datumClanarine = datumClanarine;
     }
 
-    
-    
-    
-
     @Override
     public String toString() {
         return "Clan{" + "ime=" + ime + ", prezime=" + prezime + '}';
@@ -160,6 +155,108 @@ public class Clan implements Serializable{
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String getTableName() {
+        return "clan";
+    }
+
+    @Override
+    public String getColumnNamesForInsert() {
+        return "ime,prezime,jmbg,telefon,email,adresa,datumUclanjenja,datumClanarine";
+    }
+
+    @Override
+    public String getInsertValues() {
+        StringBuilder sb = new StringBuilder();
+        java.sql.Date datumUclanjenjaSql = new java.sql.Date(datumUclanjenja.getTime());
+
+        sb.append("'").append(ime).append("', ")
+                .append("'").append(prezime).append("', ")
+                .append(jmbg).append(", ")
+                .append(telefon).append(", ")
+                .append("'").append(eMail).append("', ")
+                .append("'").append(adresa).append("', ")
+                .append("'").append(datumUclanjenjaSql).append("', ")
+                .append("'").append(datumUclanjenjaSql).append("' ");
+        return sb.toString();
+    }
+
+    @Override
+    public void setId(int id) {
+        this.brojClanskeKarte = id;
+    }
+
+    @Override
+    public String getColumns() {
+        return "*";
+    }
+
+    @Override
+    public String tableNameForGetAll() {
+        return "clan";
+    }
+
+    @Override
+    public List<GenericEntity> getList(ResultSet rs) throws Exception {
+        List<GenericEntity> lista = new ArrayList<>();
+        while (rs.next()) {
+            Clan clan = new Clan();
+
+            clan.setBrojClanskeKarte(rs.getInt("brojClanskeKarte"));
+            clan.setIme(rs.getString("ime"));
+            clan.setPrezime(rs.getString("prezime"));
+            clan.setJmbg(rs.getInt("jmbg"));
+            clan.setTelefon(rs.getInt("telefon"));
+            clan.seteMail(rs.getString("email"));
+            clan.setAdresa(rs.getString("adresa"));
+            clan.setDatumClanarine(rs.getDate("datumUclanjenja"));
+            clan.setDatumUclanjenja(rs.getDate("datumClanarine"));
+
+            lista.add(clan);
+        }
+        return lista;
+    }
+
+    @Override
+    public String getPoljaIZmene() {
+        return "";
+    }
+
+    @Override
+    public String getUslovBrisanja() {
+        return " brojClanskeKarte=" + brojClanskeKarte;
+    }
+
+    @Override
+    public String getUslovPretrage() {
+        return " ime like '%" + ime + "%' OR prezime like '%" + prezime + "%' ";
+    }
+
+    @Override
+    public String uslovZaNalazenje() {
+        return  "brojClanskeKarte=" + brojClanskeKarte + " AND datumClanarine +INTERVAL '1' YEAR >= CURRENT_DATE";
+    }
+
+    @Override
+    public GenericEntity getEntity(ResultSet rs) throws Exception {
+        if (rs.next()) {
+            Clan clan = new Clan();
+
+            clan.setBrojClanskeKarte(rs.getInt("brojClanskeKarte"));
+            clan.setIme(rs.getString("ime"));
+            clan.setPrezime(rs.getString("prezime"));
+            clan.setJmbg(rs.getInt("jmbg"));
+            clan.setTelefon(rs.getInt("telefon"));
+            clan.seteMail(rs.getString("email"));
+            clan.setAdresa(rs.getString("adresa"));
+            clan.setDatumClanarine(rs.getDate("datumUclanjenja"));
+            clan.setDatumUclanjenja(rs.getDate("datumClanarine"));
+            return clan;
+        }
+        throw new Exception("Ne postoji klijent sa unetim podacima!");
+
+    }
+
+   
 }

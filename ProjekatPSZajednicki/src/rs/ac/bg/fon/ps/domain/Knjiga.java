@@ -6,6 +6,7 @@
 package rs.ac.bg.fon.ps.domain;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,12 +15,13 @@ import java.util.Objects;
  *
  * @author ANA
  */
-public class Knjiga implements Serializable{
+public class Knjiga implements GenericEntity {
+
     private int knjigaID;
     private String naziv;
     private String autor;
     private Zanr zanr;
-   
+
     public Knjiga() {
 
     }
@@ -31,7 +33,6 @@ public class Knjiga implements Serializable{
         this.zanr = zanr;
     }
 
-   
     @Override
     public String toString() {
         return "Naziv: " + naziv + " | Autor=" + autor;
@@ -98,6 +99,85 @@ public class Knjiga implements Serializable{
 
     public void setZanr(Zanr zanr) {
         this.zanr = zanr;
+    }
+
+    @Override
+    public String getTableName() {
+        return "knjiga";
+    }
+
+    @Override
+    public String getColumnNamesForInsert() {
+        return "naziv,autor,zanr";
+    }
+
+    @Override
+    public String getInsertValues() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("'").append(naziv).append("'").append(",")
+                .append("'").append(autor).append("'").append(",")
+                .append("'").append(zanr.toString()).append("'");
+        return sb.toString();
+    }
+
+    @Override
+    public void setId(int id) {
+//        this.knjigaID = id;
+    }
+
+    @Override
+    public String getColumns() {
+        return "*";
+    }
+
+    @Override
+    public String tableNameForGetAll() {
+        return "knjiga";
+    }
+
+    @Override
+    public List<GenericEntity> getList(ResultSet rs) throws Exception {
+        List<GenericEntity> lista = new ArrayList<>();
+        while (rs.next()) {
+            Knjiga k = new Knjiga();
+
+            k.setKnjigaID(rs.getInt("knjigaID"));
+            k.setNaziv(rs.getString("naziv"));
+            k.setAutor(rs.getString("autor"));
+            k.setZanr(Zanr.valueOf(rs.getString("zanr")));
+            lista.add(k);
+
+        }
+        return lista;
+    }
+
+    @Override
+    public String getPoljaIZmene() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" autor=").append(" '").append(autor).append("'").append(",")
+                .append("zanr=").append("'").append(zanr.toString()).append("'");
+        return sb.toString();
+    }
+
+    @Override
+    public String getUslovBrisanja() {
+        return " knjigaID=" + knjigaID;
+
+    }
+
+    @Override
+    public String getUslovPretrage() {
+        return "";
+    }
+
+    @Override
+    public String uslovZaNalazenje() {
+        return "";
+    }
+
+    @Override
+    public GenericEntity getEntity(ResultSet rs) throws Exception {
+        return null;
     }
 
 }

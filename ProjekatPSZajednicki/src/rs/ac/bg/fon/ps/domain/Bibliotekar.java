@@ -6,13 +6,17 @@
 package rs.ac.bg.fon.ps.domain;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author ANA
  */
-public class Bibliotekar implements Serializable{
+public class Bibliotekar implements GenericEntity {
+
     private int bibliotekarID;
     private String ime;
     private String prezime;
@@ -103,6 +107,73 @@ public class Bibliotekar implements Serializable{
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String getTableName() {
+        return "bibliotekar";
+    }
+
+    @Override
+    public String getColumnNamesForInsert() {
+        return "";
+    }
+
+    @Override
+    public String getInsertValues() {
+        return "";
+    }
+
+    @Override
+    public void setId(int id) {
+    }
+
+    @Override
+    public String getColumns() {
+        return " * ";
+    }
+
+    @Override
+    public String tableNameForGetAll() {
+        return " bibliotekar ";
+    }
+
+    @Override
+    public List<GenericEntity> getList(ResultSet rs) throws Exception {
+          List<GenericEntity> listaBibliotekara = new ArrayList<>();
+        while (rs.next()) {
+            Bibliotekar bibliotekar = new Bibliotekar(rs.getInt("bibliotekarID"),  rs.getString("ime"), rs.getString("prezime"),rs.getString("username"), rs.getString("password"));
+            listaBibliotekara.add(bibliotekar);
+        }
+        return listaBibliotekara;
+    }
+
+    @Override
+    public String getPoljaIZmene() {
+        return "";
+    }
+
+    @Override
+    public String getUslovBrisanja() {
+        return "username='"+username+"' AND password='"+password+"'";
+    }
+
+    @Override
+    public String getUslovPretrage() {
+        return "";
+    }
+
+    @Override
+    public String uslovZaNalazenje() {
+        return "";
+    }
+
+    @Override
+    public GenericEntity getEntity(ResultSet rs) throws Exception {
+        if (rs.next()) {
+            return new Bibliotekar(rs.getInt("bibliotekarID"), rs.getString("ime"), rs.getString("prezime"), rs.getString("username"), rs.getString("password"));
+        }
+        throw new Exception("Sistem ne može da pronađe bibliotekara na osnovu učitanih vrednosti!");
+
+    }
+
 }

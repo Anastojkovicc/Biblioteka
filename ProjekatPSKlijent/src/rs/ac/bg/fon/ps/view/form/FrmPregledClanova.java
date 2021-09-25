@@ -62,7 +62,7 @@ public class FrmPregledClanova extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblClan);
 
-        btnObrisi.setText("Obrisi");
+        btnObrisi.setText("Obriši");
 
         btnPretraga.setText("Pretraži");
 
@@ -151,6 +151,10 @@ public class FrmPregledClanova extends javax.swing.JFrame {
 
     public void addBtnObrisiActionListener(ActionListener actionListener) {
         btnObrisi.addActionListener(actionListener);
+    }
+
+    public void addPretraziBtnActionListener(ActionListener actionListener) {
+        btnPretraga.addActionListener(actionListener);
     }
 
 }

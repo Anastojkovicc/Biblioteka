@@ -5,21 +5,8 @@
  */
 package rs.ac.bg.fon.ps.server;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import rs.ac.bg.fon.ps.communication.Receiver;
-import rs.ac.bg.fon.ps.communication.Request;
-import rs.ac.bg.fon.ps.communication.Response;
-import rs.ac.bg.fon.ps.communication.Sender;
-import rs.ac.bg.fon.ps.controller.Controller;
-import rs.ac.bg.fon.ps.domain.Bibliotekar;
-import rs.ac.bg.fon.ps.domain.Clan;
-import rs.ac.bg.fon.ps.domain.Knjiga;
-import rs.ac.bg.fon.ps.domain.Pozajmica;
-import rs.ac.bg.fon.ps.domain.Primerak;
 import rs.ac.bg.fon.ps.thread.ProcessClientsRequests;
 
 /**
