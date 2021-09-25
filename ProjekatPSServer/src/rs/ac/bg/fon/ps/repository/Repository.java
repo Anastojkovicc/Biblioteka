@@ -27,4 +27,6 @@ public interface Repository<T> {
     public T getUslov(T param) throws Exception;
 
     List<T> getAll();
+    
+    void razduzi(T param) throws  Exception;
 }

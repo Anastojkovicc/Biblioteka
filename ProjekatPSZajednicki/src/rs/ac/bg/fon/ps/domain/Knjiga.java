@@ -180,4 +180,14 @@ public class Knjiga implements GenericEntity {
         return null;
     }
 
+    @Override
+    public String getKojaKnjiga() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String uslovZaClanarinu() {
+        return "";
+    }
+
 }

@@ -5,6 +5,8 @@
  */
 package rs.ac.bg.fon.ps.operation;
 
+import java.util.List;
+import rs.ac.bg.fon.ps.domain.Knjiga;
 import rs.ac.bg.fon.ps.repository.Repository;
 import rs.ac.bg.fon.ps.repository.db.DBRepository;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBGeneric;
@@ -57,5 +59,7 @@ public abstract class AbstractGenericOperation {
     private void disconnect() throws Exception {
         ((DBRepository) repository).disconnect();
     }
+
+   
 
 }

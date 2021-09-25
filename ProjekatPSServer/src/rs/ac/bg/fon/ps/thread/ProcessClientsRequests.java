@@ -99,10 +99,10 @@ public class ProcessClientsRequests extends Thread {
                             response.setResult(Controller.getInstance().getAllPozajmice());
                             break;
 
-                        case DELETE_POZAJMICA:
-                            Pozajmica pozajmicaDelete = (Pozajmica) request.getArgument();
-                            Controller.getInstance().obrisiPozajmicu(pozajmicaDelete);
-                            break;
+//                        case DELETE_POZAJMICA:
+//                            Pozajmica pozajmicaDelete = (Pozajmica) request.getArgument();
+//                            Controller.getInstance().obrisiPozajmicu(pozajmicaDelete);
+//                            break;
 
                         case GET_CLAN:
                             Clan clanGet = (Clan) request.getArgument();

@@ -101,10 +101,10 @@ public class RepositoryDBGeneric implements DBRepository<GenericEntity> {
     @Override
     public GenericEntity getUslov(GenericEntity entity) throws Exception {
         try {
-             Connection connection = DBConnectionFactory.getInstance().getConnection();
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
             StringBuilder sb = new StringBuilder();
             sb.append("SELECT ").append(entity.getColumns()).append(" FROM ").
-                    append(entity.tableNameForGetAll()).append(" WHERE ").append(entity.getUslovBrisanja());
+                    append(entity.tableNameForGetAll()).append(" WHERE ").append(entity.getUslovBrisanja()).append(entity.uslovZaClanarinu());
             String query = sb.toString();
             System.out.println(query);
             Statement statement = connection.createStatement();
@@ -144,4 +144,22 @@ public class RepositoryDBGeneric implements DBRepository<GenericEntity> {
 
     }
 
+    @Override
+    public void razduzi(GenericEntity entity) throws Exception {
+        try {
+            Connection connection = DBConnectionFactory.getInstance().getConnection();
+            StringBuilder sb = new StringBuilder();
+            sb.append("UPDATE ").append(entity.getTableName()).append(" SET ").
+                    append(entity.getPoljaIZmene()).append(" WHERE ").append(entity.getKojaKnjiga());
+            String query = sb.toString();
+            System.out.println(query);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+            statement.close();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+   
 }

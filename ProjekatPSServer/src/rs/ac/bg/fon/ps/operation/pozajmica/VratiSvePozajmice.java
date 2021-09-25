@@ -3,33 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rs.ac.bg.fon.ps.operation.bibliotekar;
+package rs.ac.bg.fon.ps.operation.pozajmica;
 
-import rs.ac.bg.fon.ps.domain.Bibliotekar;
+import java.util.List;
+import rs.ac.bg.fon.ps.domain.Pozajmica;
 import rs.ac.bg.fon.ps.operation.AbstractGenericOperation;
 
 /**
  *
  * @author ANA
  */
-public class GetAllBibliotekari extends AbstractGenericOperation {
+public class VratiSvePozajmice extends AbstractGenericOperation {
 
-    private Bibliotekar bibliotekar;
+    List<Pozajmica> lista;
 
     @Override
     protected void preconditions(Object param) throws Exception {
-        if (param == null || !(param instanceof Bibliotekar)) {
-            throw new Exception("Niste uneli podatke korisnika!");
+
+        if (param == null || !(param instanceof Pozajmica)) {
+            throw new Exception("Pozajmica nije validna");
         }
     }
 
     @Override
     protected void executeOperation(Object param) throws Exception {
-        bibliotekar = (Bibliotekar) repository.getUslov(param);
+        this.lista = repository.getAll((Pozajmica) param);
     }
 
-    public Bibliotekar getBibliotekar() {
-        return bibliotekar;
+    public List<Pozajmica> getLista() {
+        return lista;
     }
 
 }

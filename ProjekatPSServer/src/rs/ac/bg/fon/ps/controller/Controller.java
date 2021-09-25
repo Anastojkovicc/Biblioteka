@@ -15,8 +15,22 @@ import rs.ac.bg.fon.ps.domain.Knjiga;
 import rs.ac.bg.fon.ps.domain.Pozajmica;
 import rs.ac.bg.fon.ps.domain.Primerak;
 import rs.ac.bg.fon.ps.operation.AbstractGenericOperation;
-import rs.ac.bg.fon.ps.operation.bibliotekar.GetAllBibliotekari;
-import rs.ac.bg.fon.ps.operation.knjiga.AddKnjiga;
+import rs.ac.bg.fon.ps.operation.bibliotekar.VratiSveBilbiotekare;
+import rs.ac.bg.fon.ps.operation.clan.ObrisiClana;
+import rs.ac.bg.fon.ps.operation.clan.SacuvajClana;
+import rs.ac.bg.fon.ps.operation.clan.VratiClana;
+import rs.ac.bg.fon.ps.operation.clan.VratiPoImenuIPrezimenu;
+import rs.ac.bg.fon.ps.operation.clan.VratiSveClanove;
+import rs.ac.bg.fon.ps.operation.knjiga.DodajKnjigu;
+import rs.ac.bg.fon.ps.operation.knjiga.IzmeniKnjigu;
+import rs.ac.bg.fon.ps.operation.knjiga.ObrisiKnjigu;
+import rs.ac.bg.fon.ps.operation.knjiga.VratiSveKnjige;
+import rs.ac.bg.fon.ps.operation.pozajmica.RazduziSvePozajmice;
+import rs.ac.bg.fon.ps.operation.pozajmica.SacuvajPozajmicu;
+import rs.ac.bg.fon.ps.operation.pozajmica.VratiPozajmiceOdredjenogClana;
+import rs.ac.bg.fon.ps.operation.pozajmica.VratiSvePozajmice;
+import rs.ac.bg.fon.ps.operation.primerak.SacuvajPrimerak;
+import rs.ac.bg.fon.ps.operation.primerak.VratiPrimerak;
 import rs.ac.bg.fon.ps.repository.Repository;
 import rs.ac.bg.fon.ps.repository.db.DBRepository;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBClan;
@@ -31,7 +45,7 @@ import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBUser;
  * @author ANA
  */
 public class Controller {
-
+    
     private final Repository repositoryUser;
     private final Repository repositoryKnjiga;
     private final Repository repositoryClan;
@@ -39,7 +53,7 @@ public class Controller {
     private final Repository repositoryPozajmica;
     private final Repository repositoryGeneric;
     private static Controller instanca;
-
+    
     public Controller() {
         this.repositoryUser = new RepositoryDBUser();
         this.repositoryKnjiga = new RepositoryDBKnjiga();
@@ -48,272 +62,113 @@ public class Controller {
         this.repositoryPozajmica = new RepositoryDBPozajmica();
         this.repositoryGeneric = new RepositoryDBGeneric();
     }
-
+    
     public static Controller getInstance() {
         if (instanca == null) {
             instanca = new Controller();
         }
         return instanca;
     }
-
+    
     public Bibliotekar login(String username, String password) throws Exception {
         Bibliotekar bibliotekar = new Bibliotekar();
         bibliotekar.setUsername(username);
         bibliotekar.setPassword(password);
-        AbstractGenericOperation operation = new GetAllBibliotekari();
+        AbstractGenericOperation operation = new VratiSveBilbiotekare();
         operation.execute(bibliotekar);
-        return ((GetAllBibliotekari) operation).getBibliotekar();
+        return ((VratiSveBilbiotekare) operation).getBibliotekar();
     }
-
+    
     public void addKnjiga(Knjiga knjiga) throws Exception {
-//        AbstractGenericOperation operation = new AddKnjiga();
-//        operation.execute(knjiga);
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            repositoryGeneric.add(knjiga);
-            ((DBRepository) repositoryGeneric).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
+        AbstractGenericOperation operation = new DodajKnjigu();
+        operation.execute(knjiga);
     }
-
+    
     public List<Knjiga> getAllBooks() throws Exception {
-        List<Knjiga> knjige = null;
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            Knjiga knjiga = new Knjiga();
-            knjige = repositoryGeneric.getAll(knjiga);
-            ((DBRepository) repositoryGeneric).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
-        return knjige;
+        AbstractGenericOperation operation = new VratiSveKnjige();
+        operation.execute(new Knjiga());
+        return ((VratiSveKnjige) operation).getKnjige();
+        
     }
-
+    
     public List<Clan> getAllClan() throws Exception {
-        List<Clan> clanovi = new ArrayList<>();
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            Clan clan = new Clan();
-            clanovi = repositoryGeneric.getAll(clan);
-            ((DBRepository) repositoryGeneric).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
-        return clanovi;
+        AbstractGenericOperation operation = new VratiSveClanove();
+        operation.execute(new Clan());
+        return ((VratiSveClanove) operation).getClanovi();
     }
-
+    
     public void addClan(Clan c) throws Exception {
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            repositoryGeneric.add(c);
-            ((DBRepository) repositoryGeneric).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
+        AbstractGenericOperation operation = new SacuvajClana();
+        operation.execute(c);
     }
-
+    
     public boolean obrisiKnjigu(Knjiga knjiga) throws Exception {
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            repositoryGeneric.delete(knjiga);
-            ((DBRepository) repositoryGeneric).commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
+        AbstractGenericOperation operation = new ObrisiKnjigu();
+        operation.execute(knjiga);
+        return true;
     }
-
+    
     public void editKnjigu(Knjiga knjiga) throws Exception {
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            ((DBRepository) repositoryGeneric).edit(knjiga);
-            ((DBRepository) repositoryGeneric).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryKnjiga).disconnect();
-        }
-
+        AbstractGenericOperation operation = new IzmeniKnjigu();
+        operation.execute(knjiga);
+        
     }
-
+    
     public boolean obrisiClana(Clan clan) throws Exception {
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            repositoryGeneric.delete(clan);
-            ((DBRepository) repositoryGeneric).commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
-
+        AbstractGenericOperation operation = new ObrisiClana();
+        operation.execute(clan);
+        return true;
     }
-
+    
     public boolean addPrimerak(Primerak primerak) throws Exception {
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            repositoryGeneric.add(primerak);
-            ((DBRepository) repositoryGeneric).commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
+        AbstractGenericOperation operation = new SacuvajPrimerak();
+        operation.execute(primerak);
+        return true;
     }
-
+    
     public boolean addPozajmica(Pozajmica pozajmica) throws Exception {
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            repositoryGeneric.add(pozajmica);
-            ((DBRepository) repositoryGeneric).commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
+        AbstractGenericOperation operation = new SacuvajPozajmicu();
+        operation.execute(pozajmica);
+        return true;
     }
-
+    
     public ArrayList<Pozajmica> getAllPozajmice() throws Exception {
-        ArrayList<Pozajmica> pozajmice = new ArrayList<>();
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            Pozajmica pozajmica = new Pozajmica();
-            pozajmice = (ArrayList<Pozajmica>) repositoryGeneric.getAll(pozajmica);
-            ((DBRepository) repositoryGeneric).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
-        return pozajmice;
+        AbstractGenericOperation operation = new VratiSvePozajmice();
+        operation.execute(new Pozajmica());
+        return (ArrayList<Pozajmica>) ((VratiSvePozajmice) operation).getLista();
     }
-
-    public boolean obrisiPozajmicu(Pozajmica p) throws Exception {
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            repositoryGeneric.delete(p);
-            ((DBRepository) repositoryGeneric).commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
-
+    
+    public void razduziSvePozajmice(ArrayList<Pozajmica> razduzivanje) throws Exception {
+        AbstractGenericOperation operation = new RazduziSvePozajmice();
+        operation.execute(razduzivanje);
     }
+//    public boolean obrisiPozajmicu(Pozajmica p) throws Exception {
+//       return true;
+//
+//    }
 
     public Clan getClan(Clan clan) throws Exception {
-        Clan clan2 = null;
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            clan2 = (Clan) repositoryGeneric.getUslov(clan);
-            ((DBRepository) repositoryGeneric).commit();
-            return clan2;
-
-        } catch (Exception e) {
-            ((DBRepository) repositoryGeneric).rollback();
-            return clan2;
-
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
-
+        AbstractGenericOperation operation = new VratiClana();
+        operation.execute(clan);
+        return ((VratiClana) operation).getClan();
     }
-
+    
     public Primerak getPrimerak(Primerak primerak) throws Exception {
-        Primerak prim = null;
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            prim = (Primerak) repositoryGeneric.getUslov(primerak);
-            ((DBRepository) repositoryGeneric).commit();
-            return prim;
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            return prim;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
+        AbstractGenericOperation operation = new VratiPrimerak();
+        operation.execute(primerak);
+        return ((VratiPrimerak) operation).getPrimerak();
     }
-
+    
     public ArrayList<Clan> getAllClanUslov(Clan clan) throws Exception {
-        ArrayList<Clan> clanovi = new ArrayList<>();
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            clanovi = (ArrayList<Clan>) repositoryGeneric.getAllPoUslovu(clan);
-            ((DBRepository) repositoryGeneric).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
-        return clanovi;
+        AbstractGenericOperation operation = new VratiPoImenuIPrezimenu();
+        operation.execute(clan);
+        return (ArrayList<Clan>) ((VratiPoImenuIPrezimenu) operation).getClanovi();
     }
-
+    
     public Object getAllPozajmiceUslov(Pozajmica p) throws Exception {
-        ArrayList<Pozajmica> pozajmice = new ArrayList<>();
-        ((DBRepository) repositoryGeneric).connect();
-        try {
-            pozajmice = (ArrayList<Pozajmica>) repositoryGeneric.getAllPoUslovu(p);
-            ((DBRepository) repositoryGeneric).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            ((DBRepository) repositoryGeneric).rollback();
-            throw e;
-        } finally {
-            ((DBRepository) repositoryGeneric).disconnect();
-        }
-        return pozajmice;
+        AbstractGenericOperation operation = new VratiPozajmiceOdredjenogClana();
+        operation.execute(p);
+        return ((VratiPozajmiceOdredjenogClana) operation).getLista();
     }
-
-    public void razduziSvePozajmice(ArrayList<Pozajmica> razduzivanje) throws Exception {
-        try {
-            for (Pozajmica pozajmica : razduzivanje) {
-
-                obrisiPozajmicu(pozajmica);
-
-            }
-        } catch (Exception ex) {
-           throw new Exception("Pozajmice ne mogu biti razdužene");
-        }
-    }
-
+    
 }

@@ -186,4 +186,9 @@ public class RepositoryDBPozajmica implements DBRepository<Pozajmica> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void razduzi(Pozajmica param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

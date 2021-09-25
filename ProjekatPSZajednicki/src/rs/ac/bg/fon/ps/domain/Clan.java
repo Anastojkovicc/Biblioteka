@@ -235,7 +235,7 @@ public class Clan implements GenericEntity {
 
     @Override
     public String uslovZaNalazenje() {
-        return  "brojClanskeKarte=" + brojClanskeKarte + " AND datumClanarine +INTERVAL '1' YEAR >= CURRENT_DATE";
+        return "brojClanskeKarte=" + brojClanskeKarte + " AND " + datumClanarine + "INTERVAL '1' YEAR >= CURRENT_DATE";
     }
 
     @Override
@@ -254,9 +254,18 @@ public class Clan implements GenericEntity {
             clan.setDatumUclanjenja(rs.getDate("datumClanarine"));
             return clan;
         }
-        throw new Exception("Ne postoji klijent sa unetim podacima!");
-
+//        throw new Exception("Ne postoji klijent sa unetim podacima!");
+return null;
     }
 
-   
+    @Override
+    public String getKojaKnjiga() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String uslovZaClanarinu() {
+        return " AND datumClanarine + INTERVAL '1' YEAR >= CURRENT_DATE";
+    }
+
 }

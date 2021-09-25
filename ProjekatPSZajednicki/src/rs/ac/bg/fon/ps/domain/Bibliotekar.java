@@ -176,4 +176,14 @@ public class Bibliotekar implements GenericEntity {
 
     }
 
+    @Override
+    public String getKojaKnjiga() {
+        return "";
+        }
+
+    @Override
+    public String uslovZaClanarinu() {
+        return "";
+    }
+
 }

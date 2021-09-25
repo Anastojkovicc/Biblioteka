@@ -84,7 +84,7 @@ public class PozajmicaController {
                         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
                         Date datum = sdf.parse(frmPozajmica.getTxtDatumIzdavanja().getText().trim());
 
-                        Pozajmica pozajmica = new Pozajmica(-1, datum, datum, clan2, primerak);
+                        Pozajmica pozajmica = new Pozajmica(-1, datum, datum, clan, primerak);
                         try {
                             boolean sacuvano = Communication.getInstance().addPozajmica(pozajmica);
                             if (sacuvano) {

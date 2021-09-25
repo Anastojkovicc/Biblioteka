@@ -37,6 +37,10 @@ public interface GenericEntity extends Serializable {
 
     String uslovZaNalazenje();
 
-    GenericEntity getEntity(ResultSet rs)throws Exception;
+    GenericEntity getEntity(ResultSet rs) throws Exception;
+
+    String getKojaKnjiga();
+
+    String uslovZaClanarinu();
 
 }

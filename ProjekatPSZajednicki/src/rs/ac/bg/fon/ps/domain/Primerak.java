@@ -142,12 +142,12 @@ public class Primerak implements GenericEntity {
 
     @Override
     public String getPoljaIZmene() {
-        return "izdat=1";
+        return "izdat=" + isIzdat();
     }
 
     @Override
     public String getUslovBrisanja() {
-        return "p.inventarskiBroj=" + invertarskiBroj + " AND p.izdat=0";
+        return "inventarskiBroj=" + invertarskiBroj + " AND izdat=0";
 
     }
 
@@ -176,8 +176,18 @@ public class Primerak implements GenericEntity {
             p.setKnjiga(k);
             return p;
         }
-        throw new Exception("Ne postoji primerak sa unetim podacima!");
+        //throw new Exception("Ne postoji primerak sa unetim podacima!");
+        return null;
+    }
 
+    @Override
+    public String getKojaKnjiga() {
+        return " inventarskiBroj=" + invertarskiBroj;
+    }
+
+    @Override
+    public String uslovZaClanarinu() {
+        return "";
     }
 
 }

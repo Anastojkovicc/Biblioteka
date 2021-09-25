@@ -5,7 +5,6 @@
  */
 package rs.ac.bg.fon.ps.operation.knjiga;
 
-import java.util.List;
 import rs.ac.bg.fon.ps.domain.Knjiga;
 import rs.ac.bg.fon.ps.operation.AbstractGenericOperation;
 
@@ -13,23 +12,21 @@ import rs.ac.bg.fon.ps.operation.AbstractGenericOperation;
  *
  * @author ANA
  */
-public class GetAllBooks extends AbstractGenericOperation{
+public class DodajKnjigu extends AbstractGenericOperation {
 
-    private List<Knjiga> knjige;
-    
+    private Knjiga knjiga;
+
     @Override
     protected void preconditions(Object param) throws Exception {
+        if (param == null || !(param instanceof Knjiga)) {
+            throw new Exception("Neispravno uneta knjiga!");
+
+        }
     }
 
     @Override
     protected void executeOperation(Object param) throws Exception {
-        knjige = repository.getAll((Knjiga) param);
+        repository.add((Knjiga) param);
     }
 
-    public List<Knjiga> getKnjige() {
-        return knjige;
-    }
-    
-    
-    
 }
