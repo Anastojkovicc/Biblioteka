@@ -7,6 +7,8 @@ package rs.ac.bg.fon.ps.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import rs.ac.bg.fon.ps.domain.Bibliotekar;
 import rs.ac.bg.fon.ps.domain.Clan;
 import rs.ac.bg.fon.ps.domain.Knjiga;
@@ -83,7 +85,7 @@ public class Controller {
         List<Knjiga> knjige = null;
         ((DBRepository) repositoryGeneric).connect();
         try {
-            Knjiga knjiga= new Knjiga();
+            Knjiga knjiga = new Knjiga();
             knjige = repositoryGeneric.getAll(knjiga);
             ((DBRepository) repositoryGeneric).commit();
         } catch (Exception e) {
@@ -100,7 +102,7 @@ public class Controller {
         List<Clan> clanovi = new ArrayList<>();
         ((DBRepository) repositoryGeneric).connect();
         try {
-            Clan clan= new Clan();
+            Clan clan = new Clan();
             clanovi = repositoryGeneric.getAll(clan);
             ((DBRepository) repositoryGeneric).commit();
         } catch (Exception e) {
@@ -207,7 +209,7 @@ public class Controller {
         ArrayList<Pozajmica> pozajmice = new ArrayList<>();
         ((DBRepository) repositoryGeneric).connect();
         try {
-            Pozajmica pozajmica= new Pozajmica();
+            Pozajmica pozajmica = new Pozajmica();
             pozajmice = (ArrayList<Pozajmica>) repositoryGeneric.getAll(pozajmica);
             ((DBRepository) repositoryGeneric).commit();
         } catch (Exception e) {
@@ -302,8 +304,16 @@ public class Controller {
         return pozajmice;
     }
 
-    public void razduziSvePozajmice(ArrayList<Pozajmica> razduzivanje) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void razduziSvePozajmice(ArrayList<Pozajmica> razduzivanje) throws Exception {
+        try {
+            for (Pozajmica pozajmica : razduzivanje) {
+
+                obrisiPozajmicu(pozajmica);
+
+            }
+        } catch (Exception ex) {
+           throw new Exception("Pozajmice ne mogu biti razdužene");
+        }
     }
 
 }
