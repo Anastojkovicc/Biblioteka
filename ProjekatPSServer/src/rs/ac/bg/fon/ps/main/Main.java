@@ -6,6 +6,7 @@
 package rs.ac.bg.fon.ps.main;
 
 import rs.ac.bg.fon.ps.server.Server;
+import rs.ac.bg.fon.ps.view.controller.MainController;
 
 /**
  *
@@ -14,6 +15,6 @@ import rs.ac.bg.fon.ps.server.Server;
 public class Main {
 
     public static void main(String[] args) {
-        new Server().startServer();
+         MainController.getInstance().openForm();
     }
 }

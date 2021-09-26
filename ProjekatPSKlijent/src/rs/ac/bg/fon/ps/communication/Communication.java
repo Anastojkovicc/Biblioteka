@@ -8,6 +8,7 @@ package rs.ac.bg.fon.ps.communication;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import rs.ac.bg.fon.ps.domain.Bibliotekar;
 import rs.ac.bg.fon.ps.domain.Clan;
 import rs.ac.bg.fon.ps.domain.Knjiga;
@@ -26,7 +27,12 @@ public class Communication {
     private static Communication instance;
 
     private Communication() throws Exception {
-        socket = new Socket("localhost", 9000);
+         try {
+           socket = new Socket("127.0.0.1", 9000); 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Server nije pokrenut", "ERROR",JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
         sender = new Sender(socket);
         receiver = new Receiver(socket);
     }
@@ -234,5 +240,13 @@ public class Communication {
             throw response.getException();
         }
     }
+    
+     public void odjaviZaposlenog(Bibliotekar bibliotekar) throws Exception {
+        Request request = new Request(Operation.ODJAVI_ZAPOSLENOG, bibliotekar);
+        sender.send(request);
+    }
+
+   
+    
 
 }

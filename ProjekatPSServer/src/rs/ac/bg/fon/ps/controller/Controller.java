@@ -39,13 +39,14 @@ import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBKnjiga;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBPozajmica;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBPrimerak;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDBUser;
+import rs.ac.bg.fon.ps.thread.ProcessClientsRequests;
 
 /**
  *
  * @author ANA
  */
 public class Controller {
-    
+
     private final Repository repositoryUser;
     private final Repository repositoryKnjiga;
     private final Repository repositoryClan;
@@ -53,7 +54,8 @@ public class Controller {
     private final Repository repositoryPozajmica;
     private final Repository repositoryGeneric;
     private static Controller instanca;
-    
+    private List<ProcessClientsRequests> nitiKlijenata;
+
     public Controller() {
         this.repositoryUser = new RepositoryDBUser();
         this.repositoryKnjiga = new RepositoryDBKnjiga();
@@ -61,114 +63,123 @@ public class Controller {
         this.repositoryPrimerak = new RepositoryDBPrimerak();
         this.repositoryPozajmica = new RepositoryDBPozajmica();
         this.repositoryGeneric = new RepositoryDBGeneric();
+        this.nitiKlijenata = new ArrayList<>();
     }
-    
+
     public static Controller getInstance() {
         if (instanca == null) {
             instanca = new Controller();
         }
         return instanca;
     }
-    
-    public Bibliotekar login(String username, String password) throws Exception {
+
+    public Bibliotekar login(String username, String password, ProcessClientsRequests klijentskaNit) throws Exception {
         Bibliotekar bibliotekar = new Bibliotekar();
         bibliotekar.setUsername(username);
         bibliotekar.setPassword(password);
         AbstractGenericOperation operation = new VratiSveBilbiotekare();
         operation.execute(bibliotekar);
+        nitiKlijenata.add(klijentskaNit);
         return ((VratiSveBilbiotekare) operation).getBibliotekar();
     }
-    
+
     public void addKnjiga(Knjiga knjiga) throws Exception {
         AbstractGenericOperation operation = new DodajKnjigu();
         operation.execute(knjiga);
     }
-    
+
     public List<Knjiga> getAllBooks() throws Exception {
         AbstractGenericOperation operation = new VratiSveKnjige();
         operation.execute(new Knjiga());
         return ((VratiSveKnjige) operation).getKnjige();
-        
+
     }
-    
+
     public List<Clan> getAllClan() throws Exception {
         AbstractGenericOperation operation = new VratiSveClanove();
         operation.execute(new Clan());
         return ((VratiSveClanove) operation).getClanovi();
     }
-    
+
     public void addClan(Clan c) throws Exception {
         AbstractGenericOperation operation = new SacuvajClana();
         operation.execute(c);
     }
-    
+
     public boolean obrisiKnjigu(Knjiga knjiga) throws Exception {
         AbstractGenericOperation operation = new ObrisiKnjigu();
         operation.execute(knjiga);
         return true;
     }
-    
+
     public void editKnjigu(Knjiga knjiga) throws Exception {
         AbstractGenericOperation operation = new IzmeniKnjigu();
         operation.execute(knjiga);
-        
+
     }
-    
+
     public boolean obrisiClana(Clan clan) throws Exception {
         AbstractGenericOperation operation = new ObrisiClana();
         operation.execute(clan);
         return true;
     }
-    
+
     public boolean addPrimerak(Primerak primerak) throws Exception {
         AbstractGenericOperation operation = new SacuvajPrimerak();
         operation.execute(primerak);
         return true;
     }
-    
+
     public boolean addPozajmica(Pozajmica pozajmica) throws Exception {
         AbstractGenericOperation operation = new SacuvajPozajmicu();
         operation.execute(pozajmica);
         return true;
     }
-    
+
     public ArrayList<Pozajmica> getAllPozajmice() throws Exception {
         AbstractGenericOperation operation = new VratiSvePozajmice();
         operation.execute(new Pozajmica());
         return (ArrayList<Pozajmica>) ((VratiSvePozajmice) operation).getLista();
     }
-    
+
     public void razduziSvePozajmice(ArrayList<Pozajmica> razduzivanje) throws Exception {
         AbstractGenericOperation operation = new RazduziSvePozajmice();
         operation.execute(razduzivanje);
     }
-//    public boolean obrisiPozajmicu(Pozajmica p) throws Exception {
-//       return true;
-//
-//    }
 
     public Clan getClan(Clan clan) throws Exception {
         AbstractGenericOperation operation = new VratiClana();
         operation.execute(clan);
         return ((VratiClana) operation).getClan();
     }
-    
+
     public Primerak getPrimerak(Primerak primerak) throws Exception {
         AbstractGenericOperation operation = new VratiPrimerak();
         operation.execute(primerak);
         return ((VratiPrimerak) operation).getPrimerak();
     }
-    
+
     public ArrayList<Clan> getAllClanUslov(Clan clan) throws Exception {
         AbstractGenericOperation operation = new VratiPoImenuIPrezimenu();
         operation.execute(clan);
         return (ArrayList<Clan>) ((VratiPoImenuIPrezimenu) operation).getClanovi();
     }
-    
+
     public Object getAllPozajmiceUslov(Pozajmica p) throws Exception {
         AbstractGenericOperation operation = new VratiPozajmiceOdredjenogClana();
         operation.execute(p);
         return ((VratiPozajmiceOdredjenogClana) operation).getLista();
     }
-    
+
+    public void odjaviZaposlenog(ProcessClientsRequests klijentskaNit) {
+        nitiKlijenata.remove(klijentskaNit);
+        klijentskaNit.ugasiNit();
+    }
+
+    public void ugasiNiti() {
+        for (ProcessClientsRequests processClientsRequests : nitiKlijenata) {
+            processClientsRequests.ugasiNit();
+        }
+    }
+
 }

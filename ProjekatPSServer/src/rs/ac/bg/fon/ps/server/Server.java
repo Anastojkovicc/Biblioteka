@@ -5,36 +5,55 @@
  */
 package rs.ac.bg.fon.ps.server;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Properties;
+import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.thread.ProcessClientsRequests;
 
 /**
  *
  * @author ANA
  */
-public class Server {
+public class Server extends Thread {
 
-    public void startServer() {
+    ServerSocket serverSocket;
+    private boolean state = false;
+
+    @Override
+    public void run() {
         try {
-            ServerSocket serverSocket = new ServerSocket(9000);
-            System.out.println("Čekanje konekcije");
-            while (true) {
+            Properties properties = new Properties();
+            properties.load(new FileInputStream("config/dbconfig.properties"));
+            serverSocket = new ServerSocket(Integer.parseInt(properties.getProperty("port")));
+            while (!state) {
+
+                System.out.println("Waiting for connection...");
                 Socket socket = serverSocket.accept();
-                System.out.println("Konektovan");
-
+                System.out.println("Connected!");
                 handleClient(socket);
-
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     private void handleClient(Socket socket) throws Exception {
         ProcessClientsRequests processClientsRequests = new ProcessClientsRequests(socket);
         processClientsRequests.start();
+
+    }
+
+    public void zaustaviServer() {
+        this.state = true;
+        Controller.getInstance().ugasiNiti();
+
+        try {
+            this.serverSocket.close();
+        } catch (IOException ex) {
+            System.out.println("Server se gasi");
+        }
     }
 }

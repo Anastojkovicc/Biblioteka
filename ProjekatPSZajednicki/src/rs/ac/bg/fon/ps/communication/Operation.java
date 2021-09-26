@@ -29,5 +29,6 @@ public enum Operation implements Serializable{
     GET_PRIMERAK,
     GET_CLANOVI_USLOV,
     GET_POZAJMICE_USLOV,
-    RAZDUZI_SVE;
+    RAZDUZI_SVE,
+    ODJAVI_ZAPOSLENOG;
 }

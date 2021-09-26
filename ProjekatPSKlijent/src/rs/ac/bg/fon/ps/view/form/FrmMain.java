@@ -6,6 +6,7 @@
 package rs.ac.bg.fon.ps.view.form;
 
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import rs.ac.bg.fon.ps.view.form.util.FormMode;
@@ -23,6 +24,7 @@ public class FrmMain extends javax.swing.JFrame {
         super("Početna forma");
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+       
     }
 
     /**
@@ -34,6 +36,7 @@ public class FrmMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnOdjava = new javax.swing.JButton();
         jmenuBarMain = new javax.swing.JMenuBar();
         jmenuKnjiga = new javax.swing.JMenu();
         jmiNovaKnjiga = new javax.swing.JMenuItem();
@@ -47,6 +50,17 @@ public class FrmMain extends javax.swing.JFrame {
         jmiPregledClanova = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnOdjava.setBackground(new java.awt.Color(255, 0, 0));
+        btnOdjava.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        btnOdjava.setText("Odjavi se");
+        btnOdjava.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(255, 0, 0), null, new java.awt.Color(255, 0, 0)));
+        btnOdjava.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnOdjava.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOdjavaActionPerformed(evt);
+            }
+        });
 
         jmenuKnjiga.setText("Knjiga");
         jmenuKnjiga.addActionListener(new java.awt.event.ActionListener() {
@@ -122,11 +136,17 @@ public class FrmMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(216, Short.MAX_VALUE)
+                .addComponent(btnOdjava, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(112, Short.MAX_VALUE)
+                .addComponent(btnOdjava, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(93, 93, 93))
         );
 
         pack();
@@ -164,11 +184,16 @@ public class FrmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jmiNovaPozajmicaActionPerformed
 
+    private void btnOdjavaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOdjavaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnOdjavaActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnOdjava;
     private javax.swing.JMenuBar jmenuBarMain;
     private javax.swing.JMenu jmenuClanovi;
     private javax.swing.JMenu jmenuKnjiga;
@@ -209,4 +234,14 @@ public class FrmMain extends javax.swing.JFrame {
     public void jmiNoviPrimerakNewAddActionListener(ActionListener actionListener) {
         jmiNoviPrimerak.addActionListener(actionListener);
     }
+
+    public JButton getBtnOdjava() {
+        return btnOdjava;
+    }
+
+    public void addBtnOdlogujSeActionListener(ActionListener actionListener) {
+        btnOdjava.addActionListener(actionListener);
+    }
+    
+    
 }

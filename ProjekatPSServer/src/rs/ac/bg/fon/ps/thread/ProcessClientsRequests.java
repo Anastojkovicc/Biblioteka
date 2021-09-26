@@ -5,6 +5,7 @@
  */
 package rs.ac.bg.fon.ps.thread;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -19,6 +20,7 @@ import rs.ac.bg.fon.ps.domain.Clan;
 import rs.ac.bg.fon.ps.domain.Knjiga;
 import rs.ac.bg.fon.ps.domain.Pozajmica;
 import rs.ac.bg.fon.ps.domain.Primerak;
+import rs.ac.bg.fon.ps.view.controller.MainController;
 
 /**
  *
@@ -27,6 +29,7 @@ import rs.ac.bg.fon.ps.domain.Primerak;
 public class ProcessClientsRequests extends Thread {
 
     Socket socket;
+    private boolean state = false;
 
     public ProcessClientsRequests(Socket socket) {
         this.socket = socket;
@@ -37,7 +40,7 @@ public class ProcessClientsRequests extends Thread {
         Sender sender = new Sender(socket);
         Receiver receiver = new Receiver(socket);
 
-        while (true) {
+        while (!false) {
             try {
                 Request request = (Request) receiver.receive();
                 Response response = new Response();
@@ -47,7 +50,9 @@ public class ProcessClientsRequests extends Thread {
 
                         case LOGIN:
                             Bibliotekar bibliotekar = (Bibliotekar) request.getArgument();
-                            response.setResult(Controller.getInstance().login(bibliotekar.getUsername(), bibliotekar.getPassword()));
+                            Bibliotekar ulogovani = Controller.getInstance().login(bibliotekar.getUsername(), bibliotekar.getPassword(), this);
+                            MainController.getInstance().dodajUlogovanog(ulogovani);
+                            response.setResult(ulogovani);
                             break;
 
                         case ADD_KNJIGA:
@@ -99,11 +104,6 @@ public class ProcessClientsRequests extends Thread {
                             response.setResult(Controller.getInstance().getAllPozajmice());
                             break;
 
-//                        case DELETE_POZAJMICA:
-//                            Pozajmica pozajmicaDelete = (Pozajmica) request.getArgument();
-//                            Controller.getInstance().obrisiPozajmicu(pozajmicaDelete);
-//                            break;
-
                         case GET_CLAN:
                             Clan clanGet = (Clan) request.getArgument();
                             Clan clanVracen = Controller.getInstance().getClan(clanGet);
@@ -120,17 +120,21 @@ public class ProcessClientsRequests extends Thread {
                             Clan clan1 = (Clan) request.getArgument();
                             response.setResult(Controller.getInstance().getAllClanUslov(clan1));
                             break;
-                            
+
                         case GET_POZAJMICE_USLOV:
-                            Pozajmica p= (Pozajmica) request.getArgument();
+                            Pozajmica p = (Pozajmica) request.getArgument();
                             response.setResult(Controller.getInstance().getAllPozajmiceUslov(p));
                             break;
-                            
+
                         case RAZDUZI_SVE:
                             ArrayList<Pozajmica> razduzivanje = (ArrayList<Pozajmica>) request.getArgument();
                             Controller.getInstance().razduziSvePozajmice(razduzivanje);
                             break;
-
+                        case ODJAVI_ZAPOSLENOG:
+                           Bibliotekar bibliotekarLogout =  (Bibliotekar) request.getArgument();
+                            MainController.getInstance().izbaciOdjavljenog(bibliotekarLogout);
+                            Controller.getInstance().odjaviZaposlenog(this);
+                            break;
                     }
 
                 } catch (Exception e) {
@@ -141,6 +145,15 @@ public class ProcessClientsRequests extends Thread {
             } catch (Exception ex) {
                 Logger.getLogger(ProcessClientsRequests.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    public void ugasiNit() {
+        state = true;
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            System.out.println("Gasi se klijentska nit!");
         }
     }
 

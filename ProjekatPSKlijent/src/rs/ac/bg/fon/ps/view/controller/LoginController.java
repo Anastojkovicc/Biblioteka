@@ -46,7 +46,7 @@ public class LoginController {
                     String password = String.copyValueOf(frmLogin.getTxtPassword().getPassword());
                     validateForm(username, password);
                     Bibliotekar user = Communication.getInstance().login(username, password);
-                    MainCordinator.getInstance().addParam(Constants.PARAM_ULOGOVANI, user);
+                    MainCordinator.getInstance().addParam(Constants.TRENUTNO_ULOGOVANI, user);
                     JOptionPane.showMessageDialog(frmLogin, "Ulogovani bibliotekar je " + user.getIme()
                             + " " + user.getPrezime(), "Prijavljivanje", JOptionPane.INFORMATION_MESSAGE);
                     frmLogin.dispose();

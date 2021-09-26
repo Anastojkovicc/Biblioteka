@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import rs.ac.bg.fon.ps.communication.Communication;
+import rs.ac.bg.fon.ps.domain.Bibliotekar;
+import rs.ac.bg.fon.ps.view.constant.Constants;
 import rs.ac.bg.fon.ps.view.cordinator.MainCordinator;
 import rs.ac.bg.fon.ps.view.form.FrmMain;
 
@@ -121,6 +124,19 @@ public class MainController {
 
             private void jmiPregledSvihKnjigaActionPerformed(ActionEvent e) throws Exception {
                 MainCordinator.getInstance().openPrikazSvihKnjigaForma();
+            }
+        });
+
+        frmMain.addBtnOdlogujSeActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    frmMain.dispose();
+                    Communication.getInstance().odjaviZaposlenog((Bibliotekar) MainCordinator.getInstance().getParam(Constants.TRENUTNO_ULOGOVANI));
+
+                } catch (Exception ex) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
